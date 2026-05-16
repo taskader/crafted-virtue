@@ -89,6 +89,7 @@ const author = {
   name: "Ellis Harrow",
   handle: "@eharrow",
   subline: "CEO, Northwind · Quiet Authority",
+  title: "Founder & CEO at Northwind Labs",
 };
 
 // ---------- Scheduled (upcoming) ----------
