@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
+import { BLOG_POSTS, getFeaturedPost } from "@/data/blogPosts";
 
 export const Route = createFileRoute("/blog")({
   head: () => ({
@@ -27,53 +29,10 @@ const THEMES = [
   "Signal vs. Noise",
 ];
 
-const FEATURED = {
-  category: "Executive Branding",
-  title: "Data-Driven Authority: Leveraging Analytics for Executive Branding",
-  subtitle: "Harness the power of data to elevate your leadership presence.",
-  teaser: "Learn how AI-driven insights and analytics can magnify your influence as an executive.",
-};
-
-const POSTS = [
-  {
-    title: "Crafting Your Executive Brand",
-    excerpt: "A step-by-step framework to define and project your leadership identity.",
-    read: "5 min read",
-    tags: ["Personal Branding", "Leadership", "Strategy"],
-  },
-  {
-    title: "Measuring Influence: Metrics That Matter",
-    excerpt: "Beyond likes and shares: gauge your real-world impact with actionable metrics.",
-    read: "6 min read",
-    tags: ["Influence", "Metrics", "Growth"],
-  },
-  {
-    title: "AI in Executive Communication",
-    excerpt: "How smart automation personalizes your voice without losing authenticity.",
-    read: "6 min read",
-    tags: ["AI", "Communication", "Leadership"],
-  },
-  {
-    title: "LinkedIn Mastery for Leaders",
-    excerpt: "Tactics to make your profile and posts stand out on LinkedIn.",
-    read: "5 min read",
-    tags: ["LinkedIn", "Networking", "Personal Brand"],
-  },
-  {
-    title: "Ghostless Publishing Explained",
-    excerpt: "Why content that stays anchored in your voice builds more credibility.",
-    read: "4 min read",
-    tags: ["Publishing", "Authenticity", "Content Strategy"],
-  },
-  {
-    title: "Signal vs. Noise: Cutting Through Clutter",
-    excerpt: "Master clarity by focusing on what truly resonates with your audience.",
-    read: "6 min read",
-    tags: ["Clarity", "Focus", "Content Strategy"],
-  },
-];
-
 function Blog() {
+  const featured = getFeaturedPost();
+  const rest = BLOG_POSTS.filter((p) => p.slug !== featured.slug);
+
   return (
     <MarketingShell>
       {/* Hero */}
@@ -99,21 +58,34 @@ function Blog() {
 
       {/* Featured */}
       <section className="mx-auto max-w-7xl px-6 py-12">
-        <Link to="/blog/article" className="block">
+        <Link
+          to="/blog/$slug"
+          params={{ slug: featured.slug }}
+          className="block"
+        >
           <Card className="overflow-hidden p-0 transition-shadow hover:shadow-lift">
             <div className="grid gap-0 md:grid-cols-5">
-              <div className="bg-ink p-10 text-parchment md:col-span-3">
-                <p className="text-[11px] uppercase tracking-widest text-parchment/60">
-                  Featured · {FEATURED.category}
-                </p>
-                <h2 className="mt-3 font-display text-3xl md:text-4xl text-balance">
-                  {FEATURED.title}
-                </h2>
-                <p className="mt-3 text-parchment/80">{FEATURED.subtitle}</p>
+              <div className="md:col-span-3">
+                <Illustration
+                  name={featured.illustration}
+                  ratio="4/3"
+                  className="h-full rounded-none ring-0"
+                  alt={`${featured.title} — featured insight illustration`}
+                />
               </div>
-              <div className="flex flex-col justify-between p-10 md:col-span-2">
-                <p className="text-ink-soft">{FEATURED.teaser}</p>
-                <span className="mt-6 text-sm font-medium text-primary">Read More →</span>
+              <div className="flex flex-col justify-between bg-ink p-10 text-parchment md:col-span-2">
+                <div>
+                  <p className="text-[11px] uppercase tracking-widest text-parchment/60">
+                    Featured · {featured.category}
+                  </p>
+                  <h2 className="mt-3 font-display text-3xl md:text-4xl text-balance">
+                    {featured.title}
+                  </h2>
+                  <p className="mt-3 text-parchment/80">{featured.excerpt}</p>
+                </div>
+                <span className="mt-6 text-sm font-medium text-parchment/90">
+                  Read More →
+                </span>
               </div>
             </div>
           </Card>
@@ -123,21 +95,36 @@ function Blog() {
       {/* Article grid */}
       <section className="mx-auto max-w-7xl px-6 pb-20">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {POSTS.map((p) => (
-            <Link key={p.title} to="/blog/article" className="block h-full">
-              <Card className="flex h-full flex-col p-7 transition-shadow hover:shadow-lift">
-                <p className="text-[11px] uppercase tracking-widest text-ink-soft">{p.read}</p>
-                <h3 className="mt-3 font-display text-xl">{p.title}</h3>
-                <p className="mt-2 flex-1 text-sm text-ink-soft">{p.excerpt}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {p.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] text-ink-soft"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+          {rest.map((p) => (
+            <Link
+              key={p.slug}
+              to="/blog/$slug"
+              params={{ slug: p.slug }}
+              className="block h-full"
+            >
+              <Card className="flex h-full flex-col overflow-hidden p-0 transition-shadow hover:shadow-lift">
+                <Illustration
+                  name={p.illustration}
+                  ratio="4/3"
+                  className="rounded-none ring-0"
+                  alt={`${p.title} — article thumbnail`}
+                />
+                <div className="flex flex-1 flex-col p-7">
+                  <p className="text-[11px] uppercase tracking-widest text-ink-soft">
+                    {p.read} · {p.category}
+                  </p>
+                  <h3 className="mt-3 font-display text-xl">{p.title}</h3>
+                  <p className="mt-2 flex-1 text-sm text-ink-soft">{p.excerpt}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {p.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] text-ink-soft"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </Card>
             </Link>

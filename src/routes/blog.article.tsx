@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
+import { getRelatedPosts } from "@/data/blogPosts";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/blog/article")({
@@ -54,6 +56,16 @@ function Article() {
         <p className="mt-4 text-xl text-ink-soft text-balance">
           Why posting once a week can beat shouting daily — and how authority rewards focus.
         </p>
+
+        {/* Hero illustration */}
+        <div className="mt-10">
+          <Illustration
+            name="postQuietAuthority"
+            ratio="16/10"
+            priority
+            alt="The Hidden ROI of Quiet Authority — article hero illustration"
+          />
+        </div>
 
         {/* AI Summary */}
         <Card className="mt-10 border-primary/20 p-6">
@@ -137,6 +149,36 @@ function Article() {
               </li>
             ))}
           </ol>
+        </section>
+
+        {/* Related posts */}
+        <section className="mt-16 border-t border-border/60 pt-10">
+          <SectionLabel>Continue reading</SectionLabel>
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            {getRelatedPosts("hidden-roi-of-quiet-authority", 3).map((r) => (
+              <Link
+                key={r.slug}
+                to="/blog/$slug"
+                params={{ slug: r.slug }}
+                className="block"
+              >
+                <Card className="flex h-full flex-col overflow-hidden p-0 transition-shadow hover:shadow-lift">
+                  <Illustration
+                    name={r.illustration}
+                    ratio="4/3"
+                    className="rounded-none ring-0"
+                    alt={`${r.title} — related article thumbnail`}
+                  />
+                  <div className="flex flex-1 flex-col p-5">
+                    <p className="text-[10px] uppercase tracking-widest text-ink-soft">
+                      {r.read} · {r.category}
+                    </p>
+                    <h3 className="mt-2 font-display text-base">{r.title}</h3>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
         </section>
 
         {/* CTA */}

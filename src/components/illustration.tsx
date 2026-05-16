@@ -32,6 +32,14 @@ import unlockPresence from "@/assets/illustrations/unlock-presence.jpg";
 import unlockManuscript from "@/assets/illustrations/unlock-manuscript.jpg";
 import unlockRevenue from "@/assets/illustrations/unlock-revenue.jpg";
 import unlockPartner from "@/assets/illustrations/unlock-partner.jpg";
+import postQuietAuthority from "@/assets/illustrations/post-quiet-authority.jpg";
+import postDataAuthority from "@/assets/illustrations/post-data-authority.jpg";
+import postExecutiveBrand from "@/assets/illustrations/post-executive-brand.jpg";
+import postInfluenceMetrics from "@/assets/illustrations/post-influence-metrics.jpg";
+import postAiCommunication from "@/assets/illustrations/post-ai-communication.jpg";
+import postLinkedinMastery from "@/assets/illustrations/post-linkedin-mastery.jpg";
+import postGhostless from "@/assets/illustrations/post-ghostless.jpg";
+import postSignalNoise from "@/assets/illustrations/post-signal-noise.jpg";
 
 export type IllustrationName =
   | "heroHome"
@@ -62,7 +70,15 @@ export type IllustrationName =
   | "unlockPresence"
   | "unlockManuscript"
   | "unlockRevenue"
-  | "unlockPartner";
+  | "unlockPartner"
+  | "postQuietAuthority"
+  | "postDataAuthority"
+  | "postExecutiveBrand"
+  | "postInfluenceMetrics"
+  | "postAiCommunication"
+  | "postLinkedinMastery"
+  | "postGhostless"
+  | "postSignalNoise";
 
 type Entry = { src: string; alt: string; w: number; h: number };
 
@@ -96,6 +112,14 @@ export const ILLUSTRATIONS: Record<IllustrationName, Entry> = {
   unlockManuscript:    { src: unlockManuscript,    w: 1024, h: 1024, alt: "Open manuscript with chapter cards and citation markers" },
   unlockRevenue:       { src: unlockRevenue,       w: 1024, h: 1024, alt: "Content assets becoming a landing page, email sequence, and lead magnet" },
   unlockPartner:       { src: unlockPartner,       w: 1024, h: 1024, alt: "Network of speaking, podcast, press, and partnership nodes radiating from an executive signal" },
+  postQuietAuthority:    { src: postQuietAuthority,    w: 1024, h: 768, alt: "Calm executive desk with one clear signal line rising above a field of muted content noise" },
+  postDataAuthority:     { src: postDataAuthority,     w: 1024, h: 768, alt: "Executive dashboard with Brand Score, Influence Delta, and content pillar charts resolving into one clear signal" },
+  postExecutiveBrand:    { src: postExecutiveBrand,    w: 1024, h: 768, alt: "Professional profile card assembled from voice, values, expertise, and content pillars" },
+  postInfluenceMetrics:  { src: postInfluenceMetrics,  w: 1024, h: 768, alt: "Engagement metrics, audience growth, and opportunity signals as a calm executive briefing" },
+  postAiCommunication:   { src: postAiCommunication,   w: 1024, h: 768, alt: "Human handwriting and AI assistance working together — content cards, voice waveform, approval checkmark" },
+  postLinkedinMastery:   { src: postLinkedinMastery,   w: 1024, h: 768, alt: "Leadership post card rising through an abstract professional network graph" },
+  postGhostless:         { src: postGhostless,         w: 1024, h: 768, alt: "An executive's own voice line flowing into published content cards with approved-by-author checkmarks" },
+  postSignalNoise:       { src: postSignalNoise,       w: 1024, h: 768, alt: "Scattered noisy shapes resolving into a single clear signal beam on warm paper" },
 };
 
 type Props = {
