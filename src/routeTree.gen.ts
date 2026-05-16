@@ -108,34 +108,34 @@ const ControlCenterIndexRoute = ControlCenterIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseTeamRoute = EnterpriseTeamRouteImport.update({
-  id: '/team',
-  path: '/team',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/team',
+  path: '/enterprise/team',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseOverviewRoute = EnterpriseOverviewRouteImport.update({
-  id: '/overview',
-  path: '/overview',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/overview',
+  path: '/enterprise/overview',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseComplianceRoute = EnterpriseComplianceRouteImport.update({
-  id: '/compliance',
-  path: '/compliance',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/compliance',
+  path: '/enterprise/compliance',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseBrandRulesRoute = EnterpriseBrandRulesRouteImport.update({
-  id: '/brand-rules',
-  path: '/brand-rules',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/brand-rules',
+  path: '/enterprise/brand-rules',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseApprovalsRoute = EnterpriseApprovalsRouteImport.update({
-  id: '/approvals',
-  path: '/approvals',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/approvals',
+  path: '/enterprise/approvals',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseAnalyticsRoute = EnterpriseAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => EnterpriseRoute,
+  id: '/enterprise/analytics',
+  path: '/enterprise/analytics',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
@@ -423,6 +423,12 @@ export interface RootRouteChildren {
   ReportRoute: typeof ReportRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  EnterpriseAnalyticsRoute: typeof EnterpriseAnalyticsRoute
+  EnterpriseApprovalsRoute: typeof EnterpriseApprovalsRoute
+  EnterpriseBrandRulesRoute: typeof EnterpriseBrandRulesRoute
+  EnterpriseComplianceRoute: typeof EnterpriseComplianceRoute
+  EnterpriseOverviewRoute: typeof EnterpriseOverviewRoute
+  EnterpriseTeamRoute: typeof EnterpriseTeamRoute
   ControlCenterIndexRoute: typeof ControlCenterIndexRoute
   EnterpriseIndexRoute: typeof EnterpriseIndexRoute
 }
@@ -522,45 +528,45 @@ declare module '@tanstack/react-router' {
     }
     '/enterprise/team': {
       id: '/enterprise/team'
-      path: '/team'
+      path: '/enterprise/team'
       fullPath: '/enterprise/team'
       preLoaderRoute: typeof EnterpriseTeamRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/enterprise/overview': {
       id: '/enterprise/overview'
-      path: '/overview'
+      path: '/enterprise/overview'
       fullPath: '/enterprise/overview'
       preLoaderRoute: typeof EnterpriseOverviewRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/enterprise/compliance': {
       id: '/enterprise/compliance'
-      path: '/compliance'
+      path: '/enterprise/compliance'
       fullPath: '/enterprise/compliance'
       preLoaderRoute: typeof EnterpriseComplianceRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/enterprise/brand-rules': {
       id: '/enterprise/brand-rules'
-      path: '/brand-rules'
+      path: '/enterprise/brand-rules'
       fullPath: '/enterprise/brand-rules'
       preLoaderRoute: typeof EnterpriseBrandRulesRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/enterprise/approvals': {
       id: '/enterprise/approvals'
-      path: '/approvals'
+      path: '/enterprise/approvals'
       fullPath: '/enterprise/approvals'
       preLoaderRoute: typeof EnterpriseApprovalsRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/enterprise/analytics': {
       id: '/enterprise/analytics'
-      path: '/analytics'
+      path: '/enterprise/analytics'
       fullPath: '/enterprise/analytics'
       preLoaderRoute: typeof EnterpriseAnalyticsRouteImport
-      parentRoute: typeof EnterpriseRoute
+      parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -710,19 +716,15 @@ const rootRouteChildren: RootRouteChildren = {
   ReportRoute: ReportRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  EnterpriseAnalyticsRoute: EnterpriseAnalyticsRoute,
+  EnterpriseApprovalsRoute: EnterpriseApprovalsRoute,
+  EnterpriseBrandRulesRoute: EnterpriseBrandRulesRoute,
+  EnterpriseComplianceRoute: EnterpriseComplianceRoute,
+  EnterpriseOverviewRoute: EnterpriseOverviewRoute,
+  EnterpriseTeamRoute: EnterpriseTeamRoute,
   ControlCenterIndexRoute: ControlCenterIndexRoute,
   EnterpriseIndexRoute: EnterpriseIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
