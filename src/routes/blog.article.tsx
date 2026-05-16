@@ -151,6 +151,36 @@ function Article() {
           </ol>
         </section>
 
+        {/* Related posts */}
+        <section className="mt-16 border-t border-border/60 pt-10">
+          <SectionLabel>Continue reading</SectionLabel>
+          <div className="mt-6 grid gap-6 sm:grid-cols-3">
+            {getRelatedPosts("hidden-roi-of-quiet-authority", 3).map((r) => (
+              <Link
+                key={r.slug}
+                to="/blog/$slug"
+                params={{ slug: r.slug }}
+                className="block"
+              >
+                <Card className="flex h-full flex-col overflow-hidden p-0 transition-shadow hover:shadow-lift">
+                  <Illustration
+                    name={r.illustration}
+                    ratio="4/3"
+                    className="rounded-none ring-0"
+                    alt={`${r.title} — related article thumbnail`}
+                  />
+                  <div className="flex flex-1 flex-col p-5">
+                    <p className="text-[10px] uppercase tracking-widest text-ink-soft">
+                      {r.read} · {r.category}
+                    </p>
+                    <h3 className="mt-2 font-display text-base">{r.title}</h3>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
+
         {/* CTA */}
         <Card className="mt-14 p-8 text-center">
           <h3 className="font-display text-2xl text-balance">Start Your 7-Day Free Trial</h3>
