@@ -21,6 +21,11 @@ import blogFeatured from "@/assets/illustrations/blog-featured.jpg";
 import blogBird from "@/assets/illustrations/blog-bird.jpg";
 import blogBook from "@/assets/illustrations/blog-book.jpg";
 import blogCompass from "@/assets/illustrations/blog-compass.jpg";
+import onboardingProfile from "@/assets/illustrations/onboarding-profile.jpg";
+import onboardingVoice from "@/assets/illustrations/onboarding-voice.jpg";
+import onboardingPillars from "@/assets/illustrations/onboarding-pillars.jpg";
+import onboardingCalendar from "@/assets/illustrations/onboarding-calendar.jpg";
+import onboardingScore from "@/assets/illustrations/onboarding-score.jpg";
 
 export type IllustrationName =
   | "heroHome"
@@ -40,7 +45,12 @@ export type IllustrationName =
   | "blogFeatured"
   | "blogBird"
   | "blogBook"
-  | "blogCompass";
+  | "blogCompass"
+  | "onboardingProfile"
+  | "onboardingVoice"
+  | "onboardingPillars"
+  | "onboardingCalendar"
+  | "onboardingScore";
 
 type Entry = { src: string; alt: string; w: number; h: number };
 
@@ -63,6 +73,11 @@ export const ILLUSTRATIONS: Record<IllustrationName, Entry> = {
   blogBird:            { src: blogBird,            w: 1024, h: 768, alt: "Single bird in flight over a thin signal line" },
   blogBook:            { src: blogBook,            w: 1024, h: 768, alt: "Open book with a rising chart line emerging from the pages" },
   blogCompass:         { src: blogCompass,         w: 1024, h: 768, alt: "Compass resting on folded paper with subtle map lines" },
+  onboardingProfile:   { src: onboardingProfile,   w: 1024, h: 768, alt: "Editorial executive profile card on warm ivory" },
+  onboardingVoice:     { src: onboardingVoice,     w: 1024, h: 768, alt: "A written ink line becoming a clean voice waveform" },
+  onboardingPillars:   { src: onboardingPillars,   w: 1024, h: 768, alt: "Four organized content pillars standing in a calm row" },
+  onboardingCalendar:  { src: onboardingCalendar,  w: 1024, h: 768, alt: "Weekly publishing calendar with an approval checkmark" },
+  onboardingScore:     { src: onboardingScore,     w: 1024, h: 768, alt: "Calm rising Brand Score line chart" },
 };
 
 type Props = {
