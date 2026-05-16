@@ -752,6 +752,7 @@ const STATUS_FILTERS: { id: "all" | PostStatus; label: string }[] = [
   { id: "scheduled", label: "Scheduled" },
   { id: "awaiting_approval", label: "Awaiting" },
   { id: "published", label: "Published" },
+  { id: "failed", label: "Failed" },
 ];
 
 export function PublishingTimeline() {
