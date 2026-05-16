@@ -24,6 +24,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
+import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
@@ -100,6 +101,11 @@ const AppContentIndexRoute = AppContentIndexRouteImport.update({
   path: '/content/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppContentNewRoute = AppContentNewRouteImport.update({
+  id: '/content/new',
+  path: '/content/new',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/solutions': typeof SolutionsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRoutesByTo {
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/solutions': typeof SolutionsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/app/content/new': typeof AppContentNewRoute
   '/app/content': typeof AppContentIndexRoute
 }
 export interface FileRoutesById {
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/solutions': typeof SolutionsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRouteTypes {
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/app/dashboard'
     | '/blog/$slug'
+    | '/app/content/new'
     | '/app/content/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/app/dashboard'
     | '/blog/$slug'
+    | '/app/content/new'
     | '/app/content'
   id:
     | '__root__'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/solutions'
     | '/app/dashboard'
     | '/blog/$slug'
+    | '/app/content/new'
     | '/app/content/'
   fileRoutesById: FileRoutesById
 }
@@ -329,16 +341,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContentIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/content/new': {
+      id: '/app/content/new'
+      path: '/content/new'
+      fullPath: '/app/content/new'
+      preLoaderRoute: typeof AppContentNewRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
   AppDashboardRoute: typeof AppDashboardRoute
+  AppContentNewRoute: typeof AppContentNewRoute
   AppContentIndexRoute: typeof AppContentIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppDashboardRoute: AppDashboardRoute,
+  AppContentNewRoute: AppContentNewRoute,
   AppContentIndexRoute: AppContentIndexRoute,
 }
 
