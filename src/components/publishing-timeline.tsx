@@ -1,7 +1,17 @@
-import { useMemo, useRef, useState } from "react";
+import { createContext, useContext, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { toast } from "sonner";
 import { AgentAvatar } from "@/components/agent-avatar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   PUBLISHED_DAYS,
   SCHEDULED_DAYS,
@@ -11,7 +21,21 @@ import {
   type TimelineMetrics,
   type TimelinePost,
 } from "@/data/publishingTimelineData";
-import { publishPostNow, reschedulePost } from "@/services/postizTimelineAdapter";
+import { publishNowFromTimeline, reschedulePost } from "@/services/postizTimelineAdapter";
+
+// ============================================================================
+// Timeline context — lets cards talk to the page-level state (publish, etc).
+// ============================================================================
+
+type TimelineCtx = {
+  requestPublish: (post: TimelinePost) => void;
+};
+
+const TimelineContext = createContext<TimelineCtx | null>(null);
+function useTimelineCtx() {
+  return useContext(TimelineContext);
+}
+
 
 // ============================================================================
 // Helpers
