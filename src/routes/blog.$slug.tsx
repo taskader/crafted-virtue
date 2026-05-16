@@ -90,7 +90,7 @@ function Post() {
         </div>
 
         <div className="mt-10 flex flex-wrap gap-2">
-          {post.tags.map((t) => (
+          {post.tags.map((t: string) => (
             <span
               key={t}
               className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] text-ink-soft"
