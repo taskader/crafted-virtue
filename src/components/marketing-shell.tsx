@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { NAV_MARKETING } from "@/lib/mock-data";
+import { brand } from "@/data/craftedVirtueData";
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
@@ -72,8 +73,8 @@ export function MarketingFooter() {
       </div>
       <div className="border-t border-border/60">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 text-xs text-ink-soft">
-          <span>© {new Date().getFullYear()} Crafted Virtue. All rights reserved.</span>
-          <span>Nothing publishes until you approve it.</span>
+          <span>© {new Date().getFullYear()} {brand.name}. All rights reserved.</span>
+          <span>{brand.trustLine}</span>
         </div>
       </div>
     </footer>
