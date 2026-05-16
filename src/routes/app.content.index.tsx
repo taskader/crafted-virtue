@@ -3,7 +3,7 @@ import { Card, SectionLabel, StatusPill } from "@/components/ui-bits";
 import { CONTENT_QUEUE, CONTENT_STATUSES } from "@/lib/mock-data";
 import { useState } from "react";
 
-export const Route = createFileRoute("/app/content")({
+export const Route = createFileRoute("/app/content/")({
   head: () => ({ meta: [{ title: "Content — Crafted Virtue" }] }),
   component: ContentList,
 });
