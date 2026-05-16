@@ -138,6 +138,10 @@ function Solutions() {
             {brand.primaryCTA}
           </Link>
         </div>
+        </div>
+        <div className="mt-12 lg:col-span-5 lg:mt-0">
+          <Illustration name="heroHome" ratio="4/3" priority />
+        </div>
       </section>
 
       {/* 1. Brand Studio */}
