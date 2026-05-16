@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
+import { Route as EnterpriseRouteImport } from './routes/enterprise'
 import { Route as IndexRouteImport } from './routes/index'
 
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -29,6 +30,11 @@ const PlatformRoute = PlatformRouteImport.update({
   path: '/platform',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnterpriseRoute = EnterpriseRouteImport.update({
+  id: '/enterprise',
+  path: '/enterprise',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,12 +43,14 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/enterprise': typeof EnterpriseRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/solutions': typeof SolutionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/enterprise': typeof EnterpriseRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/solutions': typeof SolutionsRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/enterprise': typeof EnterpriseRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/solutions': typeof SolutionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/platform' | '/pricing' | '/solutions'
+  fullPaths: '/' | '/enterprise' | '/platform' | '/pricing' | '/solutions'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/platform' | '/pricing' | '/solutions'
-  id: '__root__' | '/' | '/platform' | '/pricing' | '/solutions'
+  to: '/' | '/enterprise' | '/platform' | '/pricing' | '/solutions'
+  id: '__root__' | '/' | '/enterprise' | '/platform' | '/pricing' | '/solutions'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EnterpriseRoute: typeof EnterpriseRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -92,6 +102,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlatformRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enterprise': {
+      id: '/enterprise'
+      path: '/enterprise'
+      fullPath: '/enterprise'
+      preLoaderRoute: typeof EnterpriseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EnterpriseRoute: EnterpriseRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   SolutionsRoute: SolutionsRoute,
