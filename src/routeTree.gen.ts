@@ -9,38 +9,510 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ReportRouteImport } from './routes/report'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PlatformRouteImport } from './routes/platform'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as EnterpriseRouteImport } from './routes/enterprise'
+import { Route as ControlCenterRouteImport } from './routes/control-center'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ApproachRouteImport } from './routes/approach'
+import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnterpriseTeamRouteImport } from './routes/enterprise.team'
+import { Route as EnterpriseOverviewRouteImport } from './routes/enterprise.overview'
+import { Route as EnterpriseComplianceRouteImport } from './routes/enterprise.compliance'
+import { Route as EnterpriseBrandRulesRouteImport } from './routes/enterprise.brand-rules'
+import { Route as EnterpriseApprovalsRouteImport } from './routes/enterprise.approvals'
+import { Route as EnterpriseAnalyticsRouteImport } from './routes/enterprise.analytics'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AppVoiceRouteImport } from './routes/app.voice'
+import { Route as AppTrainingRouteImport } from './routes/app.training'
+import { Route as AppSupportRouteImport } from './routes/app.support'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppPublishingRouteImport } from './routes/app.publishing'
+import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
+import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
+import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
+import { Route as AppAccountsRouteImport } from './routes/app.accounts'
+import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
+import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportRoute = ReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlatformRoute = PlatformRouteImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnterpriseRoute = EnterpriseRouteImport.update({
+  id: '/enterprise',
+  path: '/enterprise',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ControlCenterRoute = ControlCenterRouteImport.update({
+  id: '/control-center',
+  path: '/control-center',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApproachRoute = ApproachRouteImport.update({
+  id: '/approach',
+  path: '/approach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnterpriseTeamRoute = EnterpriseTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseOverviewRoute = EnterpriseOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseComplianceRoute = EnterpriseComplianceRouteImport.update({
+  id: '/compliance',
+  path: '/compliance',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseBrandRulesRoute = EnterpriseBrandRulesRouteImport.update({
+  id: '/brand-rules',
+  path: '/brand-rules',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseApprovalsRoute = EnterpriseApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseAnalyticsRoute = EnterpriseAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const AppVoiceRoute = AppVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTrainingRoute = AppTrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSupportRoute = AppSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPublishingRoute = AppPublishingRouteImport.update({
+  id: '/publishing',
+  path: '/publishing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppApprovalsRoute = AppApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAccountsRoute = AppAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContentIndexRoute = AppContentIndexRouteImport.update({
+  id: '/content/',
+  path: '/content/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContentNewRoute = AppContentNewRouteImport.update({
+  id: '/content/new',
+  path: '/content/new',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/approach': typeof ApproachRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
+  '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
+  '/app/training': typeof AppTrainingRoute
+  '/app/voice': typeof AppVoiceRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
+  '/app/content/new': typeof AppContentNewRoute
+  '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/approach': typeof ApproachRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
+  '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
+  '/app/training': typeof AppTrainingRoute
+  '/app/voice': typeof AppVoiceRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
+  '/app/content/new': typeof AppContentNewRoute
+  '/app/content': typeof AppContentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/approach': typeof ApproachRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
+  '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
+  '/platform': typeof PlatformRoute
+  '/pricing': typeof PricingRoute
+  '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
+  '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
+  '/app/analytics': typeof AppAnalyticsRoute
+  '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
+  '/app/training': typeof AppTrainingRoute
+  '/app/voice': typeof AppVoiceRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
+  '/app/content/new': typeof AppContentNewRoute
+  '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/approach'
+    | '/blog'
+    | '/control-center'
+    | '/enterprise'
+    | '/login'
+    | '/onboarding'
+    | '/platform'
+    | '/pricing'
+    | '/report'
+    | '/signup'
+    | '/solutions'
+    | '/app/accounts'
+    | '/app/analytics'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/dashboard'
+    | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
+    | '/app/training'
+    | '/app/voice'
+    | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
+    | '/app/content/new'
+    | '/app/content/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/app'
+    | '/approach'
+    | '/blog'
+    | '/control-center'
+    | '/enterprise'
+    | '/login'
+    | '/onboarding'
+    | '/platform'
+    | '/pricing'
+    | '/report'
+    | '/signup'
+    | '/solutions'
+    | '/app/accounts'
+    | '/app/analytics'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/dashboard'
+    | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
+    | '/app/training'
+    | '/app/voice'
+    | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
+    | '/app/content/new'
+    | '/app/content'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/approach'
+    | '/blog'
+    | '/control-center'
+    | '/enterprise'
+    | '/login'
+    | '/onboarding'
+    | '/platform'
+    | '/pricing'
+    | '/report'
+    | '/signup'
+    | '/solutions'
+    | '/app/accounts'
+    | '/app/analytics'
+    | '/app/approvals'
+    | '/app/billing'
+    | '/app/dashboard'
+    | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
+    | '/app/training'
+    | '/app/voice'
+    | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
+    | '/app/content/new'
+    | '/app/content/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  ApproachRoute: typeof ApproachRoute
+  BlogRoute: typeof BlogRouteWithChildren
+  ControlCenterRoute: typeof ControlCenterRoute
+  EnterpriseRoute: typeof EnterpriseRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
+  PlatformRoute: typeof PlatformRoute
+  PricingRoute: typeof PricingRoute
+  ReportRoute: typeof ReportRoute
+  SignupRoute: typeof SignupRoute
+  SolutionsRoute: typeof SolutionsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report': {
+      id: '/report'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/platform': {
+      id: '/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof PlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enterprise': {
+      id: '/enterprise'
+      path: '/enterprise'
+      fullPath: '/enterprise'
+      preLoaderRoute: typeof EnterpriseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/control-center': {
+      id: '/control-center'
+      path: '/control-center'
+      fullPath: '/control-center'
+      preLoaderRoute: typeof ControlCenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/approach': {
+      id: '/approach'
+      path: '/approach'
+      fullPath: '/approach'
+      preLoaderRoute: typeof ApproachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +520,221 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/enterprise/team': {
+      id: '/enterprise/team'
+      path: '/team'
+      fullPath: '/enterprise/team'
+      preLoaderRoute: typeof EnterpriseTeamRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/overview': {
+      id: '/enterprise/overview'
+      path: '/overview'
+      fullPath: '/enterprise/overview'
+      preLoaderRoute: typeof EnterpriseOverviewRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/compliance': {
+      id: '/enterprise/compliance'
+      path: '/compliance'
+      fullPath: '/enterprise/compliance'
+      preLoaderRoute: typeof EnterpriseComplianceRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/brand-rules': {
+      id: '/enterprise/brand-rules'
+      path: '/brand-rules'
+      fullPath: '/enterprise/brand-rules'
+      preLoaderRoute: typeof EnterpriseBrandRulesRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/approvals': {
+      id: '/enterprise/approvals'
+      path: '/approvals'
+      fullPath: '/enterprise/approvals'
+      preLoaderRoute: typeof EnterpriseApprovalsRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/analytics': {
+      id: '/enterprise/analytics'
+      path: '/analytics'
+      fullPath: '/enterprise/analytics'
+      preLoaderRoute: typeof EnterpriseAnalyticsRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/app/voice': {
+      id: '/app/voice'
+      path: '/voice'
+      fullPath: '/app/voice'
+      preLoaderRoute: typeof AppVoiceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/training': {
+      id: '/app/training'
+      path: '/training'
+      fullPath: '/app/training'
+      preLoaderRoute: typeof AppTrainingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/support': {
+      id: '/app/support'
+      path: '/support'
+      fullPath: '/app/support'
+      preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/publishing': {
+      id: '/app/publishing'
+      path: '/publishing'
+      fullPath: '/app/publishing'
+      preLoaderRoute: typeof AppPublishingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/approvals': {
+      id: '/app/approvals'
+      path: '/approvals'
+      fullPath: '/app/approvals'
+      preLoaderRoute: typeof AppApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/analytics': {
+      id: '/app/analytics'
+      path: '/analytics'
+      fullPath: '/app/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/accounts': {
+      id: '/app/accounts'
+      path: '/accounts'
+      fullPath: '/app/accounts'
+      preLoaderRoute: typeof AppAccountsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/content/': {
+      id: '/app/content/'
+      path: '/content'
+      fullPath: '/app/content/'
+      preLoaderRoute: typeof AppContentIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/content/new': {
+      id: '/app/content/new'
+      path: '/content/new'
+      fullPath: '/app/content/new'
+      preLoaderRoute: typeof AppContentNewRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAccountsRoute: typeof AppAccountsRoute
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppApprovalsRoute: typeof AppApprovalsRoute
+  AppBillingRoute: typeof AppBillingRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppPublishingRoute: typeof AppPublishingRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSupportRoute: typeof AppSupportRoute
+  AppTrainingRoute: typeof AppTrainingRoute
+  AppVoiceRoute: typeof AppVoiceRoute
+  AppContentNewRoute: typeof AppContentNewRoute
+  AppContentIndexRoute: typeof AppContentIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAccountsRoute: AppAccountsRoute,
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppApprovalsRoute: AppApprovalsRoute,
+  AppBillingRoute: AppBillingRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppPublishingRoute: AppPublishingRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSupportRoute: AppSupportRoute,
+  AppTrainingRoute: AppTrainingRoute,
+  AppVoiceRoute: AppVoiceRoute,
+  AppContentNewRoute: AppContentNewRoute,
+  AppContentIndexRoute: AppContentIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
+interface EnterpriseRouteChildren {
+  EnterpriseAnalyticsRoute: typeof EnterpriseAnalyticsRoute
+  EnterpriseApprovalsRoute: typeof EnterpriseApprovalsRoute
+  EnterpriseBrandRulesRoute: typeof EnterpriseBrandRulesRoute
+  EnterpriseComplianceRoute: typeof EnterpriseComplianceRoute
+  EnterpriseOverviewRoute: typeof EnterpriseOverviewRoute
+  EnterpriseTeamRoute: typeof EnterpriseTeamRoute
+}
+
+const EnterpriseRouteChildren: EnterpriseRouteChildren = {
+  EnterpriseAnalyticsRoute: EnterpriseAnalyticsRoute,
+  EnterpriseApprovalsRoute: EnterpriseApprovalsRoute,
+  EnterpriseBrandRulesRoute: EnterpriseBrandRulesRoute,
+  EnterpriseComplianceRoute: EnterpriseComplianceRoute,
+  EnterpriseOverviewRoute: EnterpriseOverviewRoute,
+  EnterpriseTeamRoute: EnterpriseTeamRoute,
+}
+
+const EnterpriseRouteWithChildren = EnterpriseRoute._addFileChildren(
+  EnterpriseRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  ApproachRoute: ApproachRoute,
+  BlogRoute: BlogRouteWithChildren,
+  ControlCenterRoute: ControlCenterRoute,
+  EnterpriseRoute: EnterpriseRouteWithChildren,
+  LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
+  PlatformRoute: PlatformRoute,
+  PricingRoute: PricingRoute,
+  ReportRoute: ReportRoute,
+  SignupRoute: SignupRoute,
+  SolutionsRoute: SolutionsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
