@@ -801,10 +801,71 @@ const STATUS_FILTERS: { id: "all" | PostStatus; label: string }[] = [
   { id: "failed", label: "Failed" },
 ];
 
+const TODAY_ISO = "2026-05-18";
+const TODAY_LABEL = "Today";
+
+function flattenPosts(days: TimelineDay[]): TimelinePost[] {
+  return days.flatMap((d) => d.posts);
+}
+
+function groupIntoDays(posts: TimelinePost[], kind: "scheduled" | "past"): TimelineDay[] {
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const map = new Map<string, TimelinePost[]>();
+  for (const p of posts) {
+    const arr = map.get(p.date) ?? [];
+    arr.push(p);
+    map.set(p.date, arr);
+  }
+  const sorted = Array.from(map.entries()).sort(([a], [b]) =>
+    kind === "scheduled" ? a.localeCompare(b) : b.localeCompare(a)
+  );
+  return sorted.map(([date, posts]) => {
+    const [, m, d] = date.split("-").map(Number);
+    const isToday = date === TODAY_ISO;
+    return {
+      date,
+      label: isToday ? TODAY_LABEL : `${MONTHS[m - 1]} ${d}`,
+      kind: isToday ? "today" : kind,
+      posts,
+    };
+  });
+}
+
 export function PublishingTimeline() {
   const [query, setQuery] = useState("");
   const [platform, setPlatform] = useState<"all" | Platform>("all");
   const [status, setStatus] = useState<"all" | PostStatus>("all");
+
+  // Lift scheduled & published into local state so Publish Now can move
+  // a card from "scheduled" into "today's" published history.
+  const [scheduledPosts, setScheduledPosts] = useState<TimelinePost[]>(() =>
+    flattenPosts(SCHEDULED_DAYS)
+  );
+  const [publishedPosts, setPublishedPosts] = useState<TimelinePost[]>(() =>
+    flattenPosts(PUBLISHED_DAYS)
+  );
+
+  const [pendingPublish, setPendingPublish] = useState<TimelinePost | null>(null);
+
+  const requestPublish = (post: TimelinePost) => setPendingPublish(post);
+
+  const confirmPublish = async () => {
+    const post = pendingPublish;
+    if (!post) return;
+    // TODO(postiz): replace with real Postiz publish call from the adapter.
+    await publishNowFromTimeline(post.id);
+    const movedPost: TimelinePost = {
+      ...post,
+      status: "published",
+      date: TODAY_ISO,
+      publishedAt: "Just now",
+      postizSyncedAt: "syncing…",
+    };
+    setScheduledPosts((s) => s.filter((p) => p.id !== post.id));
+    setPublishedPosts((p) => [movedPost, ...p]);
+    setPendingPublish(null);
+    toast.success("Published. Postiz sync will update engagement metrics shortly.");
+  };
 
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -814,7 +875,7 @@ export function PublishingTimeline() {
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.4 });
   const lineHeight = useTransform(progress, [0, 1], ["0%", "100%"]);
 
-  const { scheduled, published } = useMemo(() => {
+  const { scheduled, published, scheduledNext } = useMemo(() => {
     const matches = (p: TimelinePost) => {
       if (platform !== "all" && p.platform !== platform) return false;
       if (status !== "all" && p.status !== status) return false;
@@ -825,15 +886,59 @@ export function PublishingTimeline() {
       }
       return true;
     };
-    const filterDays = (days: TimelineDay[]) =>
-      days
-        .map((d) => ({ ...d, posts: d.posts.filter(matches) }))
-        .filter((d) => d.posts.length > 0);
-    return { scheduled: filterDays(SCHEDULED_DAYS), published: filterDays(PUBLISHED_DAYS) };
-  }, [query, platform, status]);
+    const sched = scheduledPosts.filter(matches);
+    const pub = publishedPosts.filter(matches);
+    // "Scheduled Next" hero — first 4 upcoming across all dates (unfiltered for
+    // platform/status so it always shows what's coming up; still respects search).
+    const heroSource = query
+      ? scheduledPosts.filter((p) => {
+          const q = query.toLowerCase();
+          const hay = `${p.title ?? ""} ${p.subjectLine ?? ""} ${p.content}`.toLowerCase();
+          return hay.includes(q);
+        })
+      : scheduledPosts;
+    const sortedHero = [...heroSource].sort((a, b) => a.date.localeCompare(b.date)).slice(0, 4);
+    return {
+      scheduled: groupIntoDays(sched, "scheduled"),
+      published: groupIntoDays(pub, "past"),
+      scheduledNext: sortedHero,
+    };
+  }, [query, platform, status, scheduledPosts, publishedPosts]);
 
   return (
+    <TimelineContext.Provider value={{ requestPublish }}>
     <div>
+      {/* Scheduled Next — prominent top block */}
+      {scheduledNext.length > 0 && (
+        <section className="mb-10 rounded-3xl border border-border/70 bg-gradient-to-br from-parchment-deep/80 via-card to-accent/40 p-5 shadow-soft md:p-7">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-soft">
+                Scheduled Next
+              </p>
+              <h2 className="mt-1 font-display text-2xl tracking-tight text-ink">
+                The next {scheduledNext.length} {scheduledNext.length === 1 ? "post" : "posts"} ready to go
+              </h2>
+              <p className="mt-1 text-[12px] text-ink-soft">
+                Review, approve, or publish without leaving the timeline.
+              </p>
+            </div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-[10.5px] uppercase tracking-[0.16em] text-ink-soft">
+              <span className="size-1.5 rounded-full bg-primary" />
+              Synced from Postiz
+            </span>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {scheduledNext.map((p) => (
+              <ScheduledPostCard key={`hero-${p.id}`} post={p} variant="hero" />
+            ))}
+          </div>
+          <p className="mt-4 text-[11px] text-ink-soft">
+            Scheduled publishing will use your connected Postiz workspace when backend integration is enabled.
+          </p>
+        </section>
+      )}
+
       {/* Controls */}
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <div className="relative min-w-[200px] flex-1">
@@ -885,7 +990,6 @@ export function PublishingTimeline() {
 
       {/* Timeline rail */}
       <div ref={containerRef} className="relative">
-        {/* Vertical rail (desktop only) */}
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-0 top-0 hidden md:block"
@@ -899,15 +1003,14 @@ export function PublishingTimeline() {
           </div>
         </div>
 
-        {/* Scheduled section */}
         {scheduled.length > 0 && (
           <section className="space-y-12">
             <div className="md:pl-[200px]">
               <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-soft">
-                Scheduled next
+                Full scheduled queue
               </p>
               <h2 className="mt-1 font-display text-2xl tracking-tight text-ink">
-                Posts queued in Postiz
+                Everything queued in Postiz
               </h2>
             </div>
             {scheduled.map((d) => (
@@ -916,7 +1019,6 @@ export function PublishingTimeline() {
           </section>
         )}
 
-        {/* Divider */}
         {scheduled.length > 0 && published.length > 0 && (
           <div className="my-14 md:pl-[200px]">
             <div className="flex items-center gap-3">
@@ -929,7 +1031,6 @@ export function PublishingTimeline() {
           </div>
         )}
 
-        {/* Published */}
         {published.length > 0 && (
           <section className="space-y-12">
             <div className="md:pl-[200px]">
@@ -953,6 +1054,45 @@ export function PublishingTimeline() {
           </div>
         )}
       </div>
+
+      <AlertDialog open={!!pendingPublish} onOpenChange={(o) => !o && setPendingPublish(null)}>
+        <AlertDialogContent className="border-border bg-card">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="font-display text-xl text-ink">
+              Publish this post now?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-ink-soft">
+              This will send the approved post to your connected publishing workspace and mark it as published in Crafted Virtue.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          {pendingPublish && (
+            <div className="rounded-xl border border-border/70 bg-parchment-deep/60 p-3 text-[12.5px]">
+              <div className="flex items-center gap-2">
+                <PlatformTag platform={pendingPublish.platform} />
+                <span className="text-ink-soft">{pendingPublish.scheduledAt}</span>
+              </div>
+              {(pendingPublish.title || pendingPublish.subjectLine) && (
+                <p className="mt-2 font-medium text-ink">
+                  {pendingPublish.title ?? pendingPublish.subjectLine}
+                </p>
+              )}
+              <p className="mt-1 line-clamp-2 text-ink-soft">{pendingPublish.content}</p>
+            </div>
+          )}
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-full">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmPublish}
+              className="rounded-full bg-ink text-parchment hover:bg-ink/90"
+            >
+              Publish Now
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+    </TimelineContext.Provider>
+  );
     </div>
   );
 }
