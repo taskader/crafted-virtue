@@ -265,6 +265,9 @@ function Publishing() {
       </Card>
 
       <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
+        </>
+      )}
     </div>
   );
 }
+
