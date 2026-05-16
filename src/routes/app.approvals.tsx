@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -396,9 +397,7 @@ function ApprovalCard({
         <ul className="mt-4 space-y-2 rounded-xl border border-border bg-parchment-deep/50 p-3">
           {item.notes.map((n, i) => (
             <li key={i} className="flex items-start gap-2 text-xs">
-              <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-ink text-[10px] font-medium text-parchment">
-                {n.agent[0]}
-              </span>
+              <AgentAvatar name={n.agent} size="sm" className="mt-0.5" />
               <p className="leading-snug">
                 <span className="font-medium text-ink">{n.agent}:</span>{" "}
                 <span className="text-ink-soft">{n.note}</span>

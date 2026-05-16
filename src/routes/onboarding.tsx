@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { Logo } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
 import { AgentAvatar, AgentAvatarStack } from "@/components/agent-avatar";
+import { Illustration, type IllustrationName } from "@/components/illustration";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -92,6 +93,19 @@ const APPROVAL_STYLES = [
 
 const POSTING_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+const STEP_ILLUSTRATIONS: Record<number, IllustrationName> = {
+  1: "problemNoise",
+  2: "onboardingProfile",
+  3: "blogCompass",
+  4: "onboardingVoice",
+  5: "onboardingPillars",
+  6: "publishing",
+  7: "onboardingCalendar",
+  8: "contentEngine",
+  9: "onboardingScore",
+  10: "approachSignal",
+};
+
 function Onboarding() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
@@ -180,8 +194,15 @@ function Onboarding() {
         {/* CENTER — Current step */}
         <section className="min-w-0">
           <Card className="p-8 md:p-10">
-            <SectionLabel>Step {step} of {STEPS.length}</SectionLabel>
-            <h1 className="mt-2 font-display text-3xl md:text-4xl">{current.t}</h1>
+            <div className="flex items-start justify-between gap-6">
+              <div className="min-w-0 flex-1">
+                <SectionLabel>Step {step} of {STEPS.length}</SectionLabel>
+                <h1 className="mt-2 font-display text-3xl md:text-4xl">{current.t}</h1>
+              </div>
+              <div className="hidden w-32 shrink-0 sm:block md:w-40">
+                <Illustration name={STEP_ILLUSTRATIONS[step]} ratio="4/3" className="rounded-xl" />
+              </div>
+            </div>
 
             <div className="mt-8">
               <StepContent
