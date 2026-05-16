@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FounderShell } from "@/components/founder-shell";
+import { AgentAvatar } from "@/components/agent-avatar";
 
 export const Route = createFileRoute("/control-center/agents")({
   head: () => ({ meta: [{ title: "Agents — Control Center" }] }),
@@ -36,7 +37,7 @@ function AgentsPage() {
         {AGENTS.map((a) => (
           <div key={a.name} className="rounded-xl border border-parchment/15 bg-parchment/5 p-5">
             <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-parchment text-sm text-ink">{a.name[0]}</span>
+              <AgentAvatar name={a.name} size="lg" ring={false} className="ring-2 ring-parchment/20" />
               <div>
                 <p className="font-display text-lg">{a.name}</p>
                 <p className="text-xs text-parchment/60">{a.role}</p>

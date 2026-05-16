@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { Send } from "lucide-react";
 
 export const Route = createFileRoute("/app/support")({
@@ -55,7 +56,7 @@ function Support() {
         <Card className="flex h-[640px] flex-col">
           <div className="flex items-center justify-between border-b border-border/60 px-6 py-4">
             <div className="flex items-center gap-3">
-              <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-sm text-parchment">K</span>
+              <AgentAvatar name="Konrad" size="lg" />
               <div>
                 <p className="font-medium">Konrad</p>
                 <p className="text-xs text-ink-soft">Support concierge · online</p>
@@ -69,11 +70,7 @@ function Support() {
               const isUser = m.from === "user";
               return (
                 <div key={m.id} className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""}`}>
-                  {!isUser && (
-                    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ink text-[10px] text-parchment">
-                      {m.from[0]}
-                    </span>
-                  )}
+                  {!isUser && <AgentAvatar name={m.from} size="md" />}
                   <div className={`max-w-[78%] ${isUser ? "items-end" : ""}`}>
                     {!isUser && <p className="mb-1 text-[10px] uppercase tracking-wide text-ink-soft">{m.from}</p>}
                     <div
