@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
 import { Check } from "lucide-react";
 
