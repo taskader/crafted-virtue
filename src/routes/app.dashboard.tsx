@@ -125,9 +125,7 @@ function Dashboard() {
           <ul className="mt-4 space-y-3">
             {AGENT_TIMELINE.map((a, i) => (
               <li key={a.agent + i} className="flex items-start gap-3">
-                <span className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ink text-[11px] font-medium text-parchment">
-                  {a.agent[0]}
-                </span>
+                <AgentAvatar name={a.agent} size="md" className="mt-0.5" />
                 <div className="min-w-0 text-sm leading-snug">
                   <p>
                     <span className="font-medium text-ink">{a.agent}</span>{" "}
