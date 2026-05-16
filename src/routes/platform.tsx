@@ -25,12 +25,12 @@ const FEATURES: { name: string; body: string; icon: string; illus: IllustrationN
   { name: "Approval Workflow",                body: "Review, revise, approve, and schedule every draft from one clear workflow. Nothing publishes until the right approval is captured.", icon: "AW", illus: "solutionBoard" },
   { name: "Publishing Calendar",              body: "Plan and schedule approved posts across connected channels. Use Postiz-style social publishing connections for LinkedIn, X, Instagram, Facebook, YouTube, TikTok, Blog, and Newsletter.", icon: "PC", illus: "publishing" },
   { name: "Analytics & Growth Briefings",     body: "Sam turns performance into strategy with Brand Score, Influence Delta, content pillar performance, channel comparisons, and weekly recommendations.", icon: "AB", illus: "analytics" },
-  { name: "Signature Voice™ Podcast Studio",  body: "Turn your best insights into podcast scripts and audio-ready segments that extend your authority beyond written posts.", icon: "PV", illus: "brandStudio" },
-  { name: "Multimedia Video Studio™",         body: "Transform articles and posts into short video concepts, scripts, and media assets for visual platforms.", icon: "VS", illus: "contentEngine" },
-  { name: "Presence Hub™ Website Builder",    body: "Package your best content, biography, and authority signals into a living personal website.", icon: "PH", illus: "dashboardReview" },
-  { name: "Authority Manuscript™",            body: "Expand accumulated thought leadership into a structured book manuscript with citations, outlines, and chapter drafts.", icon: "AM", illus: "blogBook" },
-  { name: "Influence Revenue Engine™",        body: "Turn expertise into lead magnets, landing pages, email sequences, and funnel assets.", icon: "IR", illus: "reportCurve" },
-  { name: "Partner Amplifier™",               body: "Surface PR, podcast, speaking, and partnership opportunities aligned to your growing authority.", icon: "PA", illus: "enterpriseAligned" },
+ { name: "Signature Voice™ Podcast Studio",  body: "Turn your best insights into podcast scripts and audio-ready segments that extend your authority beyond written posts.", icon: "PV", illus: "unlockPodcast" },
+ { name: "Multimedia Video Studio™",         body: "Transform articles and posts into short video concepts, scripts, and media assets for visual platforms.", icon: "VS", illus: "unlockVideo" },
+ { name: "Presence Hub™ Website Builder",    body: "Package your best content, biography, and authority signals into a living personal website.", icon: "PH", illus: "unlockPresence" },
+ { name: "Authority Manuscript™",            body: "Expand accumulated thought leadership into a structured book manuscript with citations, outlines, and chapter drafts.", icon: "AM", illus: "unlockManuscript" },
+ { name: "Influence Revenue Engine™",        body: "Turn expertise into lead magnets, landing pages, email sequences, and funnel assets.", icon: "IR", illus: "unlockRevenue" },
+ { name: "Partner Amplifier™",               body: "Surface PR, podcast, speaking, and partnership opportunities aligned to your growing authority.", icon: "PA", illus: "unlockPartner" },
 ];
 
 function Platform() {

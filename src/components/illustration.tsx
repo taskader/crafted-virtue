@@ -26,6 +26,12 @@ import onboardingVoice from "@/assets/illustrations/onboarding-voice.jpg";
 import onboardingPillars from "@/assets/illustrations/onboarding-pillars.jpg";
 import onboardingCalendar from "@/assets/illustrations/onboarding-calendar.jpg";
 import onboardingScore from "@/assets/illustrations/onboarding-score.jpg";
+import unlockPodcast from "@/assets/illustrations/unlock-podcast.jpg";
+import unlockVideo from "@/assets/illustrations/unlock-video.jpg";
+import unlockPresence from "@/assets/illustrations/unlock-presence.jpg";
+import unlockManuscript from "@/assets/illustrations/unlock-manuscript.jpg";
+import unlockRevenue from "@/assets/illustrations/unlock-revenue.jpg";
+import unlockPartner from "@/assets/illustrations/unlock-partner.jpg";
 
 export type IllustrationName =
   | "heroHome"
@@ -50,7 +56,13 @@ export type IllustrationName =
   | "onboardingVoice"
   | "onboardingPillars"
   | "onboardingCalendar"
-  | "onboardingScore";
+  | "onboardingScore"
+  | "unlockPodcast"
+  | "unlockVideo"
+  | "unlockPresence"
+  | "unlockManuscript"
+  | "unlockRevenue"
+  | "unlockPartner";
 
 type Entry = { src: string; alt: string; w: number; h: number };
 
@@ -78,6 +90,12 @@ export const ILLUSTRATIONS: Record<IllustrationName, Entry> = {
   onboardingPillars:   { src: onboardingPillars,   w: 1024, h: 768, alt: "Four organized content pillars standing in a calm row" },
   onboardingCalendar:  { src: onboardingCalendar,  w: 1024, h: 768, alt: "Weekly publishing calendar with an approval checkmark" },
   onboardingScore:     { src: onboardingScore,     w: 1024, h: 768, alt: "Calm rising Brand Score line chart" },
+  unlockPodcast:       { src: unlockPodcast,       w: 1024, h: 1024, alt: "Podcast microphone with script cards and a soft waveform" },
+  unlockVideo:         { src: unlockVideo,         w: 1024, h: 1024, alt: "Video frame with timeline, waveform, and media cards" },
+  unlockPresence:      { src: unlockPresence,      w: 1024, h: 1024, alt: "Polished personal website assembled from content cards" },
+  unlockManuscript:    { src: unlockManuscript,    w: 1024, h: 1024, alt: "Open manuscript with chapter cards and citation markers" },
+  unlockRevenue:       { src: unlockRevenue,       w: 1024, h: 1024, alt: "Content assets becoming a landing page, email sequence, and lead magnet" },
+  unlockPartner:       { src: unlockPartner,       w: 1024, h: 1024, alt: "Network of speaking, podcast, press, and partnership nodes radiating from an executive signal" },
 };
 
 type Props = {
