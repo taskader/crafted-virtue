@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SolutionsRouteImport } from './routes/solutions'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
@@ -23,6 +24,11 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportRoute = ReportRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
+  '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/platform'
     | '/pricing'
     | '/report'
+    | '/signup'
     | '/solutions'
     | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/platform'
     | '/pricing'
     | '/report'
+    | '/signup'
     | '/solutions'
     | '/blog/$slug'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/platform'
     | '/pricing'
     | '/report'
+    | '/signup'
     | '/solutions'
     | '/blog/$slug'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   ReportRoute: typeof ReportRoute
+  SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
 }
 
@@ -166,6 +179,13 @@ declare module '@tanstack/react-router' {
       path: '/solutions'
       fullPath: '/solutions'
       preLoaderRoute: typeof SolutionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report': {
@@ -253,6 +273,7 @@ const rootRouteChildren: RootRouteChildren = {
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   ReportRoute: ReportRoute,
+  SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
 }
 export const routeTree = rootRouteImport
