@@ -50,6 +50,7 @@ import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppAccountsRouteImport } from './routes/app.accounts'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
+import { Route as AppContentReviewRouteImport } from './routes/app.content.review'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -257,6 +258,11 @@ const AppContentIndexRoute = AppContentIndexRouteImport.update({
   path: '/content/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppContentReviewRoute = AppContentReviewRouteImport.update({
+  id: '/content/review',
+  path: '/content/review',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppContentNewRoute = AppContentNewRouteImport.update({
   id: '/content/new',
   path: '/content/new',
@@ -305,6 +311,7 @@ export interface FileRoutesByFullPath {
   '/control-center/': typeof ControlCenterIndexRoute
   '/enterprise/': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
+  '/app/content/review': typeof AppContentReviewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRoutesByTo {
@@ -349,6 +356,7 @@ export interface FileRoutesByTo {
   '/control-center': typeof ControlCenterIndexRoute
   '/enterprise': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
+  '/app/content/review': typeof AppContentReviewRoute
   '/app/content': typeof AppContentIndexRoute
 }
 export interface FileRoutesById {
@@ -394,6 +402,7 @@ export interface FileRoutesById {
   '/control-center/': typeof ControlCenterIndexRoute
   '/enterprise/': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
+  '/app/content/review': typeof AppContentReviewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
 export interface FileRouteTypes {
@@ -440,6 +449,7 @@ export interface FileRouteTypes {
     | '/control-center/'
     | '/enterprise/'
     | '/app/content/new'
+    | '/app/content/review'
     | '/app/content/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -484,6 +494,7 @@ export interface FileRouteTypes {
     | '/control-center'
     | '/enterprise'
     | '/app/content/new'
+    | '/app/content/review'
     | '/app/content'
   id:
     | '__root__'
@@ -528,6 +539,7 @@ export interface FileRouteTypes {
     | '/control-center/'
     | '/enterprise/'
     | '/app/content/new'
+    | '/app/content/review'
     | '/app/content/'
   fileRoutesById: FileRoutesById
 }
@@ -850,6 +862,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContentIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/content/review': {
+      id: '/app/content/review'
+      path: '/content/review'
+      fullPath: '/app/content/review'
+      preLoaderRoute: typeof AppContentReviewRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/content/new': {
       id: '/app/content/new'
       path: '/content/new'
@@ -873,6 +892,7 @@ interface AppRouteChildren {
   AppTrainingRoute: typeof AppTrainingRoute
   AppVoiceRoute: typeof AppVoiceRoute
   AppContentNewRoute: typeof AppContentNewRoute
+  AppContentReviewRoute: typeof AppContentReviewRoute
   AppContentIndexRoute: typeof AppContentIndexRoute
 }
 
@@ -889,6 +909,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppTrainingRoute: AppTrainingRoute,
   AppVoiceRoute: AppVoiceRoute,
   AppContentNewRoute: AppContentNewRoute,
+  AppContentReviewRoute: AppContentReviewRoute,
   AppContentIndexRoute: AppContentIndexRoute,
 }
 
