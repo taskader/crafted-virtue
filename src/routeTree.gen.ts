@@ -17,6 +17,7 @@ import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EnterpriseRouteImport } from './routes/enterprise'
+import { Route as ControlCenterRouteImport } from './routes/control-center'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
@@ -24,8 +25,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppVoiceRouteImport } from './routes/app.voice'
 import { Route as AppTrainingRouteImport } from './routes/app.training'
+import { Route as AppSupportRouteImport } from './routes/app.support'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppPublishingRouteImport } from './routes/app.publishing'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppBillingRouteImport } from './routes/app.billing'
 import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppAccountsRouteImport } from './routes/app.accounts'
@@ -72,6 +76,11 @@ const EnterpriseRoute = EnterpriseRouteImport.update({
   path: '/enterprise',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ControlCenterRoute = ControlCenterRouteImport.update({
+  id: '/control-center',
+  path: '/control-center',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -107,6 +116,16 @@ const AppTrainingRoute = AppTrainingRouteImport.update({
   path: '/training',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSupportRoute = AppSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPublishingRoute = AppPublishingRouteImport.update({
   id: '/publishing',
   path: '/publishing',
@@ -115,6 +134,11 @@ const AppPublishingRoute = AppPublishingRouteImport.update({
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBillingRoute = AppBillingRouteImport.update({
+  id: '/billing',
+  path: '/billing',
   getParentRoute: () => AppRoute,
 } as any)
 const AppApprovalsRoute = AppApprovalsRouteImport.update({
@@ -148,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -159,8 +184,11 @@ export interface FileRoutesByFullPath {
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -172,6 +200,7 @@ export interface FileRoutesByTo {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -183,8 +212,11 @@ export interface FileRoutesByTo {
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -197,6 +229,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
+  '/control-center': typeof ControlCenterRoute
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
@@ -208,8 +241,11 @@ export interface FileRoutesById {
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
+  '/app/billing': typeof AppBillingRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/support': typeof AppSupportRoute
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -223,6 +259,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
+    | '/control-center'
     | '/enterprise'
     | '/login'
     | '/onboarding'
@@ -234,8 +271,11 @@ export interface FileRouteTypes {
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
+    | '/app/billing'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
@@ -247,6 +287,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
+    | '/control-center'
     | '/enterprise'
     | '/login'
     | '/onboarding'
@@ -258,8 +299,11 @@ export interface FileRouteTypes {
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
+    | '/app/billing'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
@@ -271,6 +315,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
+    | '/control-center'
     | '/enterprise'
     | '/login'
     | '/onboarding'
@@ -282,8 +327,11 @@ export interface FileRouteTypes {
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
+    | '/app/billing'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/settings'
+    | '/app/support'
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
@@ -296,6 +344,7 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
+  ControlCenterRoute: typeof ControlCenterRoute
   EnterpriseRoute: typeof EnterpriseRoute
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
@@ -364,6 +413,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnterpriseRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/control-center': {
+      id: '/control-center'
+      path: '/control-center'
+      fullPath: '/control-center'
+      preLoaderRoute: typeof ControlCenterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -413,6 +469,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTrainingRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/support': {
+      id: '/app/support'
+      path: '/support'
+      fullPath: '/app/support'
+      preLoaderRoute: typeof AppSupportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/publishing': {
       id: '/app/publishing'
       path: '/publishing'
@@ -425,6 +495,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/app/dashboard'
       preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/billing': {
+      id: '/app/billing'
+      path: '/billing'
+      fullPath: '/app/billing'
+      preLoaderRoute: typeof AppBillingRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/approvals': {
@@ -469,8 +546,11 @@ interface AppRouteChildren {
   AppAccountsRoute: typeof AppAccountsRoute
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppApprovalsRoute: typeof AppApprovalsRoute
+  AppBillingRoute: typeof AppBillingRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppPublishingRoute: typeof AppPublishingRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppSupportRoute: typeof AppSupportRoute
   AppTrainingRoute: typeof AppTrainingRoute
   AppVoiceRoute: typeof AppVoiceRoute
   AppContentNewRoute: typeof AppContentNewRoute
@@ -481,8 +561,11 @@ const AppRouteChildren: AppRouteChildren = {
   AppAccountsRoute: AppAccountsRoute,
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppApprovalsRoute: AppApprovalsRoute,
+  AppBillingRoute: AppBillingRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppPublishingRoute: AppPublishingRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppSupportRoute: AppSupportRoute,
   AppTrainingRoute: AppTrainingRoute,
   AppVoiceRoute: AppVoiceRoute,
   AppContentNewRoute: AppContentNewRoute,
@@ -506,6 +589,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
+  ControlCenterRoute: ControlCenterRoute,
   EnterpriseRoute: EnterpriseRoute,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
@@ -518,13 +602,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
