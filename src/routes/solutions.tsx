@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel, StatusPill } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { agents, brand } from "@/data/craftedVirtueData";
 import type { ContentStatus } from "@/lib/mock-data";
 
@@ -114,7 +115,8 @@ function Solutions() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-16 pt-24">
+      <section className="mx-auto max-w-7xl px-6 pb-16 pt-24 lg:grid lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-7">
         <SectionLabel>How it works</SectionLabel>
         <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
           Human Insight <span className="text-ink-soft">×</span> AI Precision.

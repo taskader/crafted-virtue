@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration, IllustrationSpot } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
 import {
   ArrowRight, ShieldCheck, Sparkles, BookOpen, BarChart3, CheckCircle2,
@@ -75,6 +76,7 @@ function Home() {
             </h2>
           </div>
           <div className="md:col-span-7">
+            <Illustration name="problemNoise" ratio="4/3" className="mb-8" />
             <ul className="space-y-5 text-lg">
               {[
                 "Your board wonders why a rival's CFO owns LinkedIn's narrative.",
@@ -106,24 +108,30 @@ function Home() {
             {[
               {
                 icon: Sparkles,
+                illus: "solutionAuthentic" as const,
                 title: "Authentic AI, trained on you",
                 body: "Captures your tone, preferred structures, vocabulary, and strategic edge — so what publishes is recognizably you, not a flattened average.",
               },
               {
                 icon: ShieldCheck,
+                illus: "solutionBoard" as const,
                 title: "Human-proofed, board-safe",
                 body: "Every draft moves through review, citations, voice checks, and approval before publishing. Nothing reaches a feed without your sign-off.",
               },
               {
                 icon: BarChart3,
+                illus: "solutionCompounding" as const,
                 title: "Results in weeks, impact for years",
                 body: "Influence velocity, Brand Score, content consistency, and opportunity signals compound over time — measurable from day one.",
               },
             ].map((c) => (
-              <Card key={c.title} className="p-7">
-                <c.icon className="h-5 w-5 text-primary" />
-                <h3 className="mt-5 font-display text-xl">{c.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft">{c.body}</p>
+              <Card key={c.title} className="overflow-hidden p-0">
+                <IllustrationSpot name={c.illus} className="aspect-[4/3] rounded-none border-b border-border/60" />
+                <div className="p-7">
+                  <c.icon className="h-5 w-5 text-primary" />
+                  <h3 className="mt-5 font-display text-xl">{c.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-soft">{c.body}</p>
+                </div>
               </Card>
             ))}
           </div>
@@ -166,6 +174,7 @@ function Home() {
       {/* 5. Empathy */}
       <section className="bg-parchment-deep py-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
+          <Illustration name="dashboardReview" ratio="4/3" className="mx-auto mb-12 max-w-3xl" />
           <Quote className="mx-auto h-8 w-8 text-primary" />
           <h2 className="mt-6 font-display text-4xl text-balance md:text-5xl">
             Handing over your voice feels risky. We understand.
