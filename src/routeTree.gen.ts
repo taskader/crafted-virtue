@@ -16,12 +16,12 @@ import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as EnterpriseRouteImport } from './routes/enterprise'
-import { Route as ControlCenterRouteImport } from './routes/control-center'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnterpriseIndexRouteImport } from './routes/enterprise.index'
+import { Route as ControlCenterIndexRouteImport } from './routes/control-center.index'
 import { Route as EnterpriseTeamRouteImport } from './routes/enterprise.team'
 import { Route as EnterpriseOverviewRouteImport } from './routes/enterprise.overview'
 import { Route as EnterpriseComplianceRouteImport } from './routes/enterprise.compliance'
@@ -77,16 +77,6 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EnterpriseRoute = EnterpriseRouteImport.update({
-  id: '/enterprise',
-  path: '/enterprise',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ControlCenterRoute = ControlCenterRouteImport.update({
-  id: '/control-center',
-  path: '/control-center',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -105,6 +95,16 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnterpriseIndexRoute = EnterpriseIndexRouteImport.update({
+  id: '/enterprise/',
+  path: '/enterprise/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ControlCenterIndexRoute = ControlCenterIndexRouteImport.update({
+  id: '/control-center/',
+  path: '/control-center/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnterpriseTeamRoute = EnterpriseTeamRouteImport.update({
@@ -208,8 +208,6 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
-  '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -234,6 +232,8 @@ export interface FileRoutesByFullPath {
   '/enterprise/compliance': typeof EnterpriseComplianceRoute
   '/enterprise/overview': typeof EnterpriseOverviewRoute
   '/enterprise/team': typeof EnterpriseTeamRoute
+  '/control-center/': typeof ControlCenterIndexRoute
+  '/enterprise/': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
@@ -242,8 +242,6 @@ export interface FileRoutesByTo {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
-  '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -268,6 +266,8 @@ export interface FileRoutesByTo {
   '/enterprise/compliance': typeof EnterpriseComplianceRoute
   '/enterprise/overview': typeof EnterpriseOverviewRoute
   '/enterprise/team': typeof EnterpriseTeamRoute
+  '/control-center': typeof ControlCenterIndexRoute
+  '/enterprise': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content': typeof AppContentIndexRoute
 }
@@ -277,8 +277,6 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
-  '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -303,6 +301,8 @@ export interface FileRoutesById {
   '/enterprise/compliance': typeof EnterpriseComplianceRoute
   '/enterprise/overview': typeof EnterpriseOverviewRoute
   '/enterprise/team': typeof EnterpriseTeamRoute
+  '/control-center/': typeof ControlCenterIndexRoute
+  '/enterprise/': typeof EnterpriseIndexRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
@@ -313,8 +313,6 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
-    | '/control-center'
-    | '/enterprise'
     | '/login'
     | '/onboarding'
     | '/platform'
@@ -339,6 +337,8 @@ export interface FileRouteTypes {
     | '/enterprise/compliance'
     | '/enterprise/overview'
     | '/enterprise/team'
+    | '/control-center/'
+    | '/enterprise/'
     | '/app/content/new'
     | '/app/content/'
   fileRoutesByTo: FileRoutesByTo
@@ -347,8 +347,6 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
-    | '/control-center'
-    | '/enterprise'
     | '/login'
     | '/onboarding'
     | '/platform'
@@ -373,6 +371,8 @@ export interface FileRouteTypes {
     | '/enterprise/compliance'
     | '/enterprise/overview'
     | '/enterprise/team'
+    | '/control-center'
+    | '/enterprise'
     | '/app/content/new'
     | '/app/content'
   id:
@@ -381,8 +381,6 @@ export interface FileRouteTypes {
     | '/app'
     | '/approach'
     | '/blog'
-    | '/control-center'
-    | '/enterprise'
     | '/login'
     | '/onboarding'
     | '/platform'
@@ -407,6 +405,8 @@ export interface FileRouteTypes {
     | '/enterprise/compliance'
     | '/enterprise/overview'
     | '/enterprise/team'
+    | '/control-center/'
+    | '/enterprise/'
     | '/app/content/new'
     | '/app/content/'
   fileRoutesById: FileRoutesById
@@ -416,8 +416,6 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
-  ControlCenterRoute: typeof ControlCenterRoute
-  EnterpriseRoute: typeof EnterpriseRouteWithChildren
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   PlatformRoute: typeof PlatformRoute
@@ -425,6 +423,8 @@ export interface RootRouteChildren {
   ReportRoute: typeof ReportRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  ControlCenterIndexRoute: typeof ControlCenterIndexRoute
+  EnterpriseIndexRoute: typeof EnterpriseIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -478,20 +478,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/enterprise': {
-      id: '/enterprise'
-      path: '/enterprise'
-      fullPath: '/enterprise'
-      preLoaderRoute: typeof EnterpriseRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/control-center': {
-      id: '/control-center'
-      path: '/control-center'
-      fullPath: '/control-center'
-      preLoaderRoute: typeof ControlCenterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -518,6 +504,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enterprise/': {
+      id: '/enterprise/'
+      path: '/enterprise'
+      fullPath: '/enterprise/'
+      preLoaderRoute: typeof EnterpriseIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/control-center/': {
+      id: '/control-center/'
+      path: '/control-center'
+      fullPath: '/control-center/'
+      preLoaderRoute: typeof ControlCenterIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/enterprise/team': {
@@ -698,35 +698,11 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
-interface EnterpriseRouteChildren {
-  EnterpriseAnalyticsRoute: typeof EnterpriseAnalyticsRoute
-  EnterpriseApprovalsRoute: typeof EnterpriseApprovalsRoute
-  EnterpriseBrandRulesRoute: typeof EnterpriseBrandRulesRoute
-  EnterpriseComplianceRoute: typeof EnterpriseComplianceRoute
-  EnterpriseOverviewRoute: typeof EnterpriseOverviewRoute
-  EnterpriseTeamRoute: typeof EnterpriseTeamRoute
-}
-
-const EnterpriseRouteChildren: EnterpriseRouteChildren = {
-  EnterpriseAnalyticsRoute: EnterpriseAnalyticsRoute,
-  EnterpriseApprovalsRoute: EnterpriseApprovalsRoute,
-  EnterpriseBrandRulesRoute: EnterpriseBrandRulesRoute,
-  EnterpriseComplianceRoute: EnterpriseComplianceRoute,
-  EnterpriseOverviewRoute: EnterpriseOverviewRoute,
-  EnterpriseTeamRoute: EnterpriseTeamRoute,
-}
-
-const EnterpriseRouteWithChildren = EnterpriseRoute._addFileChildren(
-  EnterpriseRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
-  ControlCenterRoute: ControlCenterRoute,
-  EnterpriseRoute: EnterpriseRouteWithChildren,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   PlatformRoute: PlatformRoute,
@@ -734,7 +710,19 @@ const rootRouteChildren: RootRouteChildren = {
   ReportRoute: ReportRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  ControlCenterIndexRoute: ControlCenterIndexRoute,
+  EnterpriseIndexRoute: EnterpriseIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
