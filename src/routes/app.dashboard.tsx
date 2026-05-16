@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Card, SectionLabel, Stat, StatusPill } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { Button } from "@/components/ui/button";
 import { CONTENT_QUEUE, REACH_SERIES } from "@/lib/mock-data";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
