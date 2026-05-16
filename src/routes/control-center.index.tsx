@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FounderShell } from "@/components/founder-shell";
+import { AgentAvatar } from "@/components/agent-avatar";
 
 export const Route = createFileRoute("/control-center/")({
   head: () => ({ meta: [{ title: "Founder Control Center — Crafted Virtue" }] }),
@@ -129,7 +130,7 @@ function ControlCenter() {
           {AGENTS.map((a) => (
             <div key={a.name} className="rounded-xl border border-parchment/15 bg-parchment/5 p-4">
               <div className="flex items-center gap-3">
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-parchment text-xs text-ink">{a.name[0]}</span>
+                <AgentAvatar name={a.name} size="lg" ring={false} className="ring-2 ring-parchment/20" />
                 <p className="font-display text-lg">{a.name}</p>
               </div>
               <p className="mt-3 text-[11px] uppercase tracking-wide text-parchment/60">{a.metric}</p>

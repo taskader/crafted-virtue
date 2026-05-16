@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -178,9 +179,7 @@ function ContentReview() {
             <ul className="mt-3 space-y-3">
               {AGENT_NOTES.map((n) => (
                 <li key={n.agent} className="flex items-start gap-3">
-                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ink text-[11px] font-medium text-parchment">
-                    {n.agent[0]}
-                  </span>
+                  <AgentAvatar name={n.agent} size="md" />
                   <p className="text-sm leading-snug">
                     <span className="font-medium text-ink">{n.agent}:</span>{" "}
                     <span className="text-ink-soft">{n.note}</span>
@@ -297,9 +296,7 @@ function Person({ agent, role }: { agent: string; role: string }) {
   return (
     <li className="flex items-center justify-between">
       <span className="inline-flex items-center gap-2">
-        <span className="grid h-6 w-6 place-items-center rounded-full bg-ink text-[10px] font-medium text-parchment">
-          {agent[0]}
-        </span>
+        <AgentAvatar name={agent} size="sm" />
         <span className="text-ink">{agent}</span>
       </span>
       <span className="text-xs text-ink-soft">{role}</span>
