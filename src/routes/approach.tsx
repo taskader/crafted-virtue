@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
 
 export const Route = createFileRoute("/approach")({
@@ -59,21 +60,28 @@ function Approach() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-12 pt-24">
-        <SectionLabel>Approach</SectionLabel>
-        <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
-          Not Just Technology. A Philosophy.
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-ink-soft">
-          Crafted Virtue is built on a belief: trust, consistency, and clarity matter more than noise.
-        </p>
-        <div className="mt-8">
-          <Link
-            to="/report"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
-          >
-            {brand.primaryCTA}
-          </Link>
+      <section className="mx-auto max-w-7xl px-6 pb-12 pt-24">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-7">
+            <SectionLabel>Approach</SectionLabel>
+            <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
+              Not Just Technology. A Philosophy.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-ink-soft">
+              Crafted Virtue is built on a belief: trust, consistency, and clarity matter more than noise.
+            </p>
+            <div className="mt-8">
+              <Link
+                to="/report"
+                className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
+              >
+                {brand.primaryCTA}
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-5">
+            <Illustration name="approachSignal" ratio="4/3" priority alt="A field of noise calming into a clear lighted signal on the horizon — the Crafted Virtue approach" />
+          </div>
         </div>
       </section>
 
