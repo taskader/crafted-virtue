@@ -47,6 +47,20 @@ export async function fetchPostizScheduledPosts(): Promise<TimelineDay[]> {
   return Promise.resolve(SCHEDULED_DAYS);
 }
 
+/**
+ * Publish a scheduled post immediately from the timeline.
+ * TODO(postiz): POST /api/postiz/posts/:id/publish — when wired up, this
+ * should hit the Postiz publish endpoint and return the canonical post
+ * record so the timeline can swap the local optimistic update for the
+ * server's authoritative timestamps and engagement metrics.
+ */
+export async function publishNowFromTimeline(
+  postId: string
+): Promise<{ ok: true; publishedAt: string }> {
+  void postId;
+  return Promise.resolve({ ok: true, publishedAt: new Date().toISOString() });
+}
+
 export async function fetchPostizPostAnalytics(
   postId: string
 ): Promise<TimelineMetrics | null> {
