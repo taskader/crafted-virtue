@@ -23,6 +23,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppContentRouteImport } from './routes/app.content'
 
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
@@ -94,6 +95,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppContentRoute = AppContentRouteImport.update({
+  id: '/content',
+  path: '/content',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/content': typeof AppContentRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/content': typeof AppContentRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/content': typeof AppContentRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/content'
     | '/app/dashboard'
     | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/content'
     | '/app/dashboard'
     | '/blog/$slug'
   id:
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/content'
     | '/app/dashboard'
     | '/blog/$slug'
   fileRoutesById: FileRoutesById
@@ -310,14 +322,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/content': {
+      id: '/app/content'
+      path: '/content'
+      fullPath: '/app/content'
+      preLoaderRoute: typeof AppContentRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppContentRoute: typeof AppContentRoute
   AppDashboardRoute: typeof AppDashboardRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppContentRoute: AppContentRoute,
   AppDashboardRoute: AppDashboardRoute,
 }
 
