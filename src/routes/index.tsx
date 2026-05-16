@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration, IllustrationSpot } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
 import {
   ArrowRight, ShieldCheck, Sparkles, BookOpen, BarChart3, CheckCircle2,
@@ -75,7 +76,7 @@ function Home() {
             </h2>
           </div>
           <div className="md:col-span-7">
-            <ul className="space-y-5 text-lg">
+            <Illustration name="problemNoise" ratio="4/3" className="mb-8" />
               {[
                 "Your board wonders why a rival's CFO owns LinkedIn's narrative.",
                 "Analysts quote competitors — never your insights.",
