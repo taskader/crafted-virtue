@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Logo } from "@/components/marketing-shell";
 
 const NAV = [
@@ -9,11 +9,6 @@ const NAV = [
   { to: "/enterprise/compliance", label: "Compliance" },
   { to: "/enterprise/analytics", label: "Analytics" },
 ];
-
-export const Route = createFileRoute("/enterprise_")({
-  id: "/enterprise-layout",
-  component: () => null,
-});
 
 export function EnterpriseShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
@@ -31,7 +26,7 @@ export function EnterpriseShell({ children }: { children: React.ReactNode }) {
           {NAV.map((n) => {
             const active = pathname === n.to;
             return (
-              <Link key={n.to} to={n.to} className={`rounded-full px-4 py-1.5 text-sm transition-colors ${active ? "bg-ink text-parchment" : "text-ink-soft hover:bg-secondary"}`}>
+              <Link key={n.to} to={n.to} className={`rounded-full px-4 py-1.5 text-sm whitespace-nowrap transition-colors ${active ? "bg-ink text-parchment" : "text-ink-soft hover:bg-secondary"}`}>
                 {n.label}
               </Link>
             );
