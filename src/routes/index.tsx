@@ -77,6 +77,7 @@ function Home() {
           </div>
           <div className="md:col-span-7">
             <Illustration name="problemNoise" ratio="4/3" className="mb-8" />
+            <ul className="space-y-5 text-lg">
               {[
                 "Your board wonders why a rival's CFO owns LinkedIn's narrative.",
                 "Analysts quote competitors — never your insights.",
