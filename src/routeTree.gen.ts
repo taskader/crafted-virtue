@@ -14,6 +14,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EnterpriseRouteImport } from './routes/enterprise'
 import { Route as BlogRouteImport } from './routes/blog'
@@ -44,6 +45,11 @@ const PricingRoute = PricingRouteImport.update({
 const PlatformRoute = PlatformRouteImport.update({
   id: '/platform',
   path: '/platform',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
   '/login': typeof LoginRoute
+  '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
   '/report': typeof ReportRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/enterprise'
     | '/login'
+    | '/onboarding'
     | '/platform'
     | '/pricing'
     | '/report'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/enterprise'
     | '/login'
+    | '/onboarding'
     | '/platform'
     | '/pricing'
     | '/report'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/enterprise'
     | '/login'
+    | '/onboarding'
     | '/platform'
     | '/pricing'
     | '/report'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRouteWithChildren
   EnterpriseRoute: typeof EnterpriseRoute
   LoginRoute: typeof LoginRoute
+  OnboardingRoute: typeof OnboardingRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
   ReportRoute: typeof ReportRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/platform'
       fullPath: '/platform'
       preLoaderRoute: typeof PlatformRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -270,6 +290,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRouteWithChildren,
   EnterpriseRoute: EnterpriseRoute,
   LoginRoute: LoginRoute,
+  OnboardingRoute: OnboardingRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
   ReportRoute: ReportRoute,
