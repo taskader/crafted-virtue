@@ -1093,6 +1093,4 @@ export function PublishingTimeline() {
     </div>
     </TimelineContext.Provider>
   );
-    </div>
-  );
 }
