@@ -22,6 +22,7 @@ import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
 
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
@@ -88,10 +89,15 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
@@ -102,11 +108,12 @@ export interface FileRoutesByFullPath {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
@@ -117,12 +124,13 @@ export interface FileRoutesByTo {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRoute
+  '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/enterprise': typeof EnterpriseRoute
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/dashboard'
     | '/blog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/dashboard'
     | '/blog/$slug'
   id:
     | '__root__'
@@ -180,12 +191,13 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/dashboard'
     | '/blog/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRoute
+  AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
   EnterpriseRoute: typeof EnterpriseRoute
@@ -291,8 +303,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
+
+interface AppRouteChildren {
+  AppDashboardRoute: typeof AppDashboardRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppDashboardRoute: AppDashboardRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
@@ -306,7 +335,7 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRoute,
+  AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
   EnterpriseRoute: EnterpriseRoute,
