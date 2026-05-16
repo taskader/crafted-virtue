@@ -22,6 +22,7 @@ import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AppVoiceRouteImport } from './routes/app.voice'
 import { Route as AppPublishingRouteImport } from './routes/app.publishing'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
 import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
@@ -94,6 +95,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const AppVoiceRoute = AppVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPublishingRoute = AppPublishingRouteImport.update({
   id: '/publishing',
   path: '/publishing',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content': typeof AppContentIndexRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
     | '/app/content/'
@@ -229,6 +239,7 @@ export interface FileRouteTypes {
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
     | '/app/content'
@@ -250,6 +261,7 @@ export interface FileRouteTypes {
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
     | '/app/content/'
@@ -363,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/app/voice': {
+      id: '/app/voice'
+      path: '/voice'
+      fullPath: '/app/voice'
+      preLoaderRoute: typeof AppVoiceRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/publishing': {
       id: '/app/publishing'
       path: '/publishing'
@@ -413,6 +432,7 @@ interface AppRouteChildren {
   AppApprovalsRoute: typeof AppApprovalsRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppPublishingRoute: typeof AppPublishingRoute
+  AppVoiceRoute: typeof AppVoiceRoute
   AppContentNewRoute: typeof AppContentNewRoute
   AppContentIndexRoute: typeof AppContentIndexRoute
 }
@@ -422,6 +442,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppApprovalsRoute: AppApprovalsRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppPublishingRoute: AppPublishingRoute,
+  AppVoiceRoute: AppVoiceRoute,
   AppContentNewRoute: AppContentNewRoute,
   AppContentIndexRoute: AppContentIndexRoute,
 }
