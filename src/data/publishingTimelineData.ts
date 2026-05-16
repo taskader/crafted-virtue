@@ -407,10 +407,12 @@ function groupByDate(posts: TimelinePost[]): Map<string, TimelinePost[]> {
   return map;
 }
 
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
 function labelFor(dateIso: string, todayIso: string): string {
   if (dateIso === todayIso) return "Today";
-  const d = new Date(dateIso + "T00:00:00");
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const [, m, d] = dateIso.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${d}`;
 }
 
 const TODAY_ISO = "2026-05-18";
