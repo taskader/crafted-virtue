@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Card, SectionLabel, StatusPill } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { CONTENT_QUEUE } from "@/lib/mock-data";
 import { toast } from "sonner";
 
@@ -90,11 +91,16 @@ function Publishing() {
         ))}
       </div>
 
-      <Card className="p-6">
-        <div className="mb-4 flex items-center justify-between">
-          <SectionLabel>{view === "week" ? "Week of March 17" : "March 2026"}</SectionLabel>
-          <p className="text-xs text-ink-soft">Only approved content can be scheduled.</p>
-        </div>
+      <Card className="overflow-hidden p-0">
+        <div className="grid gap-0 md:grid-cols-[220px_1fr]">
+          <div className="hidden md:block">
+            <Illustration name="publishing" ratio="1/1" className="h-full rounded-none border-0 ring-0" />
+          </div>
+          <div className="p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <SectionLabel>{view === "week" ? "Week of March 17" : "March 2026"}</SectionLabel>
+              <p className="text-xs text-ink-soft">Only approved content can be scheduled.</p>
+            </div>
         {view === "week" ? (
           <div className="grid grid-cols-7 gap-3">
             {DAYS.map((d, i) => (

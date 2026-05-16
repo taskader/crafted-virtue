@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, SectionLabel, Stat } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
+import { Illustration } from "@/components/illustration";
 import { Check, X, Upload, RefreshCw, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 
@@ -39,10 +41,13 @@ const LEARNING = [
 function Voice() {
   return (
     <div className="space-y-8">
-      <header className="max-w-2xl">
-        <SectionLabel>Voice</SectionLabel>
-        <h1 className="mt-2 font-display text-4xl">Voice Profile</h1>
-        <p className="mt-2 text-ink-soft">Your agent learns from writing samples, edits, approvals, and performance.</p>
+      <header className="grid gap-6 lg:grid-cols-[1fr_320px] lg:items-center">
+        <div className="max-w-2xl">
+          <SectionLabel>Voice</SectionLabel>
+          <h1 className="mt-2 font-display text-4xl">Voice Profile</h1>
+          <p className="mt-2 text-ink-soft">Your agent learns from writing samples, edits, approvals, and performance.</p>
+        </div>
+        <Illustration name="onboardingVoice" ratio="4/3" className="hidden lg:block" />
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -149,12 +154,17 @@ function Voice() {
       </div>
 
       <Card className="p-6">
-        <SectionLabel>Recent learning</SectionLabel>
-        <p className="mt-2 text-sm text-ink-soft">What Leo has picked up from your last 14 edits and approvals.</p>
+        <div className="flex items-start gap-4">
+          <AgentAvatar name="Leo" size="lg" />
+          <div className="flex-1">
+            <SectionLabel>Recent learning</SectionLabel>
+            <p className="mt-2 text-sm text-ink-soft">What Leo has picked up from your last 14 edits and approvals.</p>
+          </div>
+        </div>
         <ul className="mt-5 space-y-3 text-sm">
           {LEARNING.map((l) => (
             <li key={l} className="flex items-start gap-3 rounded-xl border border-border/60 bg-parchment-deep p-3">
-              <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[10px] text-parchment">L</span>
+              <AgentAvatar name="Leo" size="sm" className="mt-0.5" />
               <span>{l}</span>
             </li>
           ))}

@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, SectionLabel, Stat } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
+import { Illustration } from "@/components/illustration";
 import { REACH_SERIES } from "@/lib/mock-data";
 import { toast } from "sonner";
 import {
@@ -203,13 +205,18 @@ function Analytics() {
       </Card>
 
       <Card className="bg-ink p-8 text-parchment">
-        <SectionLabel>
-          <span className="text-parchment/70">Sam's weekly growth briefing</span>
-        </SectionLabel>
-        <h2 className="mt-3 font-display text-2xl">What worked, what didn't, what to do next.</h2>
-        <p className="mt-3 max-w-3xl text-sm text-parchment/80">
-          Your strongest content this week translated technical complexity into executive decision language. Your weakest posts were more abstract and less tied to practical operating lessons.
-        </p>
+        <div className="flex items-start gap-5">
+          <AgentAvatar name="Sam" size="xl" className="shrink-0 ring-2 ring-parchment/20" />
+          <div className="flex-1">
+            <SectionLabel>
+              <span className="text-parchment/70">Sam's weekly growth briefing</span>
+            </SectionLabel>
+            <h2 className="mt-3 font-display text-2xl">What worked, what didn't, what to do next.</h2>
+            <p className="mt-3 max-w-3xl text-sm text-parchment/80">
+              Your strongest content this week translated technical complexity into executive decision language. Your weakest posts were more abstract and less tied to practical operating lessons.
+            </p>
+          </div>
+        </div>
         <ul className="mt-6 space-y-2.5">
           {RECS.map((r, i) => (
             <li key={r} className="flex items-start gap-3 text-sm">

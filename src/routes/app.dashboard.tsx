@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Card, SectionLabel, Stat, StatusPill } from "@/components/ui-bits";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { Illustration } from "@/components/illustration";
 import { Button } from "@/components/ui/button";
 import { CONTENT_QUEUE, REACH_SERIES } from "@/lib/mock-data";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -96,27 +97,32 @@ function Dashboard() {
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="relative overflow-hidden bg-ink p-7 text-parchment lg:col-span-2">
           <div className="absolute right-0 top-0 h-40 w-40 -translate-y-10 translate-x-10 rounded-full bg-brass/20 blur-3xl" />
-          <div className="relative">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-brass" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-parchment/70">
-                Next Best Action
-              </span>
+          <div className="relative grid gap-6 md:grid-cols-[1fr_180px] md:items-center">
+            <div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-brass" />
+                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-parchment/70">
+                  Next Best Action
+                </span>
+              </div>
+              <h2 className="mt-3 font-display text-3xl leading-tight">
+                Approve this week's authority plan.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-parchment/75">
+                Four drafts are ready for review. Approve them now to keep your publishing cadence on track.
+              </p>
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/app/approvals"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-parchment px-5 py-2.5 text-sm font-medium text-ink hover:bg-parchment/90"
+                >
+                  Review Approvals <ArrowRight className="h-4 w-4" />
+                </Link>
+                <span className="text-xs text-parchment/60">{awaiting} drafts · ~6 min review</span>
+              </div>
             </div>
-            <h2 className="mt-3 font-display text-3xl leading-tight">
-              Approve this week's authority plan.
-            </h2>
-            <p className="mt-2 max-w-xl text-sm text-parchment/75">
-              Four drafts are ready for review. Approve them now to keep your publishing cadence on track.
-            </p>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Link
-                to="/app/approvals"
-                className="inline-flex items-center gap-1.5 rounded-full bg-parchment px-5 py-2.5 text-sm font-medium text-ink hover:bg-parchment/90"
-              >
-                Review Approvals <ArrowRight className="h-4 w-4" />
-              </Link>
-              <span className="text-xs text-parchment/60">{awaiting} drafts · ~6 min review</span>
+            <div className="hidden md:block">
+              <Illustration name="dashboardReview" ratio="4/3" className="rounded-xl ring-1 ring-parchment/15" />
             </div>
           </div>
         </Card>
@@ -287,17 +293,20 @@ function Dashboard() {
       {/* Weekly Growth Briefing */}
       <Card className="p-7">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <SectionLabel>Sam's Weekly Growth Briefing</SectionLabel>
+          <div className="flex items-start gap-4">
+            <AgentAvatar name="Sam" size="xl" className="mt-1" />
+            <div>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <SectionLabel>Sam's Weekly Growth Briefing</SectionLabel>
+              </div>
+              <h2 className="mt-2 font-display text-2xl leading-snug text-balance max-w-3xl">
+                Operating lessons translated into board-level language outperformed everything else this week.
+              </h2>
+              <p className="mt-3 max-w-3xl text-ink-soft">
+                Your audience responded most strongly to practical operating lessons this week. Posts that translated technical complexity into board-level language had the highest engagement and save rate.
+              </p>
             </div>
-            <h2 className="mt-2 font-display text-2xl leading-snug text-balance max-w-3xl">
-              Operating lessons translated into board-level language outperformed everything else this week.
-            </h2>
-            <p className="mt-3 max-w-3xl text-ink-soft">
-              Your audience responded most strongly to practical operating lessons this week. Posts that translated technical complexity into board-level language had the highest engagement and save rate.
-            </p>
           </div>
           <Link to="/app/analytics" className="text-xs text-primary hover:underline">
             See full briefing →

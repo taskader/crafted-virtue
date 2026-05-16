@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Card, SectionLabel, Stat } from "@/components/ui-bits";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { toast } from "sonner";
 import { CreditCard, Check } from "lucide-react";
 
@@ -152,6 +153,18 @@ function Billing() {
           ))}
         </div>
       </div>
+
+      <Card className="p-6">
+        <div className="flex items-start gap-4">
+          <AgentAvatar name="Beatrice" size="lg" />
+          <div>
+            <SectionLabel>From Beatrice</SectionLabel>
+            <p className="mt-2 text-sm text-ink">
+              Your trial converts in 4 days at the Pro rate. I'll send a renewal summary 48 hours before the charge and flag any usage that would benefit from an add-on. Ping me here for invoices, VAT, or finance handoffs.
+            </p>
+          </div>
+        </div>
+      </Card>
     </div>
   );
 }
