@@ -72,6 +72,10 @@ export type TimelinePost = {
   category?: string;
   readTime?: string;
   excerpt?: string;
+  authorTitle?: string;
+  failureReason?: string;
+  postizSyncedAt?: string;
+  approval?: "approved" | "pending" | "rejected";
 };
 
 export type TimelineDay = {
@@ -85,6 +89,7 @@ const author = {
   name: "Ellis Harrow",
   handle: "@eharrow",
   subline: "CEO, Northwind · Quiet Authority",
+  title: "Founder & CEO at Northwind Labs",
 };
 
 // ---------- Scheduled (upcoming) ----------
@@ -98,6 +103,8 @@ const SCHEDULED: TimelinePost[] = [
     authorName: author.name,
     authorHandle: author.handle,
     authorSubline: author.subline,
+    authorTitle: author.title,
+    postizSyncedAt: "12m ago",
     title: "The Quiet Compounding of Reputation",
     content:
       "Reputation doesn't spike. It compounds. Three things I've learned about earning trust slowly — and why most operators give up six months too early.",
@@ -160,6 +167,23 @@ const SCHEDULED: TimelinePost[] = [
     voiceScore: 90,
     factCheckStatus: "verified",
   },
+  {
+    id: "sf1",
+    platform: "instagram",
+    status: "failed",
+    date: "2026-05-18",
+    scheduledAt: "Mon May 18 · 12:00",
+    authorName: "Ellis Harrow",
+    authorHandle: "ellis.harrow",
+    content: "Behind-the-scenes from this week's offsite — pages from the notebook.",
+    mediaType: "image",
+    failureReason: "Instagram rejected media — aspect ratio outside 4:5 to 1.91:1.",
+    postizPostId: "pz_8839",
+    postizIntegrationId: "ig_main",
+    createdByAgent: "Vincent",
+    voiceScore: 86,
+    factCheckStatus: "verified",
+  },
 ];
 
 // ---------- Published (history, newest first) ----------
@@ -174,6 +198,8 @@ const PUBLISHED: TimelinePost[] = [
     authorName: author.name,
     authorHandle: author.handle,
     authorSubline: author.subline,
+    authorTitle: author.title,
+    postizSyncedAt: "12m ago",
     content:
       "On choosing convictions slowly.\n\nConviction is expensive. Spend it on the right calls. The rest of the time, stay curious and a little bit uncertain.",
     metrics: { reactions: 1284, comments: 96, reposts: 142, impressions: 41200 },
@@ -270,6 +296,8 @@ const PUBLISHED: TimelinePost[] = [
     authorName: author.name,
     authorHandle: author.handle,
     authorSubline: author.subline,
+    authorTitle: author.title,
+    postizSyncedAt: "12m ago",
     content:
       "Three questions I ask before every board update. They take fifteen minutes and save the next ninety.",
     metrics: { reactions: 942, comments: 71, reposts: 88, impressions: 28600 },
@@ -349,6 +377,8 @@ const PUBLISHED: TimelinePost[] = [
     authorName: author.name,
     authorHandle: author.handle,
     authorSubline: author.subline,
+    authorTitle: author.title,
+    postizSyncedAt: "12m ago",
     content:
       "Field notes from Q3 customer calls. Three patterns surfacing across mid-market buyers — and what they're telling us about the next 18 months.",
     metrics: { reactions: 712, comments: 42, reposts: 61, impressions: 19400 },
@@ -407,10 +437,12 @@ function groupByDate(posts: TimelinePost[]): Map<string, TimelinePost[]> {
   return map;
 }
 
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
 function labelFor(dateIso: string, todayIso: string): string {
   if (dateIso === todayIso) return "Today";
-  const d = new Date(dateIso + "T00:00:00");
-  return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  const [, m, d] = dateIso.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${d}`;
 }
 
 const TODAY_ISO = "2026-05-18";

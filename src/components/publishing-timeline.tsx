@@ -214,40 +214,44 @@ function CardShell({
   );
 }
 
-function AuthorRow({
-  name,
-  handle,
-  subline,
-  time,
-  agent,
-}: {
-  name: string;
-  handle?: string;
-  subline?: string;
-  time?: string;
-  agent?: string;
-}) {
+// --- shared sub-pieces ------------------------------------------------------
+
+function AgentAttribution({ post }: { post: TimelinePost }) {
+  const bits: { label: string; agent: string }[] = [];
+  if (post.createdByAgent) bits.push({ label: "Drafted by", agent: post.createdByAgent });
+  if (post.reviewedByAgent) bits.push({ label: "Reviewed by", agent: post.reviewedByAgent });
+  if (post.status === "published" && post.createdByAgent && !post.reviewedByAgent) {
+    bits.push({ label: "Analyzed by", agent: "Sam" });
+  }
+  if (!bits.length) return null;
   return (
-    <div className="flex items-start justify-between gap-3">
-      <div className="flex items-start gap-3">
-        <AgentAvatar name={agent ?? name} size="md" />
-        <div>
-          <p className="text-sm font-medium leading-tight text-ink">{name}</p>
-          {subline ? (
-            <p className="text-[11px] leading-tight text-ink-soft">{subline}</p>
-          ) : handle ? (
-            <p className="text-[11px] leading-tight text-ink-soft">{handle}</p>
-          ) : null}
-        </div>
-      </div>
-      {time && <p className="text-[11px] text-ink-soft whitespace-nowrap">{time}</p>}
+    <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10.5px] text-ink-soft">
+      {bits.map((b, i) => (
+        <span key={i} className="inline-flex items-center gap-1.5">
+          <AgentAvatar name={b.agent} size="xs" />
+          <span>
+            {b.label} <span className="font-medium text-ink">{b.agent}</span>
+          </span>
+        </span>
+      ))}
     </div>
   );
 }
 
-function MediaPlaceholder({ label }: { label?: string }) {
+function PostizSyncedTag({ post }: { post: TimelinePost }) {
+  if (post.status !== "published") return null;
+  const synced = post.postizSyncedAt ?? "just now";
   return (
-    <div className="mt-3 grid aspect-[4/3] place-items-center overflow-hidden rounded-xl border border-border/70 bg-gradient-to-br from-parchment-deep via-card to-accent/60">
+    <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 text-[10px] text-ink-soft ring-1 ring-inset ring-border/60">
+      <span className="size-1 rounded-full bg-success" />
+      Postiz synced · last updated {synced}
+    </span>
+  );
+}
+
+function MediaPlaceholder({ label, ratio = "aspect-[4/3]" }: { label?: string; ratio?: string }) {
+  return (
+    <div className={`grid ${ratio} place-items-center overflow-hidden rounded-xl border border-border/70 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}>
       <div className="text-center">
         <div className="mx-auto mb-1 grid size-9 place-items-center rounded-full bg-card ring-1 ring-border/60">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
@@ -258,169 +262,272 @@ function MediaPlaceholder({ label }: { label?: string }) {
   );
 }
 
+// --- X / Twitter -----------------------------------------------------------
 export function XPostCard({ post }: { post: TimelinePost }) {
+  const handle = post.authorHandle.startsWith("@") ? post.authorHandle : `@${post.authorHandle}`;
   return (
-    <CardShell>
-      <div className="mb-2 flex items-center gap-2">
-        <PlatformTag platform="x" />
-        <StatusTag status={post.status} />
+    <CardShell className="bg-card" accentBorder="border-ink/15">
+      <div className="flex items-start gap-3">
+        <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0">
+            <span className="text-[13.5px] font-semibold text-ink">{post.authorName}</span>
+            <span className="text-[12px] text-ink-soft">{handle}</span>
+            <span className="text-[12px] text-ink-soft">· {post.publishedAt ?? post.scheduledAt}</span>
+            <PlatformTag platform="x" />
+          </div>
+          <p className="mt-1.5 max-w-[58ch] whitespace-pre-line text-[14px] leading-[1.45] text-ink">
+            {post.content}
+          </p>
+          {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
+          <EngagementMetricsRow platform="x" metrics={post.metrics} />
+          <AgentAttribution post={post} />
+          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        </div>
       </div>
-      <AuthorRow
-        name={post.authorName}
-        handle={post.authorHandle}
-        time={post.publishedAt ?? post.scheduledAt}
-        agent={post.createdByAgent}
-      />
-      <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">
-        {post.content}
-      </p>
-      {post.mediaType && <MediaPlaceholder />}
-      <EngagementMetricsRow platform="x" metrics={post.metrics} />
     </CardShell>
   );
 }
 
+// --- LinkedIn --------------------------------------------------------------
 export function LinkedInPostCard({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-[oklch(0.45_0.12_245)]/20">
-      <div className="mb-2 flex items-center gap-2">
+    <CardShell accentBorder="border-[oklch(0.45_0.12_245)]/25" className="bg-card">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
+          <div>
+            <p className="text-[14px] font-semibold leading-tight text-ink">
+              {post.authorName} <span className="text-[11px] font-normal text-ink-soft">· 1st</span>
+            </p>
+            <p className="mt-0.5 text-[12px] leading-snug text-ink-soft">
+              {post.authorTitle ?? post.authorSubline ?? post.authorHandle}
+            </p>
+            <p className="mt-0.5 text-[11px] text-ink-soft">
+              {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">🌐</span>
+            </p>
+          </div>
+        </div>
+        <button className="rounded-full border border-[oklch(0.45_0.12_245)]/40 px-3 py-1 text-[11px] font-semibold text-[oklch(0.45_0.12_245)] hover:bg-[oklch(0.45_0.12_245)]/5">
+          + Follow
+        </button>
+      </div>
+      <p className="mt-4 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
+      {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+      <div className="mt-3 flex items-center gap-2">
         <PlatformTag platform="linkedin" />
         <StatusTag status={post.status} />
       </div>
-      <AuthorRow
-        name={post.authorName}
-        subline={post.authorSubline ?? post.authorHandle}
-        time={post.publishedAt ?? post.scheduledAt}
-        agent={post.createdByAgent}
-      />
-      <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">
-        {post.content}
-      </p>
-      {post.mediaType && <MediaPlaceholder />}
       <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
       <RecentComments comments={post.recentComments} />
+      <AgentAttribution post={post} />
+      <div className="mt-2"><PostizSyncedTag post={post} /></div>
     </CardShell>
   );
 }
 
+// --- Facebook --------------------------------------------------------------
 export function FacebookPostCard({ post }: { post: TimelinePost }) {
+  const reactionCount = post.metrics?.reactions ?? post.metrics?.likes ?? 0;
+  const others = Math.max(0, reactionCount - 1);
   return (
-    <CardShell accentBorder="border-[oklch(0.5_0.14_255)]/20">
-      <div className="mb-2 flex items-center gap-2">
-        <PlatformTag platform="facebook" />
-        <StatusTag status={post.status} />
-      </div>
-      <AuthorRow
-        name={post.authorName}
-        handle={post.authorHandle}
-        time={post.publishedAt ?? post.scheduledAt}
-        agent={post.createdByAgent}
-      />
-      <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">
-        {post.content}
-      </p>
-      {post.mediaType && <MediaPlaceholder />}
-      <EngagementMetricsRow platform="facebook" metrics={post.metrics} />
-    </CardShell>
-  );
-}
-
-export function InstagramPostCard({ post }: { post: TimelinePost }) {
-  return (
-    <CardShell accentBorder="border-[oklch(0.6_0.18_15)]/20" className="overflow-hidden p-0">
-      <div className="flex items-center justify-between gap-2 px-5 pt-5">
-        <div className="flex items-center gap-2">
-          <PlatformTag platform="instagram" />
-          <StatusTag status={post.status} />
+    <CardShell accentBorder="border-[oklch(0.5_0.14_255)]/25" className="bg-card">
+      <div className="flex items-start gap-3">
+        <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-baseline justify-between gap-2">
+            <p className="text-[14px] font-semibold leading-tight text-ink">{post.authorName}</p>
+            <PlatformTag platform="facebook" />
+          </div>
+          <p className="mt-0.5 text-[11.5px] text-ink-soft">
+            {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">Public</span>
+          </p>
         </div>
-        <span className="text-[11px] text-ink-soft">{post.publishedAt ?? post.scheduledAt}</span>
       </div>
-      <div className="mt-3 px-5">
-        <AuthorRow name={post.authorName} handle={"@" + post.authorHandle.replace(/^@/, "")} agent={post.createdByAgent} />
+      <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
+      {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+
+      <div className="mt-3 flex items-center justify-between text-[11.5px] text-ink-soft">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="inline-flex -space-x-0.5">
+            <span className="grid size-4 place-items-center rounded-full bg-[oklch(0.5_0.14_255)] text-[8px] text-parchment">👍</span>
+            <span className="grid size-4 place-items-center rounded-full bg-destructive text-[8px] text-parchment">❤</span>
+          </span>
+          You and {fmt(others)} others
+        </span>
+        <span>
+          {fmt(post.metrics?.comments)} comments · {fmt(post.metrics?.shares)} shares
+        </span>
       </div>
-      <div className="mt-3 px-5">
-        <MediaPlaceholder label="Photo" />
+      <EngagementMetricsRow platform="facebook" metrics={post.metrics} />
+      <AgentAttribution post={post} />
+      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+    </CardShell>
+  );
+}
+
+// --- Instagram -------------------------------------------------------------
+export function InstagramPostCard({ post }: { post: TimelinePost }) {
+  const handle = post.authorHandle.replace(/^@/, "");
+  return (
+    <CardShell accentBorder="border-[oklch(0.6_0.18_15)]/25" className="overflow-hidden bg-card p-0">
+      <div className="flex items-center justify-between gap-2 px-4 py-3">
+        <div className="flex items-center gap-2.5">
+          <span className="rounded-full bg-gradient-to-tr from-brass via-[oklch(0.6_0.18_15)] to-[oklch(0.55_0.13_25)] p-0.5">
+            <AgentAvatar name={post.createdByAgent ?? post.authorName} size="md" className="ring-2 ring-card" />
+          </span>
+          <p className="text-[13px] font-semibold text-ink">@{handle}</p>
+        </div>
+        <PlatformTag platform="instagram" />
       </div>
-      <div className="px-5 pb-5">
-        <p className="mt-3 text-[14px] leading-relaxed text-ink">{post.content}</p>
-        <EngagementMetricsRow platform="instagram" metrics={post.metrics} />
+      <div className="border-y border-border/60">
+        <MediaPlaceholder ratio="aspect-square" label="Photo" />
+      </div>
+      <div className="px-4 pt-3">
+        <div className="flex items-center gap-3 text-ink">
+          <span className="text-base">♡</span>
+          <span className="text-base">💬</span>
+          <span className="text-base">↗</span>
+          <span className="ml-auto text-base">🔖</span>
+        </div>
+        <p className="mt-2 text-[13px] font-semibold text-ink">{fmt(post.metrics?.likes)} likes</p>
+        <p className="mt-1 text-[13px] leading-relaxed text-ink">
+          <span className="font-semibold">@{handle}</span>{" "}
+          <span>{post.content}</span>
+        </p>
+        {(post.metrics?.comments ?? 0) > 0 && (
+          <button className="mt-1 text-[12px] text-ink-soft hover:text-ink">
+            View all {fmt(post.metrics?.comments)} comments
+          </button>
+        )}
+        <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-ink-soft">
+          {post.publishedAt ?? post.scheduledAt}
+        </p>
+      </div>
+      <div className="px-4 pb-4">
+        <AgentAttribution post={post} />
+        <div className="mt-2"><PostizSyncedTag post={post} /></div>
       </div>
     </CardShell>
   );
 }
 
+// --- YouTube ---------------------------------------------------------------
 export function YouTubePostCard({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-destructive/20" className="overflow-hidden p-0">
-      <div className="flex items-center gap-2 px-5 pt-5">
-        <PlatformTag platform="youtube" />
-        <StatusTag status={post.status} />
-      </div>
-      <div className="mx-5 mt-3 grid aspect-video place-items-center overflow-hidden rounded-xl bg-gradient-to-br from-ink via-ink-soft to-destructive/40">
-        <div className="grid size-12 place-items-center rounded-full bg-destructive text-parchment ring-4 ring-parchment/20">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20" /></svg>
+    <CardShell accentBorder="border-destructive/20" className="overflow-hidden bg-card p-0">
+      <div className="relative">
+        <div className="grid aspect-video place-items-center overflow-hidden bg-gradient-to-br from-ink via-ink-soft to-destructive/40">
+          <button className="grid size-14 place-items-center rounded-full bg-destructive/90 text-parchment shadow-lg ring-4 ring-parchment/20 transition hover:scale-105">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20" /></svg>
+          </button>
         </div>
+        <span className="absolute bottom-2 right-2 rounded bg-ink/85 px-1.5 py-0.5 text-[10px] font-medium text-parchment">12:14</span>
       </div>
-      <div className="px-5 pb-5 pt-3">
+      <div className="p-5">
+        <div className="mb-2 flex items-center gap-2">
+          <PlatformTag platform="youtube" />
+          <StatusTag status={post.status} />
+        </div>
         <h3 className="font-display text-lg leading-snug text-ink">{post.title}</h3>
-        <p className="mt-1 text-[13px] text-ink-soft">{post.content}</p>
-        <p className="mt-2 text-[11px] text-ink-soft">
-          {post.authorName} · {post.publishedAt ?? post.scheduledAt}
-        </p>
+        <div className="mt-2 flex items-center gap-2 text-[12px] text-ink-soft">
+          <AgentAvatar name={post.authorName} size="sm" />
+          <span className="font-medium text-ink">{post.authorName}</span>
+          <span>· {fmt(post.metrics?.views)} views · {post.publishedAt ?? post.scheduledAt}</span>
+        </div>
+        <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{post.content}</p>
         <EngagementMetricsRow platform="youtube" metrics={post.metrics} />
+        <AgentAttribution post={post} />
+        <div className="mt-2"><PostizSyncedTag post={post} /></div>
       </div>
     </CardShell>
   );
 }
 
+// --- Blog ------------------------------------------------------------------
 export function BlogPostCard({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-[oklch(0.55_0.13_25)]/20">
-      <div className="mb-2 flex items-center gap-2">
-        <PlatformTag platform="blog" />
-        <StatusTag status={post.status} />
-        {post.category && (
-          <span className="text-[10.5px] uppercase tracking-[0.14em] text-ink-soft">
-            · {post.category}
-          </span>
-        )}
+    <CardShell accentBorder="border-[oklch(0.55_0.13_25)]/25" className="bg-card">
+      <div className="grid gap-4 md:grid-cols-[1fr_180px]">
+        <div>
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <PlatformTag platform="blog" />
+            <StatusTag status={post.status} />
+            {post.category && (
+              <span className="text-[10.5px] uppercase tracking-[0.14em] text-ink-soft">
+                · {post.category}
+              </span>
+            )}
+          </div>
+          <h3 className="font-display text-xl leading-tight tracking-tight text-ink">{post.title}</h3>
+          <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{post.excerpt ?? post.content}</p>
+          <div className="mt-3 flex items-center gap-2 text-[11px] text-ink-soft">
+            <AgentAvatar name={post.authorName} size="xs" />
+            <span>{post.authorName}</span>
+            <span>· {post.publishedAt ?? post.scheduledAt}</span>
+            {post.readTime && <span>· {post.readTime}</span>}
+          </div>
+          <EngagementMetricsRow platform="blog" metrics={post.metrics} />
+          <AgentAttribution post={post} />
+          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        </div>
+        <div className="hidden md:block">
+          <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
+        </div>
       </div>
-      <h3 className="font-display text-xl leading-tight tracking-tight text-ink">{post.title}</h3>
-      <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{post.excerpt ?? post.content}</p>
-      <div className="mt-3 flex items-center justify-between text-[11px] text-ink-soft">
-        <span>
-          {post.authorName} · {post.publishedAt ?? post.scheduledAt}
-        </span>
-        {post.readTime && <span>{post.readTime}</span>}
-      </div>
-      <EngagementMetricsRow platform="blog" metrics={post.metrics} />
     </CardShell>
   );
 }
 
+// --- Newsletter ------------------------------------------------------------
 export function NewsletterPostCard({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-brass/30">
-      <div className="mb-2 flex items-center gap-2">
+    <CardShell accentBorder="border-brass/40" className="bg-card">
+      <div className="mb-3 flex items-center gap-2">
         <PlatformTag platform="newsletter" />
         <StatusTag status={post.status} />
+        <span className="ml-auto text-[10.5px] uppercase tracking-[0.14em] text-ink-soft">
+          Email · {post.authorHandle}
+        </span>
       </div>
-      <p className="text-[10.5px] uppercase tracking-[0.18em] text-ink-soft">Subject</p>
-      <h3 className="mt-1 font-display text-xl leading-tight tracking-tight text-ink">
-        {post.subjectLine ?? post.title}
-      </h3>
-      {post.previewText && (
-        <p className="mt-2 text-[13px] italic text-ink-soft">"{post.previewText}"</p>
-      )}
+      <div className="rounded-xl border border-brass/30 bg-parchment-deep/60 p-4">
+        <p className="text-[10.5px] uppercase tracking-[0.18em] text-ink-soft">Subject</p>
+        <h3 className="mt-1 font-display text-xl leading-tight tracking-tight text-ink">
+          {post.subjectLine ?? post.title}
+        </h3>
+        {post.previewText && (
+          <p className="mt-2 text-[12.5px] italic text-ink-soft">Preview: "{post.previewText}"</p>
+        )}
+      </div>
       <p className="mt-3 text-[13.5px] leading-relaxed text-ink">{post.content}</p>
+      <div className="mt-3 grid grid-cols-4 gap-2 rounded-lg bg-parchment-deep/40 p-3 text-center">
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Sent</p>
+          <p className="font-display text-base text-ink">{fmt(post.metrics?.sends)}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Opens</p>
+          <p className="font-display text-base text-ink">{fmt(post.metrics?.opens)}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Clicks</p>
+          <p className="font-display text-base text-ink">{fmt(post.metrics?.clicks)}</p>
+        </div>
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Open rate</p>
+          <p className="font-display text-base text-brass">{post.metrics?.openRate ?? "—"}%</p>
+        </div>
+      </div>
       <p className="mt-2 text-[11px] text-ink-soft">
         {post.authorName} · {post.publishedAt ?? post.scheduledAt}
       </p>
-      <EngagementMetricsRow platform="newsletter" metrics={post.metrics} />
+      <AgentAttribution post={post} />
+      <div className="mt-2"><PostizSyncedTag post={post} /></div>
     </CardShell>
   );
 }
 
+// --- Scheduled -------------------------------------------------------------
 export function ScheduledPostCard({ post }: { post: TimelinePost }) {
   const awaiting = post.status === "awaiting_approval";
   const handlePublish = async () => {
@@ -436,11 +543,19 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
     toast("Rescheduling flow opened.");
   };
 
+  const approvalLabel = awaiting ? "Pending" : "Approved";
+  const approvalTone = awaiting
+    ? "bg-warning/15 text-ink ring-warning/40"
+    : "bg-success/15 text-success ring-success/35";
+
   return (
-    <CardShell className="border-dashed">
+    <CardShell className="border-dashed bg-card">
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <PlatformTag platform={post.platform} />
         <StatusTag status={post.status} />
+        <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ring-1 ring-inset ${approvalTone}`}>
+          Approval: {approvalLabel}
+        </span>
         <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-ink-soft">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
           {post.scheduledAt}
@@ -457,13 +572,9 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
         {post.content}
       </p>
 
-      <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-ink-soft">
-        {post.createdByAgent && (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-parchment-deep pl-1 pr-2 py-0.5">
-            <AgentAvatar name={post.createdByAgent} size="xs" />
-            <span>Drafted by {post.createdByAgent}</span>
-          </span>
-        )}
+      <AgentAttribution post={post} />
+
+      <div className="mt-3 flex flex-wrap items-center gap-2 text-[10.5px] text-ink-soft">
         {post.voiceScore != null && (
           <span className="rounded-full bg-accent/60 px-2 py-0.5 ring-1 ring-inset ring-primary/15">
             Voice {post.voiceScore}
@@ -474,6 +585,10 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
             Facts {post.factCheckStatus}
           </span>
         )}
+        <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 ring-1 ring-inset ring-border/60">
+          <span className="size-1 rounded-full bg-primary" />
+          Scheduled via Postiz
+        </span>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2 border-t border-border/60 pt-4">
@@ -505,7 +620,48 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
   );
 }
 
+// --- Failed ----------------------------------------------------------------
+export function FailedPostCard({ post }: { post: TimelinePost }) {
+  return (
+    <CardShell accentBorder="border-destructive/40" className="bg-destructive/5">
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <PlatformTag platform={post.platform} />
+        <span className="inline-flex items-center gap-1 rounded-full bg-destructive/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-destructive ring-1 ring-inset ring-destructive/30">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Publishing failed
+        </span>
+        <span className="ml-auto text-[11px] text-ink-soft">{post.scheduledAt}</span>
+      </div>
+      <p className="text-[13.5px] leading-relaxed text-ink">{post.content}</p>
+      <p className="mt-2 text-[12px] text-destructive">
+        <span className="font-medium">Reason:</span> {post.failureReason ?? "Unknown error from upstream platform."}
+      </p>
+      <AgentAttribution post={post} />
+      <div className="mt-4 flex flex-wrap gap-2 border-t border-destructive/20 pt-4">
+        <button
+          onClick={() => toast.success("Job re-queued in Postiz.")}
+          className="rounded-full bg-ink px-4 py-1.5 text-xs font-medium text-parchment hover:bg-ink/90"
+        >
+          Retry
+        </button>
+        <button
+          onClick={() => toast("Opening Postiz to reconnect this account.")}
+          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
+        >
+          Reconnect Account
+        </button>
+        {post.postizPostId && (
+          <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
+            Postiz · {post.postizPostId}
+          </span>
+        )}
+      </div>
+    </CardShell>
+  );
+}
+
 export function PlatformPostCard({ post }: { post: TimelinePost }) {
+  if (post.status === "failed") return <FailedPostCard post={post} />;
   if (post.status === "scheduled" || post.status === "awaiting_approval") {
     return <ScheduledPostCard post={post} />;
   }
@@ -596,6 +752,7 @@ const STATUS_FILTERS: { id: "all" | PostStatus; label: string }[] = [
   { id: "scheduled", label: "Scheduled" },
   { id: "awaiting_approval", label: "Awaiting" },
   { id: "published", label: "Published" },
+  { id: "failed", label: "Failed" },
 ];
 
 export function PublishingTimeline() {
