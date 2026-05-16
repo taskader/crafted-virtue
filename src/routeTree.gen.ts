@@ -22,6 +22,12 @@ import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EnterpriseTeamRouteImport } from './routes/enterprise.team'
+import { Route as EnterpriseOverviewRouteImport } from './routes/enterprise.overview'
+import { Route as EnterpriseComplianceRouteImport } from './routes/enterprise.compliance'
+import { Route as EnterpriseBrandRulesRouteImport } from './routes/enterprise.brand-rules'
+import { Route as EnterpriseApprovalsRouteImport } from './routes/enterprise.approvals'
+import { Route as EnterpriseAnalyticsRouteImport } from './routes/enterprise.analytics'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppVoiceRouteImport } from './routes/app.voice'
 import { Route as AppTrainingRouteImport } from './routes/app.training'
@@ -101,6 +107,36 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnterpriseTeamRoute = EnterpriseTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseOverviewRoute = EnterpriseOverviewRouteImport.update({
+  id: '/overview',
+  path: '/overview',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseComplianceRoute = EnterpriseComplianceRouteImport.update({
+  id: '/compliance',
+  path: '/compliance',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseBrandRulesRoute = EnterpriseBrandRulesRouteImport.update({
+  id: '/brand-rules',
+  path: '/brand-rules',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseApprovalsRoute = EnterpriseApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
+const EnterpriseAnalyticsRoute = EnterpriseAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => EnterpriseRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -173,7 +209,7 @@ export interface FileRoutesByFullPath {
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -192,6 +228,12 @@ export interface FileRoutesByFullPath {
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
@@ -201,7 +243,7 @@ export interface FileRoutesByTo {
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -220,6 +262,12 @@ export interface FileRoutesByTo {
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content': typeof AppContentIndexRoute
 }
@@ -230,7 +278,7 @@ export interface FileRoutesById {
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
   '/control-center': typeof ControlCenterRoute
-  '/enterprise': typeof EnterpriseRoute
+  '/enterprise': typeof EnterpriseRouteWithChildren
   '/login': typeof LoginRoute
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
@@ -249,6 +297,12 @@ export interface FileRoutesById {
   '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/enterprise/analytics': typeof EnterpriseAnalyticsRoute
+  '/enterprise/approvals': typeof EnterpriseApprovalsRoute
+  '/enterprise/brand-rules': typeof EnterpriseBrandRulesRoute
+  '/enterprise/compliance': typeof EnterpriseComplianceRoute
+  '/enterprise/overview': typeof EnterpriseOverviewRoute
+  '/enterprise/team': typeof EnterpriseTeamRoute
   '/app/content/new': typeof AppContentNewRoute
   '/app/content/': typeof AppContentIndexRoute
 }
@@ -279,6 +333,12 @@ export interface FileRouteTypes {
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
     | '/app/content/new'
     | '/app/content/'
   fileRoutesByTo: FileRoutesByTo
@@ -307,6 +367,12 @@ export interface FileRouteTypes {
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
     | '/app/content/new'
     | '/app/content'
   id:
@@ -335,6 +401,12 @@ export interface FileRouteTypes {
     | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
+    | '/enterprise/analytics'
+    | '/enterprise/approvals'
+    | '/enterprise/brand-rules'
+    | '/enterprise/compliance'
+    | '/enterprise/overview'
+    | '/enterprise/team'
     | '/app/content/new'
     | '/app/content/'
   fileRoutesById: FileRoutesById
@@ -345,7 +417,7 @@ export interface RootRouteChildren {
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
   ControlCenterRoute: typeof ControlCenterRoute
-  EnterpriseRoute: typeof EnterpriseRoute
+  EnterpriseRoute: typeof EnterpriseRouteWithChildren
   LoginRoute: typeof LoginRoute
   OnboardingRoute: typeof OnboardingRoute
   PlatformRoute: typeof PlatformRoute
@@ -447,6 +519,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/enterprise/team': {
+      id: '/enterprise/team'
+      path: '/team'
+      fullPath: '/enterprise/team'
+      preLoaderRoute: typeof EnterpriseTeamRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/overview': {
+      id: '/enterprise/overview'
+      path: '/overview'
+      fullPath: '/enterprise/overview'
+      preLoaderRoute: typeof EnterpriseOverviewRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/compliance': {
+      id: '/enterprise/compliance'
+      path: '/compliance'
+      fullPath: '/enterprise/compliance'
+      preLoaderRoute: typeof EnterpriseComplianceRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/brand-rules': {
+      id: '/enterprise/brand-rules'
+      path: '/brand-rules'
+      fullPath: '/enterprise/brand-rules'
+      preLoaderRoute: typeof EnterpriseBrandRulesRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/approvals': {
+      id: '/enterprise/approvals'
+      path: '/approvals'
+      fullPath: '/enterprise/approvals'
+      preLoaderRoute: typeof EnterpriseApprovalsRouteImport
+      parentRoute: typeof EnterpriseRoute
+    }
+    '/enterprise/analytics': {
+      id: '/enterprise/analytics'
+      path: '/analytics'
+      fullPath: '/enterprise/analytics'
+      preLoaderRoute: typeof EnterpriseAnalyticsRouteImport
+      parentRoute: typeof EnterpriseRoute
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -584,13 +698,35 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface EnterpriseRouteChildren {
+  EnterpriseAnalyticsRoute: typeof EnterpriseAnalyticsRoute
+  EnterpriseApprovalsRoute: typeof EnterpriseApprovalsRoute
+  EnterpriseBrandRulesRoute: typeof EnterpriseBrandRulesRoute
+  EnterpriseComplianceRoute: typeof EnterpriseComplianceRoute
+  EnterpriseOverviewRoute: typeof EnterpriseOverviewRoute
+  EnterpriseTeamRoute: typeof EnterpriseTeamRoute
+}
+
+const EnterpriseRouteChildren: EnterpriseRouteChildren = {
+  EnterpriseAnalyticsRoute: EnterpriseAnalyticsRoute,
+  EnterpriseApprovalsRoute: EnterpriseApprovalsRoute,
+  EnterpriseBrandRulesRoute: EnterpriseBrandRulesRoute,
+  EnterpriseComplianceRoute: EnterpriseComplianceRoute,
+  EnterpriseOverviewRoute: EnterpriseOverviewRoute,
+  EnterpriseTeamRoute: EnterpriseTeamRoute,
+}
+
+const EnterpriseRouteWithChildren = EnterpriseRoute._addFileChildren(
+  EnterpriseRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
   ControlCenterRoute: ControlCenterRoute,
-  EnterpriseRoute: EnterpriseRoute,
+  EnterpriseRoute: EnterpriseRouteWithChildren,
   LoginRoute: LoginRoute,
   OnboardingRoute: OnboardingRoute,
   PlatformRoute: PlatformRoute,
@@ -602,3 +738,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
