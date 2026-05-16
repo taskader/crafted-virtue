@@ -3,7 +3,7 @@ import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
 import { ShieldCheck, Building2, Lock, FileCheck2 } from "lucide-react";
 
-export const Route = createFileRoute("/enterprise")({
+export const Route = createFileRoute("/enterprise/")({
   head: () => ({ meta: [{ title: "Enterprise — Crafted Virtue" }, { name: "description", content: "Activate executive voices across your organization, under brand rules and compliance review." }] }),
   component: Enterprise,
 });
@@ -16,7 +16,7 @@ function Enterprise() {
         <h1 className="mt-4 font-display text-5xl text-balance">Your most credible voices, working as one editorial voice.</h1>
         <p className="mt-5 max-w-2xl text-lg text-ink-soft">Activate 10 to 500 executives under shared brand rules, with SAML SSO, audit logs, and compliance review built into the workflow.</p>
         <div className="mt-8 flex gap-3">
-          <Link to="/signup" className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment">Talk to sales</Link>
+          <Link to="/enterprise/overview" className="rounded-full bg-ink px-5 py-3 text-sm font-medium text-parchment">Enter enterprise workspace</Link>
           <Link to="/report" className="rounded-full border border-ink/20 px-5 py-3 text-sm font-medium text-ink">Run org Impact Analysis</Link>
         </div>
       </section>
