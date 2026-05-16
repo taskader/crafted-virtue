@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel, StatusPill } from "@/components/ui-bits";
 import { Illustration } from "@/components/illustration";
+import { AgentAvatar } from "@/components/agent-avatar";
 import { agents, brand } from "@/data/craftedVirtueData";
 import type { ContentStatus } from "@/lib/mock-data";
 
@@ -271,9 +272,7 @@ function Solutions() {
           {featuredAgents.map((a) => (
             <Card key={a.id} className="p-6">
               <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-ink text-parchment font-display">
-                  {a.name[0]}
-                </span>
+                <AgentAvatar name={a.name} size="lg" />
                 <div>
                   <p className="font-display text-lg leading-tight">{a.name}</p>
                   <p className="text-[11px] uppercase tracking-widest text-ink-soft">
