@@ -132,6 +132,8 @@ function Publishing() {
             })}
           </div>
         )}
+          </div>
+        </div>
       </Card>
 
       <Card className="p-6">
