@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { Illustration } from "@/components/illustration";
 import { brand } from "@/data/craftedVirtueData";
+import { getRelatedPosts } from "@/data/blogPosts";
 import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/blog/article")({
@@ -54,6 +56,16 @@ function Article() {
         <p className="mt-4 text-xl text-ink-soft text-balance">
           Why posting once a week can beat shouting daily — and how authority rewards focus.
         </p>
+
+        {/* Hero illustration */}
+        <div className="mt-10">
+          <Illustration
+            name="postQuietAuthority"
+            ratio="16/10"
+            priority
+            alt="The Hidden ROI of Quiet Authority — article hero illustration"
+          />
+        </div>
 
         {/* AI Summary */}
         <Card className="mt-10 border-primary/20 p-6">
