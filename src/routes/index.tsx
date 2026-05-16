@@ -108,24 +108,30 @@ function Home() {
             {[
               {
                 icon: Sparkles,
+                illus: "solutionAuthentic" as const,
                 title: "Authentic AI, trained on you",
                 body: "Captures your tone, preferred structures, vocabulary, and strategic edge — so what publishes is recognizably you, not a flattened average.",
               },
               {
                 icon: ShieldCheck,
+                illus: "solutionBoard" as const,
                 title: "Human-proofed, board-safe",
                 body: "Every draft moves through review, citations, voice checks, and approval before publishing. Nothing reaches a feed without your sign-off.",
               },
               {
                 icon: BarChart3,
+                illus: "solutionCompounding" as const,
                 title: "Results in weeks, impact for years",
                 body: "Influence velocity, Brand Score, content consistency, and opportunity signals compound over time — measurable from day one.",
               },
             ].map((c) => (
-              <Card key={c.title} className="p-7">
-                <c.icon className="h-5 w-5 text-primary" />
-                <h3 className="mt-5 font-display text-xl">{c.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft">{c.body}</p>
+              <Card key={c.title} className="overflow-hidden p-0">
+                <IllustrationSpot name={c.illus} className="aspect-[4/3] rounded-none border-b border-border/60" />
+                <div className="p-7">
+                  <c.icon className="h-5 w-5 text-primary" />
+                  <h3 className="mt-5 font-display text-xl">{c.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-soft">{c.body}</p>
+                </div>
               </Card>
             ))}
           </div>
