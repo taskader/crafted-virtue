@@ -32,6 +32,14 @@ import unlockPresence from "@/assets/illustrations/unlock-presence.jpg";
 import unlockManuscript from "@/assets/illustrations/unlock-manuscript.jpg";
 import unlockRevenue from "@/assets/illustrations/unlock-revenue.jpg";
 import unlockPartner from "@/assets/illustrations/unlock-partner.jpg";
+import postQuietAuthority from "@/assets/illustrations/post-quiet-authority.jpg";
+import postDataAuthority from "@/assets/illustrations/post-data-authority.jpg";
+import postExecutiveBrand from "@/assets/illustrations/post-executive-brand.jpg";
+import postInfluenceMetrics from "@/assets/illustrations/post-influence-metrics.jpg";
+import postAiCommunication from "@/assets/illustrations/post-ai-communication.jpg";
+import postLinkedinMastery from "@/assets/illustrations/post-linkedin-mastery.jpg";
+import postGhostless from "@/assets/illustrations/post-ghostless.jpg";
+import postSignalNoise from "@/assets/illustrations/post-signal-noise.jpg";
 
 export type IllustrationName =
   | "heroHome"
@@ -62,7 +70,15 @@ export type IllustrationName =
   | "unlockPresence"
   | "unlockManuscript"
   | "unlockRevenue"
-  | "unlockPartner";
+  | "unlockPartner"
+  | "postQuietAuthority"
+  | "postDataAuthority"
+  | "postExecutiveBrand"
+  | "postInfluenceMetrics"
+  | "postAiCommunication"
+  | "postLinkedinMastery"
+  | "postGhostless"
+  | "postSignalNoise";
 
 type Entry = { src: string; alt: string; w: number; h: number };
 
