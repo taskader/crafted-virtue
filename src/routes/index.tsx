@@ -174,6 +174,7 @@ function Home() {
       {/* 5. Empathy */}
       <section className="bg-parchment-deep py-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
+          <Illustration name="dashboardReview" ratio="4/3" className="mx-auto mb-12 max-w-3xl" />
           <Quote className="mx-auto h-8 w-8 text-primary" />
           <h2 className="mt-6 font-display text-4xl text-balance md:text-5xl">
             Handing over your voice feels risky. We understand.
