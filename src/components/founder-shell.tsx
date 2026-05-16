@@ -5,7 +5,8 @@ import {
   LifeBuoy, Map as MapIcon, AlertTriangle,
 } from "lucide-react";
 
-const NAV = [
+type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const NAV: NavItem[] = [
   { to: "/control-center", label: "Overview", icon: LayoutDashboard, exact: true },
   { to: "/control-center/users", label: "Users", icon: Users },
   { to: "/control-center/agents", label: "Agents", icon: Bot },
@@ -15,7 +16,7 @@ const NAV = [
   { to: "/control-center/support", label: "Support", icon: LifeBuoy },
   { to: "/control-center/roadmap", label: "Roadmap", icon: MapIcon },
   { to: "/control-center/incidents", label: "Incidents", icon: AlertTriangle },
-] as const;
+];
 
 export function FounderShell({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
