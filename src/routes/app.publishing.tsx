@@ -41,6 +41,7 @@ const POSTIZ_ACCOUNTS = [
 ];
 
 function Publishing() {
+  const [mainView, setMainView] = useState<View>("timeline");
   const [view, setView] = useState<"week" | "month">("week");
   const [platform, setPlatform] = useState<Platform>("All");
 
@@ -49,23 +50,29 @@ function Publishing() {
     [platform]
   );
 
+  const isTimeline = mainView === "timeline";
+
   return (
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-w-2xl">
           <SectionLabel>Publishing</SectionLabel>
-          <h1 className="mt-2 font-display text-4xl">Publishing</h1>
+          <h1 className="mt-2 font-display text-4xl">
+            {isTimeline ? "Publishing Timeline" : "Publishing"}
+          </h1>
           <p className="mt-2 text-ink-soft">
-            Approved content moves from your queue into the calendar. Publishing is managed through your connected Postiz workspace.
+            {isTimeline
+              ? "See every scheduled and published post in one chronological view. Scheduled posts sit at the top; published history unfolds below."
+              : "Approved content moves from your queue into the calendar. Publishing is managed through your connected Postiz workspace."}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex rounded-full border border-border p-1">
-            {(["week", "month"] as const).map((v) => (
+            {(["timeline", "calendar", "queue"] as const).map((v) => (
               <button
                 key={v}
-                onClick={() => setView(v)}
-                className={`rounded-full px-4 py-1.5 text-xs font-medium capitalize ${view === v ? "bg-ink text-parchment" : "text-ink-soft"}`}
+                onClick={() => setMainView(v)}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium capitalize ${mainView === v ? "bg-ink text-parchment" : "text-ink-soft"}`}
               >
                 {v}
               </button>
@@ -80,7 +87,25 @@ function Publishing() {
         </div>
       </header>
 
-      <div className="flex flex-wrap gap-2">
+      {isTimeline && <PublishingTimeline />}
+
+      {!isTimeline && (
+        <>
+        <div className="flex flex-wrap gap-2">
+          <div className="flex rounded-full border border-border p-1">
+            {(["week", "month"] as const).map((v) => (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium capitalize ${view === v ? "bg-ink text-parchment" : "text-ink-soft"}`}
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
         {PLATFORMS.map((p) => (
           <button
             key={p}
