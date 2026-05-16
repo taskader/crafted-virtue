@@ -1,5 +1,6 @@
 import { type ContentStatus } from "@/lib/mock-data";
 import { Link } from "@tanstack/react-router";
+import { AgentAvatar } from "@/components/agent-avatar";
 
 const TONES: Record<ContentStatus, string> = {
   "draft": "bg-muted text-ink-soft ring-border/60",
@@ -66,10 +67,9 @@ export function PlatformBadge({ name }: { name: string }) {
 
 // --- Agent activity chip -----------------------------------------------
 export function AgentChip({ name, role, action }: { name: string; role?: string; action?: string }) {
-  const initial = name.charAt(0);
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card px-2 py-1 text-[11px] text-ink">
-      <span className="grid size-5 place-items-center rounded-full bg-ink text-[10px] font-medium text-parchment">{initial}</span>
+    <span className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card pl-1 pr-2.5 py-0.5 text-[11px] text-ink">
+      <AgentAvatar name={name} size="xs" />
       <span className="font-medium">{name}</span>
       {role && <span className="text-ink-soft">· {role}</span>}
       {action && <span className="text-ink-soft">· {action}</span>}
