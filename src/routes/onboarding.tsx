@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Logo } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
+import { AgentAvatar, AgentAvatarStack } from "@/components/agent-avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -230,12 +231,20 @@ function Onboarding() {
                   Your Crafted Virtue Agent
                 </span>
               </div>
-              <p className="mt-2 font-display text-lg leading-snug">
+              <p className="mt-3 font-display text-lg leading-snug">
                 Your agent is learning.
               </p>
               <p className="mt-2 text-xs text-parchment/70">
                 Coordinating onboarding, voice learning, content setup, and publishing preferences. Specialist agents support specific tasks behind the scenes.
               </p>
+              <div className="mt-4 flex items-center gap-3">
+                <AgentAvatarStack
+                  names={["Olivia", "Leo", "Sam", "Talia", "Vincent", "Alex", "Konrad", "Solomon"]}
+                  size="md"
+                  max={6}
+                />
+                <span className="text-[10px] uppercase tracking-[0.18em] text-parchment/60">Active team</span>
+              </div>
             </div>
             <div className="p-5">
               <div className="flex items-start gap-2">
@@ -262,18 +271,22 @@ function Onboarding() {
 
               <SectionLabel>Active specialists</SectionLabel>
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {["Olivia", "Leo", "Sam", "Talia", "Vincent", "Alex", "Konrad", "Solomon"].map((n) => (
-                  <span
-                    key={n}
-                    className={`rounded-full border px-2.5 py-1 text-[11px] ${
-                      current.agent.includes(n)
-                        ? "border-ink bg-ink text-parchment"
-                        : "border-border bg-card text-ink-soft"
-                    }`}
-                  >
-                    {n}
-                  </span>
-                ))}
+                {["Olivia", "Leo", "Sam", "Talia", "Vincent", "Alex", "Konrad", "Solomon"].map((n) => {
+                  const active = current.agent.includes(n);
+                  return (
+                    <span
+                      key={n}
+                      className={`inline-flex items-center gap-1.5 rounded-full border pl-0.5 pr-2.5 py-0.5 text-[11px] ${
+                        active
+                          ? "border-ink bg-ink text-parchment"
+                          : "border-border bg-card text-ink-soft"
+                      }`}
+                    >
+                      <AgentAvatar name={n} size="xs" ring={!active} className={active ? "ring-1 ring-inset ring-parchment/40" : ""} />
+                      {n}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </Card>
