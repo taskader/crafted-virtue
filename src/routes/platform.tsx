@@ -1,52 +1,180 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
-import { SPECIALISTS } from "@/lib/mock-data";
+import { brand } from "@/data/craftedVirtueData";
 
 export const Route = createFileRoute("/platform")({
-  head: () => ({ meta: [{ title: "Platform — Crafted Virtue" }, { name: "description", content: "Voice learning, content workflow, publishing, analytics, and approvals." }] }),
+  head: () => ({
+    meta: [
+      { title: "Platform — Crafted Virtue" },
+      {
+        name: "description",
+        content:
+          "The complete feature ecosystem: Brand Studio, Content Engine, Truth Filter, Approval Workflow, Publishing Calendar, Analytics, Podcast Studio, Video Studio, Website Builder, Book Engine, Revenue Engine, and Partner Amplifier.",
+      },
+    ],
+  }),
   component: Platform,
 });
 
-const MODULES = [
-  { t: "Voice learning", d: "Continuous tuning on your writing samples, talks, and feedback. Your agent gets more recognizably you each week." },
-  { t: "Content creation", d: "Drafts originate from your real perspective — not generic templates. Pillars, angles, and references are pre-modelled." },
-  { t: "Approval workflow", d: "Inline edits, voice-fit scoring, compliance flags, and one-click approval. The publish button is yours." },
-  { t: "Postiz-style publishing", d: "Connect LinkedIn, X, Newsletter, Blog, Instagram and more. Optimal windows handled for you." },
-  { t: "Analytics", d: "Reach, engagement, Influence Delta, and Brand Score — explained in plain English, not vanity metrics." },
-  { t: "Media generation", d: "Cover art, audiograms, pull-quote graphics, and short-form video — generated under your brand rules." },
+const FEATURES = [
+  {
+    name: "Brand Studio™",
+    body: "Benchmark your brand’s strength and calibrate your voice from day one. Brand Studio measures your authority baseline, content pillars, and strategic positioning so the system knows what to amplify.",
+    icon: "BS",
+  },
+  {
+    name: "Content Engine",
+    body: "AI-crafted thought leadership that sounds like you because it is trained on you. Generate LinkedIn posts, X threads, newsletters, articles, and content campaigns shaped by your voice profile.",
+    icon: "CE",
+  },
+  {
+    name: "Truth Filter",
+    body: "Board-level content accuracy. The Truth Filter identifies factual claims, checks sources, and adds citation chips so your content stays credible and verifiable.",
+    icon: "TF",
+  },
+  {
+    name: "Approval Workflow",
+    body: "Review, revise, approve, and schedule every draft from one clear workflow. Nothing publishes until the right approval is captured.",
+    icon: "AW",
+  },
+  {
+    name: "Publishing Calendar",
+    body: "Plan and schedule approved posts across connected channels. Use Postiz-style social publishing connections for LinkedIn, X, Instagram, Facebook, YouTube, TikTok, Blog, and Newsletter.",
+    icon: "PC",
+  },
+  {
+    name: "Analytics & Growth Briefings",
+    body: "Sam turns performance into strategy with Brand Score, Influence Delta, content pillar performance, channel comparisons, and weekly recommendations.",
+    icon: "AB",
+  },
+  {
+    name: "Signature Voice™ Podcast Studio",
+    body: "Turn your best insights into podcast scripts and audio-ready segments that extend your authority beyond written posts.",
+    icon: "PV",
+  },
+  {
+    name: "Multimedia Video Studio™",
+    body: "Transform articles and posts into short video concepts, scripts, and media assets for visual platforms.",
+    icon: "VS",
+  },
+  {
+    name: "Presence Hub™ Website Builder",
+    body: "Package your best content, biography, and authority signals into a living personal website.",
+    icon: "PH",
+  },
+  {
+    name: "Authority Manuscript™",
+    body: "Expand accumulated thought leadership into a structured book manuscript with citations, outlines, and chapter drafts.",
+    icon: "AM",
+  },
+  {
+    name: "Influence Revenue Engine™",
+    body: "Turn expertise into lead magnets, landing pages, email sequences, and funnel assets.",
+    icon: "IR",
+  },
+  {
+    name: "Partner Amplifier™",
+    body: "Surface PR, podcast, speaking, and partnership opportunities aligned to your growing authority.",
+    icon: "PA",
+  },
 ];
 
 function Platform() {
   return (
     <MarketingShell>
+      {/* Hero */}
       <section className="mx-auto max-w-5xl px-6 pb-16 pt-24">
         <SectionLabel>The platform</SectionLabel>
-        <h1 className="mt-4 font-display text-5xl text-balance">One agent, eight specialists, every step of the work.</h1>
+        <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
+          What Crafted Virtue Unlocks
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg text-ink-soft">
+          It’s not a toolset. It’s an ecosystem built around your voice.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link
+            to="/solutions"
+            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
+          >
+            Explore Platform
+          </Link>
+          <Link
+            to="/report"
+            className="rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/30"
+          >
+            {brand.primaryCTA}
+          </Link>
+        </div>
       </section>
-      <section className="mx-auto grid max-w-7xl gap-5 px-6 pb-16 md:grid-cols-3">
-        {MODULES.map((m) => (
-          <Card key={m.t} className="p-6">
-            <h2 className="font-display text-xl">{m.t}</h2>
-            <p className="mt-2 text-sm text-ink-soft">{m.d}</p>
-          </Card>
-        ))}
-      </section>
+
+      {/* Feature Grid */}
       <section className="mx-auto max-w-7xl px-6 pb-24">
-        <SectionLabel>Behind the scenes</SectionLabel>
-        <h2 className="mt-3 font-display text-3xl">The specialists working under your agent</h2>
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {SPECIALISTS.map((s) => (
-            <Card key={s.id} className="p-4">
-              <div className="grid h-9 w-9 place-items-center rounded-lg bg-ink font-display text-sm text-parchment">{s.name[0]}</div>
-              <p className="mt-3 font-medium">{s.name}</p>
-              <p className="text-xs text-ink-soft">{s.role}</p>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map((f) => (
+            <Card key={f.name} className="p-7">
+              <div className="grid h-10 w-10 place-items-center rounded-lg bg-ink font-display text-sm text-parchment">
+                {f.icon}
+              </div>
+              <h2 className="mt-5 font-display text-xl">{f.name}</h2>
+              <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.body}</p>
             </Card>
           ))}
         </div>
-        <div className="mt-12 text-center">
-          <Link to="/signup" className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-parchment">Start free trial</Link>
+      </section>
+
+      {/* Operating Model */}
+      <section className="bg-parchment-deep">
+        <div className="mx-auto max-w-5xl px-6 py-20">
+          <SectionLabel>The operating model</SectionLabel>
+          <h2 className="mt-3 font-display text-4xl text-balance">
+            Built like a personal brand operating system.
+          </h2>
+          <p className="mt-4 max-w-2xl text-ink-soft">
+            Crafted Virtue combines a personal agent, specialist AI skills, approval workflows, social publishing
+            rails, and analytics feedback loops into one calm executive workspace.
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            {[
+              "Personal agent",
+              "Specialist agents",
+              "Approval workflows",
+              "Publishing rails",
+              "Analytics loops",
+            ].map((item) => (
+              <span
+                key={item}
+                className="inline-flex items-center rounded-full border border-ink/10 bg-parchment px-4 py-2 text-sm text-ink"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="mx-auto max-w-5xl px-6 pb-24 pt-20">
+        <Card className="p-10 text-center">
+          <h2 className="font-display text-4xl text-balance">
+            See everything that fits your voice in one place.
+          </h2>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/signup"
+              className="rounded-full bg-ink px-6 py-3 text-sm font-medium text-parchment shadow-soft"
+            >
+              {brand.secondaryCTA}
+            </Link>
+            <Link
+              to="/report"
+              className="rounded-full border border-ink/15 px-6 py-3 text-sm font-medium text-ink hover:border-ink/30"
+            >
+              {brand.primaryCTA}
+            </Link>
+          </div>
+          <p className="mt-5 text-xs text-ink-soft">{brand.trustLine}</p>
+        </Card>
       </section>
     </MarketingShell>
   );
