@@ -51,28 +51,35 @@ function Report() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-12 pt-24">
-        <SectionLabel>Influence Delta™ Report</SectionLabel>
-        <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
-          Discover Your Influence Delta™
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-ink-soft">
-          Benchmark your digital presence against top performers in your field—see the opportunity gap in
-          minutes.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="#report-form"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
-          >
-            Generate My Report
-          </a>
-          <Link
-            to="/signup"
-            className="rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/30"
-          >
-            Start Free 7-Day Trial
-          </Link>
+      <section className="mx-auto max-w-7xl px-6 pb-12 pt-24">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-7">
+            <SectionLabel>Influence Delta™ Report</SectionLabel>
+            <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
+              Discover Your Influence Delta™
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-ink-soft">
+              Benchmark your digital presence against top performers in your field—see the opportunity gap in
+              minutes.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#report-form"
+                className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
+              >
+                Generate My Report
+              </a>
+              <Link
+                to="/signup"
+                className="rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/30"
+              >
+                Start Free 7-Day Trial
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-5">
+            <Illustration name="reportCurve" ratio="4/3" priority alt="Influence Delta report cover with a rising authority signal curve" />
+          </div>
         </div>
       </section>
 

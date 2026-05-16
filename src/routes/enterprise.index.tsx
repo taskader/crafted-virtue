@@ -75,28 +75,35 @@ function Enterprise() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-12 pt-24">
-        <SectionLabel>Authority-as-a-Service</SectionLabel>
-        <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
-          People Trust People, Not Logos.
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-ink-soft">
-          Give your executives the tools to build trust at scale—and make your brand more human, more visible,
-          and more credible.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            to="/enterprise/overview"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
-          >
-            Book a Custom Demo
-          </Link>
-          <Link
-            to="/report"
-            className="rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/30"
-          >
-            {brand.primaryCTA}
-          </Link>
+      <section className="mx-auto max-w-7xl px-6 pb-12 pt-24">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-7">
+            <SectionLabel>Authority-as-a-Service</SectionLabel>
+            <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
+              People Trust People, Not Logos.
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg text-ink-soft">
+              Give your executives the tools to build trust at scale—and make your brand more human, more visible,
+              and more credible.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                to="/enterprise/overview"
+                className="rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
+              >
+                Book a Custom Demo
+              </Link>
+              <Link
+                to="/report"
+                className="rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/30"
+              >
+                {brand.primaryCTA}
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-5">
+            <Illustration name="enterpriseAligned" ratio="16/10" priority alt="Multiple executive voices aligning through brand rules into one firm-wide authority signal" />
+          </div>
         </div>
       </section>
 

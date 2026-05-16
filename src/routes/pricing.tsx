@@ -110,19 +110,26 @@ function Pricing() {
   return (
     <MarketingShell>
       {/* Hero */}
-      <section className="mx-auto max-w-5xl px-6 pb-12 pt-24">
-        <SectionLabel>Pricing</SectionLabel>
-        <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
-          Flexible Plans. Professional Results.
-        </h1>
-        <p className="mt-5 max-w-2xl text-lg text-ink-soft">
-          Start with a free 7-day trial. No credit card required.
-        </p>
-        <p className="mt-3 max-w-3xl text-sm text-ink-soft">
-          Choose the plan that matches your ambition: Core to establish a baseline presence, Pro to run a
-          consistent multi-channel personal brand with intelligent automation, and Enterprise for coordinated,
-          compliant, multi-executive influence.
-        </p>
+      <section className="mx-auto max-w-7xl px-6 pb-12 pt-24">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-7">
+            <SectionLabel>Pricing</SectionLabel>
+            <h1 className="mt-4 font-display text-5xl text-balance md:text-6xl">
+              Flexible Plans. Professional Results.
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg text-ink-soft">
+              Start with a free 7-day trial. No credit card required.
+            </p>
+            <p className="mt-3 max-w-3xl text-sm text-ink-soft">
+              Choose the plan that matches your ambition: Core to establish a baseline presence, Pro to run a
+              consistent multi-channel personal brand with intelligent automation, and Enterprise for coordinated,
+              compliant, multi-executive influence.
+            </p>
+          </div>
+          <div className="md:col-span-5">
+            <Illustration name="analytics" ratio="4/3" priority alt="Calm dashboard with Brand Score and content pillars — Crafted Virtue plans overview" />
+          </div>
+        </div>
       </section>
 
       {/* Tiers */}
