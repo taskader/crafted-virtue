@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Card, SectionLabel, StatusPill } from "@/components/ui-bits";
 import { Illustration } from "@/components/illustration";
+import { PublishingTimeline } from "@/components/publishing-timeline";
 import { CONTENT_QUEUE } from "@/lib/mock-data";
 import { toast } from "sonner";
 
@@ -9,6 +10,8 @@ export const Route = createFileRoute("/app/publishing")({
   head: () => ({ meta: [{ title: "Publishing — Crafted Virtue" }] }),
   component: Publishing,
 });
+
+type View = "timeline" | "calendar" | "queue";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const PLATFORMS = ["All", "LinkedIn", "X", "Instagram", "YouTube", "Blog", "Newsletter"] as const;
