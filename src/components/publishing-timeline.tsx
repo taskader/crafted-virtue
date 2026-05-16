@@ -552,19 +552,29 @@ export function NewsletterPostCard({ post }: { post: TimelinePost }) {
 }
 
 // --- Scheduled -------------------------------------------------------------
-export function ScheduledPostCard({ post }: { post: TimelinePost }) {
+export function ScheduledPostCard({
+  post,
+  variant = "default",
+}: {
+  post: TimelinePost;
+  variant?: "default" | "hero";
+}) {
+  const ctx = useTimelineCtx();
   const awaiting = post.status === "awaiting_approval";
-  const handlePublish = async () => {
+
+  const handlePublish = () => {
     if (awaiting) {
       toast("Opening approval review…");
       return;
     }
-    await publishPostNow(post.id);
-    toast.success("Publish queued in Postiz.");
+    if (ctx) ctx.requestPublish(post);
   };
   const handleReschedule = async () => {
     await reschedulePost(post.id, post.date);
     toast("Rescheduling flow opened.");
+  };
+  const handleRequestRevision = () => {
+    toast("Revision requested. Author has been notified.");
   };
 
   const approvalLabel = awaiting ? "Pending" : "Approved";
@@ -572,8 +582,10 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
     ? "bg-warning/15 text-ink ring-warning/40"
     : "bg-success/15 text-success ring-success/35";
 
+  const titleSize = variant === "hero" ? "text-base" : "text-lg";
+
   return (
-    <CardShell className="border-dashed bg-card">
+    <CardShell className={`border-dashed bg-card ${variant === "hero" ? "p-4" : ""}`}>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <PlatformTag platform={post.platform} />
         <StatusTag status={post.status} />
@@ -586,13 +598,12 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
         </span>
       </div>
 
-      {post.title && (
-        <h3 className="font-display text-lg leading-snug text-ink">{post.title}</h3>
+      {(post.title || post.subjectLine) && (
+        <h3 className={`font-display ${titleSize} leading-snug text-ink`}>
+          {post.title ?? post.subjectLine}
+        </h3>
       )}
-      {post.subjectLine && !post.title && (
-        <h3 className="font-display text-lg leading-snug text-ink">{post.subjectLine}</h3>
-      )}
-      <p className="mt-1 whitespace-pre-line text-[13.5px] leading-relaxed text-ink-soft">
+      <p className={`mt-1 whitespace-pre-line ${variant === "hero" ? "line-clamp-3 text-[13px]" : "text-[13.5px]"} leading-relaxed text-ink-soft`}>
         {post.content}
       </p>
 
@@ -622,18 +633,29 @@ export function ScheduledPostCard({ post }: { post: TimelinePost }) {
         >
           {awaiting ? "Review & Approve" : "Publish Now"}
         </button>
-        <button
-          onClick={handleReschedule}
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-        >
-          Reschedule
-        </button>
-        <button
-          onClick={() => toast("Opened in editor.")}
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-        >
-          Edit
-        </button>
+        {awaiting ? (
+          <button
+            onClick={handleRequestRevision}
+            className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
+          >
+            Request Revision
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={handleReschedule}
+              className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
+            >
+              Reschedule
+            </button>
+            <button
+              onClick={() => toast("Opened in editor.")}
+              className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
+            >
+              Edit
+            </button>
+          </>
+        )}
         {post.postizPostId && (
           <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
             Postiz · {post.postizPostId}
