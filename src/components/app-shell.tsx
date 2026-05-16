@@ -1,18 +1,20 @@
 import { Link, Outlet, useLocation } from "@tanstack/react-router";
 import { Logo } from "./marketing-shell";
 import {
-  LayoutDashboard, PenLine, CheckCircle2, CalendarDays, BarChart3, Mic2,
-  Plug, GraduationCap, LifeBuoy, CreditCard, Settings, Sparkles, Bell,
+  LayoutDashboard, PenLine, Library, CheckCircle2, CalendarDays, BarChart3, Mic2,
+  Plug, GraduationCap, LifeBuoy, CreditCard, Settings, Sparkles, Bell, Plus,
 } from "lucide-react";
 
 const NAV = [
-  { to: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/app/content", label: "Content", icon: PenLine },
+  { to: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/app/content/new", label: "New Content", icon: Plus, exact: true },
+  { to: "/app/library", label: "Library", icon: Library },
+  { to: "/app/content", label: "Content", icon: PenLine, exact: true },
   { to: "/app/approvals", label: "Approvals", icon: CheckCircle2 },
   { to: "/app/publishing", label: "Publishing", icon: CalendarDays },
   { to: "/app/analytics", label: "Analytics", icon: BarChart3 },
   { to: "/app/voice", label: "Voice profile", icon: Mic2 },
-  { to: "/app/accounts", label: "Social accounts", icon: Plug },
+  { to: "/app/accounts", label: "Accounts", icon: Plug },
   { to: "/app/training", label: "Training", icon: GraduationCap },
 ];
 
@@ -21,6 +23,10 @@ const SECONDARY = [
   { to: "/app/billing", label: "Billing", icon: CreditCard },
   { to: "/app/settings", label: "Settings", icon: Settings },
 ];
+
+function isActive(pathname: string, to: string, exact?: boolean) {
+  return exact ? pathname === to : pathname === to || pathname.startsWith(to + "/");
+}
 
 export function AppShell() {
   const { pathname } = useLocation();
@@ -37,9 +43,9 @@ export function AppShell() {
             Coordinating Olivia, Leo, Sam, Talia, Vincent, Alex, Konrad &amp; Beatrice on your behalf.
           </p>
         </div>
-        <nav className="flex-1 space-y-0.5 px-3">
+        <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 pb-4">
           {NAV.map((n) => {
-            const active = pathname.startsWith(n.to);
+            const active = isActive(pathname, n.to, n.exact);
             const Icon = n.icon;
             return (
               <Link
@@ -56,7 +62,7 @@ export function AppShell() {
           })}
           <div className="my-3 editorial-rule" />
           {SECONDARY.map((n) => {
-            const active = pathname.startsWith(n.to);
+            const active = pathname === n.to;
             const Icon = n.icon;
             return (
               <Link
@@ -99,6 +105,17 @@ export function AppShell() {
             </Link>
           </div>
         </header>
+        {/* Mobile nav strip */}
+        <nav className="flex gap-1 overflow-x-auto border-b border-border/60 px-4 py-2 lg:hidden">
+          {NAV.concat(SECONDARY).map((n) => {
+            const active = isActive(pathname, n.to, "exact" in n ? n.exact : false);
+            return (
+              <Link key={n.to} to={n.to} className={`rounded-full px-3 py-1 text-xs whitespace-nowrap ${active ? "bg-ink text-parchment" : "text-ink-soft"}`}>
+                {n.label}
+              </Link>
+            );
+          })}
+        </nav>
         <main className="mx-auto max-w-7xl px-6 py-8">
           <Outlet />
         </main>
