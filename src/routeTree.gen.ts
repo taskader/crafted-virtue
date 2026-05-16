@@ -23,10 +23,12 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppVoiceRouteImport } from './routes/app.voice'
+import { Route as AppTrainingRouteImport } from './routes/app.training'
 import { Route as AppPublishingRouteImport } from './routes/app.publishing'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
 import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
+import { Route as AppAccountsRouteImport } from './routes/app.accounts'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
@@ -100,6 +102,11 @@ const AppVoiceRoute = AppVoiceRouteImport.update({
   path: '/voice',
   getParentRoute: () => AppRoute,
 } as any)
+const AppTrainingRoute = AppTrainingRouteImport.update({
+  id: '/training',
+  path: '/training',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPublishingRoute = AppPublishingRouteImport.update({
   id: '/publishing',
   path: '/publishing',
@@ -118,6 +125,11 @@ const AppApprovalsRoute = AppApprovalsRouteImport.update({
 const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAccountsRoute = AppAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
   getParentRoute: () => AppRoute,
 } as any)
 const AppContentIndexRoute = AppContentIndexRouteImport.update({
@@ -144,10 +156,12 @@ export interface FileRoutesByFullPath {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -166,10 +180,12 @@ export interface FileRoutesByTo {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -189,10 +205,12 @@ export interface FileRoutesById {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/publishing': typeof AppPublishingRoute
+  '/app/training': typeof AppTrainingRoute
   '/app/voice': typeof AppVoiceRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -213,10 +231,12 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
@@ -235,10 +255,12 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
@@ -257,10 +279,12 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
     | '/app/dashboard'
     | '/app/publishing'
+    | '/app/training'
     | '/app/voice'
     | '/blog/$slug'
     | '/app/content/new'
@@ -382,6 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppVoiceRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/training': {
+      id: '/app/training'
+      path: '/training'
+      fullPath: '/app/training'
+      preLoaderRoute: typeof AppTrainingRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/publishing': {
       id: '/app/publishing'
       path: '/publishing'
@@ -410,6 +441,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/accounts': {
+      id: '/app/accounts'
+      path: '/accounts'
+      fullPath: '/app/accounts'
+      preLoaderRoute: typeof AppAccountsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/content/': {
       id: '/app/content/'
       path: '/content'
@@ -428,20 +466,24 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAccountsRoute: typeof AppAccountsRoute
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppApprovalsRoute: typeof AppApprovalsRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppPublishingRoute: typeof AppPublishingRoute
+  AppTrainingRoute: typeof AppTrainingRoute
   AppVoiceRoute: typeof AppVoiceRoute
   AppContentNewRoute: typeof AppContentNewRoute
   AppContentIndexRoute: typeof AppContentIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAccountsRoute: AppAccountsRoute,
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppApprovalsRoute: AppApprovalsRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppPublishingRoute: AppPublishingRoute,
+  AppTrainingRoute: AppTrainingRoute,
   AppVoiceRoute: AppVoiceRoute,
   AppContentNewRoute: AppContentNewRoute,
   AppContentIndexRoute: AppContentIndexRoute,
