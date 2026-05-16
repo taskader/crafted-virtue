@@ -23,6 +23,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
@@ -96,6 +97,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppApprovalsRoute = AppApprovalsRouteImport.update({
+  id: '/approvals',
+  path: '/approvals',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppContentIndexRoute = AppContentIndexRouteImport.update({
   id: '/content/',
   path: '/content/',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -138,6 +145,7 @@ export interface FileRoutesByTo {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/report': typeof ReportRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/app/approvals': typeof AppApprovalsRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/app/content/new': typeof AppContentNewRoute
@@ -177,6 +186,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/approvals'
     | '/app/dashboard'
     | '/blog/$slug'
     | '/app/content/new'
@@ -195,6 +205,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/approvals'
     | '/app/dashboard'
     | '/blog/$slug'
     | '/app/content/new'
@@ -213,6 +224,7 @@ export interface FileRouteTypes {
     | '/report'
     | '/signup'
     | '/solutions'
+    | '/app/approvals'
     | '/app/dashboard'
     | '/blog/$slug'
     | '/app/content/new'
@@ -334,6 +346,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/approvals': {
+      id: '/app/approvals'
+      path: '/approvals'
+      fullPath: '/app/approvals'
+      preLoaderRoute: typeof AppApprovalsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/content/': {
       id: '/app/content/'
       path: '/content'
@@ -352,12 +371,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppApprovalsRoute: typeof AppApprovalsRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppContentNewRoute: typeof AppContentNewRoute
   AppContentIndexRoute: typeof AppContentIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppApprovalsRoute: AppApprovalsRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppContentNewRoute: AppContentNewRoute,
   AppContentIndexRoute: AppContentIndexRoute,
