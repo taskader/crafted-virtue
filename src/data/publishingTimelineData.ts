@@ -72,6 +72,10 @@ export type TimelinePost = {
   category?: string;
   readTime?: string;
   excerpt?: string;
+  authorTitle?: string;
+  failureReason?: string;
+  postizSyncedAt?: string;
+  approval?: "approved" | "pending" | "rejected";
 };
 
 export type TimelineDay = {
