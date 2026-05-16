@@ -203,6 +203,8 @@ function Onboarding() {
                 <Illustration name={STEP_ILLUSTRATIONS[step]} ratio="4/3" className="rounded-xl" />
               </div>
             </div>
+
+            <div className="mt-8">
               <StepContent
                 step={step}
                 state={{ goals, tones, pillars, connected, approval, days, generated }}
