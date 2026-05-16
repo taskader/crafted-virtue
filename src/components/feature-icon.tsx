@@ -9,7 +9,7 @@
  * Stroke: ink at 1.4–1.6, blue (primary) and gold (brass) used as restrained
  * accents only.
  */
-import type { SVGProps } from "react";
+import type { ReactElement, SVGProps } from "react";
 
 export type FeatureIconName =
   | "brandStudio"
@@ -52,7 +52,7 @@ function Base({ children, ...rest }: SvgProps & { children: React.ReactNode }) {
   );
 }
 
-const ICONS: Record<FeatureIconName, (p: SvgProps) => JSX.Element> = {
+const ICONS: Record<FeatureIconName, (p: SvgProps) => ReactElement> = {
   // Profile card + calibration dial + small Brand Score arc
   brandStudio: (p) => (
     <Base {...p}>
