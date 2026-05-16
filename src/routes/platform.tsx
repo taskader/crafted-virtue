@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
 import { Illustration, IllustrationSpot, type IllustrationName } from "@/components/illustration";
+import { FeatureIcon, type FeatureIconName } from "@/components/feature-icon";
 import { brand } from "@/data/craftedVirtueData";
 
 export const Route = createFileRoute("/platform")({
@@ -18,19 +19,19 @@ export const Route = createFileRoute("/platform")({
   component: Platform,
 });
 
-const FEATURES: { name: string; body: string; icon: string; illus: IllustrationName }[] = [
-  { name: "Brand Studio™",                    body: "Benchmark your brand’s strength and calibrate your voice from day one. Brand Studio measures your authority baseline, content pillars, and strategic positioning so the system knows what to amplify.", icon: "BS", illus: "brandStudio" },
-  { name: "Content Engine",                   body: "AI-crafted thought leadership that sounds like you because it is trained on you. Generate LinkedIn posts, X threads, newsletters, articles, and content campaigns shaped by your voice profile.", icon: "CE", illus: "contentEngine" },
-  { name: "Truth Filter",                     body: "Board-level content accuracy. The Truth Filter identifies factual claims, checks sources, and adds citation chips so your content stays credible and verifiable.", icon: "TF", illus: "truthFilter" },
-  { name: "Approval Workflow",                body: "Review, revise, approve, and schedule every draft from one clear workflow. Nothing publishes until the right approval is captured.", icon: "AW", illus: "solutionBoard" },
-  { name: "Publishing Calendar",              body: "Plan and schedule approved posts across connected channels. Use Postiz-style social publishing connections for LinkedIn, X, Instagram, Facebook, YouTube, TikTok, Blog, and Newsletter.", icon: "PC", illus: "publishing" },
-  { name: "Analytics & Growth Briefings",     body: "Sam turns performance into strategy with Brand Score, Influence Delta, content pillar performance, channel comparisons, and weekly recommendations.", icon: "AB", illus: "analytics" },
- { name: "Signature Voice™ Podcast Studio",  body: "Turn your best insights into podcast scripts and audio-ready segments that extend your authority beyond written posts.", icon: "PV", illus: "unlockPodcast" },
- { name: "Multimedia Video Studio™",         body: "Transform articles and posts into short video concepts, scripts, and media assets for visual platforms.", icon: "VS", illus: "unlockVideo" },
- { name: "Presence Hub™ Website Builder",    body: "Package your best content, biography, and authority signals into a living personal website.", icon: "PH", illus: "unlockPresence" },
- { name: "Authority Manuscript™",            body: "Expand accumulated thought leadership into a structured book manuscript with citations, outlines, and chapter drafts.", icon: "AM", illus: "unlockManuscript" },
- { name: "Influence Revenue Engine™",        body: "Turn expertise into lead magnets, landing pages, email sequences, and funnel assets.", icon: "IR", illus: "unlockRevenue" },
- { name: "Partner Amplifier™",               body: "Surface PR, podcast, speaking, and partnership opportunities aligned to your growing authority.", icon: "PA", illus: "unlockPartner" },
+const FEATURES: { name: string; body: string; icon: FeatureIconName; illus: IllustrationName }[] = [
+  { name: "Brand Studio™",                    body: "Benchmark your brand’s strength and calibrate your voice from day one. Brand Studio measures your authority baseline, content pillars, and strategic positioning so the system knows what to amplify.", icon: "brandStudio",        illus: "brandStudio" },
+  { name: "Content Engine",                   body: "AI-crafted thought leadership that sounds like you because it is trained on you. Generate LinkedIn posts, X threads, newsletters, articles, and content campaigns shaped by your voice profile.", icon: "contentEngine",       illus: "contentEngine" },
+  { name: "Truth Filter",                     body: "Board-level content accuracy. The Truth Filter identifies factual claims, checks sources, and adds citation chips so your content stays credible and verifiable.", icon: "truthFilter",         illus: "truthFilter" },
+  { name: "Approval Workflow",                body: "Review, revise, approve, and schedule every draft from one clear workflow. Nothing publishes until the right approval is captured.", icon: "approvalWorkflow",    illus: "solutionBoard" },
+  { name: "Publishing Calendar",              body: "Plan and schedule approved posts across connected channels. Use Postiz-style social publishing connections for LinkedIn, X, Instagram, Facebook, YouTube, TikTok, Blog, and Newsletter.", icon: "publishingCalendar",  illus: "publishing" },
+  { name: "Analytics & Growth Briefings",     body: "Sam turns performance into strategy with Brand Score, Influence Delta, content pillar performance, channel comparisons, and weekly recommendations.", icon: "analyticsBriefing",   illus: "analytics" },
+  { name: "Signature Voice™ Podcast Studio",  body: "Turn your best insights into podcast scripts and audio-ready segments that extend your authority beyond written posts.", icon: "podcastStudio",       illus: "unlockPodcast" },
+  { name: "Multimedia Video Studio™",         body: "Transform articles and posts into short video concepts, scripts, and media assets for visual platforms.", icon: "videoStudio",         illus: "unlockVideo" },
+  { name: "Presence Hub™ Website Builder",    body: "Package your best content, biography, and authority signals into a living personal website.", icon: "presenceHub",         illus: "unlockPresence" },
+  { name: "Authority Manuscript™",            body: "Expand accumulated thought leadership into a structured book manuscript with citations, outlines, and chapter drafts.", icon: "authorityManuscript", illus: "unlockManuscript" },
+  { name: "Influence Revenue Engine™",        body: "Turn expertise into lead magnets, landing pages, email sequences, and funnel assets.", icon: "revenueEngine",       illus: "unlockRevenue" },
+  { name: "Partner Amplifier™",               body: "Surface PR, podcast, speaking, and partnership opportunities aligned to your growing authority.", icon: "partnerAmplifier",    illus: "unlockPartner" },
 ];
 
 function Platform() {
@@ -73,9 +74,7 @@ function Platform() {
             <Card key={f.name} className="overflow-hidden p-0">
               <IllustrationSpot name={f.illus} className="aspect-[3/2] rounded-none border-b border-border/60" />
               <div className="p-7">
-                <div className="grid h-10 w-10 place-items-center rounded-lg bg-ink font-display text-sm text-parchment">
-                  {f.icon}
-                </div>
+                <FeatureIcon name={f.icon} label={f.name} />
                 <h2 className="mt-5 font-display text-xl">{f.name}</h2>
                 <p className="mt-2 text-sm text-ink-soft leading-relaxed">{f.body}</p>
               </div>
