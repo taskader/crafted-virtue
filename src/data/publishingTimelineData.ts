@@ -167,6 +167,23 @@ const SCHEDULED: TimelinePost[] = [
     voiceScore: 90,
     factCheckStatus: "verified",
   },
+  {
+    id: "sf1",
+    platform: "instagram",
+    status: "failed",
+    date: "2026-05-18",
+    scheduledAt: "Mon May 18 · 12:00",
+    authorName: "Ellis Harrow",
+    authorHandle: "ellis.harrow",
+    content: "Behind-the-scenes from this week's offsite — pages from the notebook.",
+    mediaType: "image",
+    failureReason: "Instagram rejected media — aspect ratio outside 4:5 to 1.91:1.",
+    postizPostId: "pz_8839",
+    postizIntegrationId: "ig_main",
+    createdByAgent: "Vincent",
+    voiceScore: 86,
+    factCheckStatus: "verified",
+  },
 ];
 
 // ---------- Published (history, newest first) ----------
