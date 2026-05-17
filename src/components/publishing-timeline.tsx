@@ -710,52 +710,6 @@ export function TimelineDateGroup({ day }: { day: TimelineDay }) {
   );
 }
 
-// ============================================================================
-// Date group
-// ============================================================================
-
-export function TimelineDateGroup({ day }: { day: TimelineDay }) {
-  const sublabel =
-    day.kind === "scheduled"
-      ? "Scheduled"
-      : day.kind === "today"
-      ? "Latest"
-      : "Published";
-
-  return (
-    <div className="relative grid gap-6 md:grid-cols-[160px_1fr] md:gap-10">
-      {/* Date column — sticky on desktop */}
-      <div className="md:sticky md:top-24 md:self-start">
-        <div className="flex items-center gap-3 md:block">
-          <p className="font-display text-3xl leading-none tracking-tight text-ink md:text-4xl">
-            {day.label}
-          </p>
-          <p className="mt-0 text-[10.5px] uppercase tracking-[0.18em] text-ink-soft md:mt-2">
-            {sublabel}
-          </p>
-        </div>
-        <p className="mt-1 hidden text-[11px] text-ink-soft md:block">
-          {day.posts.length} {day.posts.length === 1 ? "post" : "posts"}
-        </p>
-      </div>
-
-      {/* Posts column */}
-      <div className="relative space-y-4">
-        {day.posts.map((p) => (
-          <motion.div
-            key={p.id}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          >
-            <PlatformPostCard post={p} />
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ============================================================================
 // Main Timeline
