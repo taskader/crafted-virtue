@@ -656,11 +656,6 @@ export function ScheduledPostCard({
             </button>
           </>
         )}
-        {post.postizPostId && (
-          <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
-            Postiz · {post.postizPostId}
-          </span>
-        )}
       </div>
     </CardShell>
   );
