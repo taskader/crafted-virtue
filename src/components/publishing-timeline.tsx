@@ -347,8 +347,7 @@ export function LinkedInPostPreview({ post }: { post: TimelinePost }) {
           </button>
         </div>
         <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
-        {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
-        <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
+        {post.mediaType && <div className="mt-3"><MediaPlaceholder ratio="aspect-video" maxH={260} /></div>}
         <RecentComments comments={post.recentComments} />
       </div>
     </PreviewShell>
