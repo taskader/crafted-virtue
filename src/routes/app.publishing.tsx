@@ -173,7 +173,11 @@ function Publishing() {
           </div>
         </div>
       </Card>
+        </>
+      )}
 
+      {isQueue && (
+        <>
       <Card className="p-6">
         <div className="flex items-center justify-between">
           <div>
