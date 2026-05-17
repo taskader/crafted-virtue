@@ -262,13 +262,13 @@ function AgentAttribution({ post }: { post: TimelinePost }) {
   );
 }
 
-function PostizSyncedTag({ post }: { post: TimelinePost }) {
+function ChannelSyncTag({ post }: { post: TimelinePost }) {
   if (post.status !== "published") return null;
   const synced = post.postizSyncedAt ?? "just now";
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 text-[10px] text-ink-soft ring-1 ring-inset ring-border/60">
       <span className="size-1 rounded-full bg-success" />
-      Postiz synced · last updated {synced}
+      Synced with connected channels · updated {synced}
     </span>
   );
 }
