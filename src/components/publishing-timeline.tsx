@@ -997,10 +997,10 @@ export function PublishingTimeline() {
           <section className="space-y-12">
             <div className="md:pl-[200px]">
               <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-soft">
-                Full scheduled queue
+                Scheduled Publishing Queue
               </p>
               <h2 className="mt-1 font-display text-2xl tracking-tight text-ink">
-                Everything queued in Postiz
+                Everything scheduled through Crafted Virtue
               </h2>
             </div>
             {scheduled.map((d) => (
