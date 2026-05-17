@@ -307,10 +307,14 @@ export function XPostPreview({ post }: { post: TimelinePost }) {
             <span className="text-[13px] text-ink-soft">{handle}</span>
             <span className="text-[13px] text-ink-soft">· {post.publishedAt ?? post.scheduledAt}</span>
           </div>
-          <p className="mt-1 max-w-[58ch] whitespace-pre-line text-[14.5px] leading-[1.45] text-ink">
+          <p className="mt-1 whitespace-pre-line text-[14px] leading-[1.45] text-ink">
             {post.content}
           </p>
-          {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
+          {post.mediaType && (
+            <div className="mt-2.5">
+              <MediaPlaceholder ratio="aspect-video" maxH={200} />
+            </div>
+          )}
           <EngagementMetricsRow platform="x" metrics={post.metrics} />
         </div>
       </div>
