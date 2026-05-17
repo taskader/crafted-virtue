@@ -910,12 +910,12 @@ export function PublishingTimeline() {
                 The next {scheduledNext.length} {scheduledNext.length === 1 ? "post" : "posts"} ready to go
               </h2>
               <p className="mt-1 text-[12px] text-ink-soft">
-                Review, approve, or publish without leaving the timeline.
+                Approved and pending posts prepared by your Crafted Virtue Agent.
               </p>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-[10.5px] uppercase tracking-[0.16em] text-ink-soft">
               <span className="size-1.5 rounded-full bg-primary" />
-              Synced from Postiz
+              Synced with connected channels
             </span>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -924,7 +924,7 @@ export function PublishingTimeline() {
             ))}
           </div>
           <p className="mt-4 text-[11px] text-ink-soft">
-            Scheduled publishing will use your connected Postiz workspace when backend integration is enabled.
+            Scheduled publishing runs through your connected channels in Crafted Virtue.
           </p>
         </section>
       )}
