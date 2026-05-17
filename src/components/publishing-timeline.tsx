@@ -217,23 +217,20 @@ function RecentComments({ comments }: { comments?: TimelinePost["recentComments"
 }
 
 // ============================================================================
-// Card shell + per-platform cards
+// Preview shell + per-platform native previews
 // ============================================================================
 
-function CardShell({
+// A quiet wrapper: hairline border, subtle background, no SaaS card chrome.
+function PreviewShell({
   children,
   className = "",
-  accentBorder,
 }: {
   children: React.ReactNode;
   className?: string;
-  accentBorder?: string;
 }) {
   return (
     <div
-      className={`relative rounded-2xl border bg-card p-5 shadow-soft transition hover:shadow-md ${
-        accentBorder ?? "border-border/70"
-      } ${className}`}
+      className={`overflow-hidden rounded-2xl border border-border/40 bg-card ${className}`}
     >
       {children}
     </div>
@@ -246,38 +243,24 @@ function AgentAttribution({ post }: { post: TimelinePost }) {
   const bits: { label: string; agent: string }[] = [];
   if (post.createdByAgent) bits.push({ label: "Drafted by", agent: post.createdByAgent });
   if (post.reviewedByAgent) bits.push({ label: "Reviewed by", agent: post.reviewedByAgent });
-  if (post.status === "published" && post.createdByAgent && !post.reviewedByAgent) {
-    bits.push({ label: "Analyzed by", agent: "Sam" });
-  }
   if (!bits.length) return null;
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10.5px] text-ink-soft">
+    <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1 text-[10.5px] text-ink-soft">
       {bits.map((b, i) => (
         <span key={i} className="inline-flex items-center gap-1.5">
           <AgentAvatar name={b.agent} size="xs" />
           <span>
-            {b.label} <span className="font-medium text-ink">{b.agent}</span>
+            {b.label} <span className="text-ink">{b.agent}</span>
           </span>
         </span>
       ))}
-    </div>
-  );
-}
-
-function ChannelSyncTag({ post }: { post: TimelinePost }) {
-  if (post.status !== "published") return null;
-  const synced = post.postizSyncedAt ?? "just now";
-  return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 text-[10px] text-ink-soft ring-1 ring-inset ring-border/60">
-      <span className="size-1 rounded-full bg-success" />
-      Synced with connected channels · updated {synced}
     </span>
   );
 }
 
 function MediaPlaceholder({ label, ratio = "aspect-[4/3]" }: { label?: string; ratio?: string }) {
   return (
-    <div className={`grid ${ratio} place-items-center overflow-hidden rounded-xl border border-border/70 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}>
+    <div className={`grid ${ratio} place-items-center overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}>
       <div className="text-center">
         <div className="mx-auto mb-1 grid size-9 place-items-center rounded-full bg-card ring-1 ring-border/60">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
@@ -289,114 +272,104 @@ function MediaPlaceholder({ label, ratio = "aspect-[4/3]" }: { label?: string; r
 }
 
 // --- X / Twitter -----------------------------------------------------------
-export function XPostCard({ post }: { post: TimelinePost }) {
+export function XPostPreview({ post }: { post: TimelinePost }) {
   const handle = post.authorHandle.startsWith("@") ? post.authorHandle : `@${post.authorHandle}`;
   return (
-    <CardShell className="bg-card" accentBorder="border-ink/15">
-      <div className="flex items-start gap-3">
+    <PreviewShell>
+      <div className="flex items-start gap-3 p-4">
         <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0">
-            <span className="text-[13.5px] font-semibold text-ink">{post.authorName}</span>
-            <span className="text-[12px] text-ink-soft">{handle}</span>
-            <span className="text-[12px] text-ink-soft">· {post.publishedAt ?? post.scheduledAt}</span>
-            <PlatformTag platform="x" />
+            <span className="text-[14px] font-semibold text-ink">{post.authorName}</span>
+            <span className="text-[13px] text-ink-soft">{handle}</span>
+            <span className="text-[13px] text-ink-soft">· {post.publishedAt ?? post.scheduledAt}</span>
           </div>
-          <p className="mt-1.5 max-w-[58ch] whitespace-pre-line text-[14px] leading-[1.45] text-ink">
+          <p className="mt-1 max-w-[58ch] whitespace-pre-line text-[14.5px] leading-[1.45] text-ink">
             {post.content}
           </p>
           {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
           <EngagementMetricsRow platform="x" metrics={post.metrics} />
-          <AgentAttribution post={post} />
-          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
       </div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- LinkedIn --------------------------------------------------------------
-export function LinkedInPostCard({ post }: { post: TimelinePost }) {
+export function LinkedInPostPreview({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-[oklch(0.45_0.12_245)]/25" className="bg-card">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex items-start gap-3">
-          <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
-          <div>
-            <p className="text-[14px] font-semibold leading-tight text-ink">
-              {post.authorName} <span className="text-[11px] font-normal text-ink-soft">· 1st</span>
-            </p>
-            <p className="mt-0.5 text-[12px] leading-snug text-ink-soft">
-              {post.authorTitle ?? post.authorSubline ?? post.authorHandle}
-            </p>
-            <p className="mt-0.5 text-[11px] text-ink-soft">
-              {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">🌐</span>
-            </p>
+    <PreviewShell>
+      <div className="p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3">
+            <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
+            <div>
+              <p className="text-[14px] font-semibold leading-tight text-ink">
+                {post.authorName} <span className="text-[11px] font-normal text-ink-soft">· 1st</span>
+              </p>
+              <p className="mt-0.5 text-[12px] leading-snug text-ink-soft">
+                {post.authorTitle ?? post.authorSubline ?? post.authorHandle}
+              </p>
+              <p className="mt-0.5 text-[11px] text-ink-soft">
+                {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">🌐</span>
+              </p>
+            </div>
           </div>
+          <button className="rounded-full border border-[oklch(0.45_0.12_245)]/40 px-3 py-1 text-[11px] font-semibold text-[oklch(0.45_0.12_245)] hover:bg-[oklch(0.45_0.12_245)]/5">
+            + Follow
+          </button>
         </div>
-        <button className="rounded-full border border-[oklch(0.45_0.12_245)]/40 px-3 py-1 text-[11px] font-semibold text-[oklch(0.45_0.12_245)] hover:bg-[oklch(0.45_0.12_245)]/5">
-          + Follow
-        </button>
+        <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
+        {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+        <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
+        <RecentComments comments={post.recentComments} />
       </div>
-      <p className="mt-4 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
-      {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
-      <div className="mt-3 flex items-center gap-2">
-        <PlatformTag platform="linkedin" />
-        <StatusTag status={post.status} />
-      </div>
-      <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
-      <RecentComments comments={post.recentComments} />
-      <AgentAttribution post={post} />
-      <div className="mt-2"><ChannelSyncTag post={post} /></div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- Facebook --------------------------------------------------------------
-export function FacebookPostCard({ post }: { post: TimelinePost }) {
+export function FacebookPostPreview({ post }: { post: TimelinePost }) {
   const reactionCount = post.metrics?.reactions ?? post.metrics?.likes ?? 0;
   const others = Math.max(0, reactionCount - 1);
   return (
-    <CardShell accentBorder="border-[oklch(0.5_0.14_255)]/25" className="bg-card">
-      <div className="flex items-start gap-3">
-        <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
-        <div className="min-w-0 flex-1">
-          <div className="flex items-baseline justify-between gap-2">
+    <PreviewShell>
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          <AgentAvatar name={post.createdByAgent ?? post.authorName} size="lg" />
+          <div className="min-w-0 flex-1">
             <p className="text-[14px] font-semibold leading-tight text-ink">{post.authorName}</p>
-            <PlatformTag platform="facebook" />
+            <p className="mt-0.5 text-[11.5px] text-ink-soft">
+              {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">Public</span>
+            </p>
           </div>
-          <p className="mt-0.5 text-[11.5px] text-ink-soft">
-            {post.publishedAt ?? post.scheduledAt} · <span className="opacity-70">Public</span>
-          </p>
         </div>
+        <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
+        {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+        {reactionCount > 0 && (
+          <div className="mt-3 flex items-center justify-between text-[11.5px] text-ink-soft">
+            <span className="inline-flex items-center gap-1.5">
+              <span className="inline-flex -space-x-0.5">
+                <span className="grid size-4 place-items-center rounded-full bg-[oklch(0.5_0.14_255)] text-[8px] text-parchment">👍</span>
+                <span className="grid size-4 place-items-center rounded-full bg-destructive text-[8px] text-parchment">❤</span>
+              </span>
+              You and {fmt(others)} others
+            </span>
+            <span>
+              {fmt(post.metrics?.comments)} comments · {fmt(post.metrics?.shares)} shares
+            </span>
+          </div>
+        )}
       </div>
-      <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
-      {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
-
-      <div className="mt-3 flex items-center justify-between text-[11.5px] text-ink-soft">
-        <span className="inline-flex items-center gap-1.5">
-          <span className="inline-flex -space-x-0.5">
-            <span className="grid size-4 place-items-center rounded-full bg-[oklch(0.5_0.14_255)] text-[8px] text-parchment">👍</span>
-            <span className="grid size-4 place-items-center rounded-full bg-destructive text-[8px] text-parchment">❤</span>
-          </span>
-          You and {fmt(others)} others
-        </span>
-        <span>
-          {fmt(post.metrics?.comments)} comments · {fmt(post.metrics?.shares)} shares
-        </span>
-      </div>
-      <EngagementMetricsRow platform="facebook" metrics={post.metrics} />
-      <AgentAttribution post={post} />
-      <div className="mt-2"><ChannelSyncTag post={post} /></div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- Instagram -------------------------------------------------------------
-export function InstagramPostCard({ post }: { post: TimelinePost }) {
+export function InstagramPostPreview({ post }: { post: TimelinePost }) {
   const handle = post.authorHandle.replace(/^@/, "");
   return (
-    <CardShell accentBorder="border-[oklch(0.6_0.18_15)]/25" className="overflow-hidden bg-card p-0">
+    <PreviewShell>
       <div className="flex items-center justify-between gap-2 px-4 py-3">
         <div className="flex items-center gap-2.5">
           <span className="rounded-full bg-gradient-to-tr from-brass via-[oklch(0.6_0.18_15)] to-[oklch(0.55_0.13_25)] p-0.5">
@@ -404,19 +377,20 @@ export function InstagramPostCard({ post }: { post: TimelinePost }) {
           </span>
           <p className="text-[13px] font-semibold text-ink">@{handle}</p>
         </div>
-        <PlatformTag platform="instagram" />
       </div>
-      <div className="border-y border-border/60">
+      <div className="border-y border-border/40">
         <MediaPlaceholder ratio="aspect-square" label="Photo" />
       </div>
-      <div className="px-4 pt-3">
+      <div className="px-4 pb-4 pt-3">
         <div className="flex items-center gap-3 text-ink">
           <span className="text-base">♡</span>
           <span className="text-base">💬</span>
           <span className="text-base">↗</span>
           <span className="ml-auto text-base">🔖</span>
         </div>
-        <p className="mt-2 text-[13px] font-semibold text-ink">{fmt(post.metrics?.likes)} likes</p>
+        {(post.metrics?.likes ?? 0) > 0 && (
+          <p className="mt-2 text-[13px] font-semibold text-ink">{fmt(post.metrics?.likes)} likes</p>
+        )}
         <p className="mt-1 text-[13px] leading-relaxed text-ink">
           <span className="font-semibold">@{handle}</span>{" "}
           <span>{post.content}</span>
@@ -430,18 +404,14 @@ export function InstagramPostCard({ post }: { post: TimelinePost }) {
           {post.publishedAt ?? post.scheduledAt}
         </p>
       </div>
-      <div className="px-4 pb-4">
-        <AgentAttribution post={post} />
-        <div className="mt-2"><ChannelSyncTag post={post} /></div>
-      </div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- YouTube ---------------------------------------------------------------
-export function YouTubePostCard({ post }: { post: TimelinePost }) {
+export function YouTubePostPreview({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-destructive/20" className="overflow-hidden bg-card p-0">
+    <PreviewShell>
       <div className="relative">
         <div className="grid aspect-video place-items-center overflow-hidden bg-gradient-to-br from-ink via-ink-soft to-destructive/40">
           <button className="grid size-14 place-items-center rounded-full bg-destructive/90 text-parchment shadow-lg ring-4 ring-parchment/20 transition hover:scale-105">
@@ -450,277 +420,198 @@ export function YouTubePostCard({ post }: { post: TimelinePost }) {
         </div>
         <span className="absolute bottom-2 right-2 rounded bg-ink/85 px-1.5 py-0.5 text-[10px] font-medium text-parchment">12:14</span>
       </div>
-      <div className="p-5">
-        <div className="mb-2 flex items-center gap-2">
-          <PlatformTag platform="youtube" />
-          <StatusTag status={post.status} />
-        </div>
+      <div className="p-4">
         <h3 className="font-display text-lg leading-snug text-ink">{post.title}</h3>
         <div className="mt-2 flex items-center gap-2 text-[12px] text-ink-soft">
           <AgentAvatar name={post.authorName} size="sm" />
-          <span className="font-medium text-ink">{post.authorName}</span>
+          <span className="text-ink">{post.authorName}</span>
           <span>· {fmt(post.metrics?.views)} views · {post.publishedAt ?? post.scheduledAt}</span>
         </div>
-        <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{post.content}</p>
-        <EngagementMetricsRow platform="youtube" metrics={post.metrics} />
-        <AgentAttribution post={post} />
-        <div className="mt-2"><ChannelSyncTag post={post} /></div>
+        <p className="mt-2 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{post.content}</p>
       </div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- Blog ------------------------------------------------------------------
-export function BlogPostCard({ post }: { post: TimelinePost }) {
+export function BlogPostPreview({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-[oklch(0.55_0.13_25)]/25" className="bg-card">
-      <div className="grid gap-4 md:grid-cols-[1fr_180px]">
-        <div>
-          <div className="mb-2 flex flex-wrap items-center gap-2">
-            <PlatformTag platform="blog" />
-            <StatusTag status={post.status} />
-            {post.category && (
-              <span className="text-[10.5px] uppercase tracking-[0.14em] text-ink-soft">
-                · {post.category}
-              </span>
-            )}
-          </div>
-          <h3 className="font-display text-xl leading-tight tracking-tight text-ink">{post.title}</h3>
+    <PreviewShell>
+      <div className="grid gap-0 md:grid-cols-[1fr_180px]">
+        <div className="p-4">
+          {post.category && (
+            <p className="text-[10.5px] uppercase tracking-[0.16em] text-ink-soft">
+              {post.category}
+            </p>
+          )}
+          <h3 className="mt-1 font-display text-xl leading-tight tracking-tight text-ink">{post.title}</h3>
           <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">{post.excerpt ?? post.content}</p>
           <div className="mt-3 flex items-center gap-2 text-[11px] text-ink-soft">
             <AgentAvatar name={post.authorName} size="xs" />
-            <span>{post.authorName}</span>
+            <span className="text-ink">{post.authorName}</span>
             <span>· {post.publishedAt ?? post.scheduledAt}</span>
             {post.readTime && <span>· {post.readTime}</span>}
           </div>
-          <EngagementMetricsRow platform="blog" metrics={post.metrics} />
-          <AgentAttribution post={post} />
-          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden p-4 pl-0 md:block">
           <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
         </div>
       </div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
 // --- Newsletter ------------------------------------------------------------
-export function NewsletterPostCard({ post }: { post: TimelinePost }) {
+export function NewsletterPostPreview({ post }: { post: TimelinePost }) {
   return (
-    <CardShell accentBorder="border-brass/40" className="bg-card">
-      <div className="mb-3 flex items-center gap-2">
-        <PlatformTag platform="newsletter" />
-        <StatusTag status={post.status} />
-        <span className="ml-auto text-[10.5px] uppercase tracking-[0.14em] text-ink-soft">
-          Email · {post.authorHandle}
-        </span>
+    <PreviewShell>
+      <div className="border-b border-border/40 px-4 py-2.5 text-[11px] text-ink-soft">
+        <span className="text-ink">{post.authorName}</span> · {post.authorHandle} · {post.publishedAt ?? post.scheduledAt}
       </div>
-      <div className="rounded-xl border border-brass/30 bg-parchment-deep/60 p-4">
+      <div className="p-4">
         <p className="text-[10.5px] uppercase tracking-[0.18em] text-ink-soft">Subject</p>
         <h3 className="mt-1 font-display text-xl leading-tight tracking-tight text-ink">
           {post.subjectLine ?? post.title}
         </h3>
         {post.previewText && (
-          <p className="mt-2 text-[12.5px] italic text-ink-soft">Preview: "{post.previewText}"</p>
+          <p className="mt-1.5 text-[12.5px] italic text-ink-soft">Preview: "{post.previewText}"</p>
+        )}
+        <p className="mt-3 text-[13.5px] leading-relaxed text-ink">{post.content}</p>
+        {post.metrics && (
+          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-border/40 pt-3 text-[11px] text-ink-soft">
+            <span><span className="text-ink tabular-nums">{fmt(post.metrics.sends)}</span> sent</span>
+            <span><span className="text-ink tabular-nums">{fmt(post.metrics.opens)}</span> opens</span>
+            <span><span className="text-ink tabular-nums">{fmt(post.metrics.clicks)}</span> clicks</span>
+            {post.metrics.openRate != null && (
+              <span className="ml-auto text-brass">{post.metrics.openRate}% open rate</span>
+            )}
+          </div>
         )}
       </div>
-      <p className="mt-3 text-[13.5px] leading-relaxed text-ink">{post.content}</p>
-      <div className="mt-3 grid grid-cols-4 gap-2 rounded-lg bg-parchment-deep/40 p-3 text-center">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Sent</p>
-          <p className="font-display text-base text-ink">{fmt(post.metrics?.sends)}</p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Opens</p>
-          <p className="font-display text-base text-ink">{fmt(post.metrics?.opens)}</p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Clicks</p>
-          <p className="font-display text-base text-ink">{fmt(post.metrics?.clicks)}</p>
-        </div>
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] text-ink-soft">Open rate</p>
-          <p className="font-display text-base text-brass">{post.metrics?.openRate ?? "—"}%</p>
-        </div>
-      </div>
-      <p className="mt-2 text-[11px] text-ink-soft">
-        {post.authorName} · {post.publishedAt ?? post.scheduledAt}
-      </p>
-      <AgentAttribution post={post} />
-      <div className="mt-2"><ChannelSyncTag post={post} /></div>
-    </CardShell>
+    </PreviewShell>
   );
 }
 
-// --- Scheduled -------------------------------------------------------------
+// ============================================================================
+// Quiet Crafted Virtue control bar — sits below every preview
+// ============================================================================
+
+function ControlBar({ post }: { post: TimelinePost }) {
+  const ctx = useTimelineCtx();
+  const awaiting = post.status === "awaiting_approval";
+  const failed = post.status === "failed";
+  const scheduled = post.status === "scheduled";
+  const published = post.status === "published";
+
+  const onPublish = () => {
+    if (ctx) ctx.requestPublish(post);
+  };
+  const onReschedule = async () => {
+    await reschedulePost(post.id, post.date);
+    toast("Rescheduling flow opened.");
+  };
+
+  const btnPrimary =
+    "rounded-full bg-ink px-3 py-1 text-[11px] font-medium text-parchment hover:bg-ink/90";
+  const btnGhost =
+    "rounded-full px-3 py-1 text-[11px] font-medium text-ink-soft hover:text-ink hover:bg-muted/60";
+
+  return (
+    <div className="mt-2 space-y-1.5">
+      {/* Failed warning — small, inline, never a giant red card */}
+      {failed && (
+        <div className="flex items-start gap-2 rounded-md border-l-2 border-destructive/70 bg-destructive/5 px-2.5 py-1.5 text-[11.5px] text-ink">
+          <svg className="mt-[2px] text-destructive" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>
+            <span className="font-medium">Publishing didn't go through.</span>{" "}
+            <span className="text-ink-soft">{post.failureReason ?? "Channel returned an error."}</span>
+          </span>
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-1">
+        <StatusDot status={post.status} />
+        <AgentAttribution post={post} />
+
+        {/* spacer */}
+        <span className="flex-1" />
+
+        {/* actions */}
+        {awaiting && (
+          <>
+            <button onClick={onPublish} className={btnPrimary}>Approve</button>
+            <button onClick={() => toast("Revision requested. Author notified.")} className={btnGhost}>
+              Request Revision
+            </button>
+            <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
+          </>
+        )}
+        {scheduled && (
+          <>
+            <button onClick={onPublish} className={btnPrimary}>Publish Now</button>
+            <button onClick={onReschedule} className={btnGhost}>Reschedule</button>
+            <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
+          </>
+        )}
+        {failed && (
+          <>
+            <button
+              onClick={() => toast.success("Publishing job re-queued.")}
+              className={btnPrimary}
+            >
+              Retry
+            </button>
+            <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
+          </>
+        )}
+        {published && (
+          <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ============================================================================
+// Scheduled hero card — compact, quiet, used inside "Scheduled Next" only
+// ============================================================================
+
 export function ScheduledPostCard({
   post,
-  variant = "default",
+  variant: _variant = "default",
 }: {
   post: TimelinePost;
   variant?: "default" | "hero";
 }) {
-  const ctx = useTimelineCtx();
-  const awaiting = post.status === "awaiting_approval";
-
-  const handlePublish = () => {
-    if (awaiting) {
-      toast("Opening approval review…");
-      return;
-    }
-    if (ctx) ctx.requestPublish(post);
-  };
-  const handleReschedule = async () => {
-    await reschedulePost(post.id, post.date);
-    toast("Rescheduling flow opened.");
-  };
-  const handleRequestRevision = () => {
-    toast("Revision requested. Author has been notified.");
-  };
-
-  const approvalLabel = awaiting ? "Pending" : "Approved";
-  const approvalTone = awaiting
-    ? "bg-warning/15 text-ink ring-warning/40"
-    : "bg-success/15 text-success ring-success/35";
-
-  const titleSize = variant === "hero" ? "text-base" : "text-lg";
-
   return (
-    <CardShell className={`border-dashed bg-card ${variant === "hero" ? "p-4" : ""}`}>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <PlatformTag platform={post.platform} />
-        <StatusTag status={post.status} />
-        <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ring-1 ring-inset ${approvalTone}`}>
-          Approval: {approvalLabel}
-        </span>
-        <span className="ml-auto inline-flex items-center gap-1 text-[11px] text-ink-soft">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-          {post.scheduledAt}
-        </span>
-      </div>
-
-      {(post.title || post.subjectLine) && (
-        <h3 className={`font-display ${titleSize} leading-snug text-ink`}>
-          {post.title ?? post.subjectLine}
-        </h3>
-      )}
-      <p className={`mt-1 whitespace-pre-line ${variant === "hero" ? "line-clamp-3 text-[13px]" : "text-[13.5px]"} leading-relaxed text-ink-soft`}>
-        {post.content}
-      </p>
-
-      <AgentAttribution post={post} />
-
-      <div className="mt-3 flex flex-wrap items-center gap-2 text-[10.5px] text-ink-soft">
-        {post.voiceScore != null && (
-          <span className="rounded-full bg-accent/60 px-2 py-0.5 ring-1 ring-inset ring-primary/15">
-            Voice {post.voiceScore}
-          </span>
-        )}
-        {post.factCheckStatus && (
-          <span className="rounded-full bg-success/10 px-2 py-0.5 text-success ring-1 ring-inset ring-success/30">
-            Facts {post.factCheckStatus}
-          </span>
-        )}
-        <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 ring-1 ring-inset ring-border/60">
-          <span className="size-1 rounded-full bg-primary" />
-          Scheduled through Crafted Virtue
-        </span>
-      </div>
-
-      <div className="mt-4 flex flex-wrap gap-2 border-t border-border/60 pt-4">
-        <button
-          onClick={handlePublish}
-          className="rounded-full bg-ink px-4 py-1.5 text-xs font-medium text-parchment hover:bg-ink/90"
-        >
-          {awaiting ? "Review & Approve" : "Publish Now"}
-        </button>
-        {awaiting ? (
-          <button
-            onClick={handleRequestRevision}
-            className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-          >
-            Request Revision
-          </button>
-        ) : (
-          <>
-            <button
-              onClick={handleReschedule}
-              className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-            >
-              Reschedule
-            </button>
-            <button
-              onClick={() => toast("Opened in editor.")}
-              className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-            >
-              Edit
-            </button>
-          </>
-        )}
-      </div>
-    </CardShell>
+    <div>
+      <PreviewPicker post={post} />
+      <ControlBar post={post} />
+    </div>
   );
 }
 
-// --- Failed ----------------------------------------------------------------
-export function FailedPostCard({ post }: { post: TimelinePost }) {
-  return (
-    <CardShell accentBorder="border-destructive/40" className="bg-destructive/5">
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <PlatformTag platform={post.platform} />
-        <span className="inline-flex items-center gap-1 rounded-full bg-destructive/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-destructive ring-1 ring-inset ring-destructive/30">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Publishing failed
-        </span>
-        <span className="ml-auto text-[11px] text-ink-soft">{post.scheduledAt}</span>
-      </div>
-      <p className="text-[13.5px] leading-relaxed text-ink">{post.content}</p>
-      <p className="mt-2 text-[12px] text-destructive">
-        <span className="font-medium">Reason:</span> {post.failureReason ?? "Unknown error from upstream platform."}
-      </p>
-      <AgentAttribution post={post} />
-      <div className="mt-4 flex flex-wrap gap-2 border-t border-destructive/20 pt-4">
-        <button
-          onClick={() => toast.success("Publishing job re-queued.")}
-          className="rounded-full bg-ink px-4 py-1.5 text-xs font-medium text-parchment hover:bg-ink/90"
-        >
-          Retry
-        </button>
-        <button
-          onClick={() => toast("Opening channel settings to reconnect.")}
-          className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
-        >
-          Reconnect Channel
-        </button>
-      </div>
-    </CardShell>
-  );
+// PreviewPicker chooses the platform-native preview for any status.
+function PreviewPicker({ post }: { post: TimelinePost }) {
+  switch (post.platform) {
+    case "x": return <XPostPreview post={post} />;
+    case "linkedin": return <LinkedInPostPreview post={post} />;
+    case "facebook": return <FacebookPostPreview post={post} />;
+    case "instagram": return <InstagramPostPreview post={post} />;
+    case "youtube": return <YouTubePostPreview post={post} />;
+    case "blog": return <BlogPostPreview post={post} />;
+    case "newsletter": return <NewsletterPostPreview post={post} />;
+    default: return <XPostPreview post={post} />;
+  }
 }
 
 export function PlatformPostCard({ post }: { post: TimelinePost }) {
-  if (post.status === "failed") return <FailedPostCard post={post} />;
-  if (post.status === "scheduled" || post.status === "awaiting_approval") {
-    return <ScheduledPostCard post={post} />;
-  }
-  switch (post.platform) {
-    case "x":
-      return <XPostCard post={post} />;
-    case "linkedin":
-      return <LinkedInPostCard post={post} />;
-    case "facebook":
-      return <FacebookPostCard post={post} />;
-    case "instagram":
-      return <InstagramPostCard post={post} />;
-    case "youtube":
-      return <YouTubePostCard post={post} />;
-    case "blog":
-      return <BlogPostCard post={post} />;
-    case "newsletter":
-      return <NewsletterPostCard post={post} />;
-    default:
-      return <XPostCard post={post} />;
-  }
+  return (
+    <div>
+      <PreviewPicker post={post} />
+      <ControlBar post={post} />
+    </div>
+  );
 }
 
 // ============================================================================
