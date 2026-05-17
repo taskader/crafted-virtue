@@ -481,7 +481,7 @@ export function BlogPostPreview({ post }: { post: TimelinePost }) {
           </div>
         </div>
         <div className="hidden p-4 pl-0 md:block">
-          <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
+          <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" maxH={220} />
         </div>
       </div>
     </PreviewShell>
