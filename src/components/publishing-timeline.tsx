@@ -854,7 +854,7 @@ export function PublishingTimeline() {
     setScheduledPosts((s) => s.filter((p) => p.id !== post.id));
     setPublishedPosts((p) => [movedPost, ...p]);
     setPendingPublish(null);
-    toast.success("Published. Postiz sync will update engagement metrics shortly.");
+    toast.success("Published. Engagement metrics will sync from your connected channels shortly.");
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
