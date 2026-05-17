@@ -306,7 +306,7 @@ export function XPostCard({ post }: { post: TimelinePost }) {
           {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
           <EngagementMetricsRow platform="x" metrics={post.metrics} />
           <AgentAttribution post={post} />
-          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
       </div>
     </CardShell>
@@ -345,7 +345,7 @@ export function LinkedInPostCard({ post }: { post: TimelinePost }) {
       <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
       <RecentComments comments={post.recentComments} />
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
@@ -385,7 +385,7 @@ export function FacebookPostCard({ post }: { post: TimelinePost }) {
       </div>
       <EngagementMetricsRow platform="facebook" metrics={post.metrics} />
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
@@ -430,7 +430,7 @@ export function InstagramPostCard({ post }: { post: TimelinePost }) {
       </div>
       <div className="px-4 pb-4">
         <AgentAttribution post={post} />
-        <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        <div className="mt-2"><ChannelSyncTag post={post} /></div>
       </div>
     </CardShell>
   );
@@ -462,7 +462,7 @@ export function YouTubePostCard({ post }: { post: TimelinePost }) {
         <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{post.content}</p>
         <EngagementMetricsRow platform="youtube" metrics={post.metrics} />
         <AgentAttribution post={post} />
-        <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        <div className="mt-2"><ChannelSyncTag post={post} /></div>
       </div>
     </CardShell>
   );
@@ -493,7 +493,7 @@ export function BlogPostCard({ post }: { post: TimelinePost }) {
           </div>
           <EngagementMetricsRow platform="blog" metrics={post.metrics} />
           <AgentAttribution post={post} />
-          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
         <div className="hidden md:block">
           <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
@@ -546,7 +546,7 @@ export function NewsletterPostCard({ post }: { post: TimelinePost }) {
         {post.authorName} · {post.publishedAt ?? post.scheduledAt}
       </p>
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
