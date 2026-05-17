@@ -622,7 +622,7 @@ export function ScheduledPostCard({
         )}
         <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 ring-1 ring-inset ring-border/60">
           <span className="size-1 rounded-full bg-primary" />
-          Scheduled via Postiz
+          Scheduled through Crafted Virtue
         </span>
       </div>
 
