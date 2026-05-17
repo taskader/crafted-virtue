@@ -543,34 +543,61 @@ function ControlBar({ post }: { post: TimelinePost }) {
   const btnGhost =
     "rounded-full px-3 py-1 text-[11px] font-medium text-ink-soft hover:text-ink hover:bg-muted/60";
 
+  // Compact meta line: scheduled time · approval · voice · facts
+  const metaBits: React.ReactNode[] = [];
+  if (scheduled || awaiting) {
+    if (post.scheduledAt) metaBits.push(<span key="t">Scheduled {post.scheduledAt}</span>);
+    if (post.approval || awaiting || scheduled) {
+      metaBits.push(
+        <span key="a">
+          Approval: <span className="text-ink">{awaiting ? "Pending" : "Approved"}</span>
+        </span>
+      );
+    }
+  }
+  if (post.voiceScore != null) metaBits.push(<span key="v">Voice <span className="text-ink tabular-nums">{post.voiceScore}</span></span>);
+  if (post.factCheckStatus) {
+    const fLabel = post.factCheckStatus === "verified" ? "Facts verified" : post.factCheckStatus === "pending" ? "Facts pending" : "Facts flagged";
+    metaBits.push(<span key="f">{fLabel}</span>);
+  }
+
   return (
     <div className="mt-2 space-y-1.5">
       {/* Failed warning — small, inline, never a giant red card */}
       {failed && (
-        <div className="flex items-start gap-2 rounded-md border-l-2 border-destructive/70 bg-destructive/5 px-2.5 py-1.5 text-[11.5px] text-ink">
-          <svg className="mt-[2px] text-destructive" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div className="flex items-start gap-2 rounded-md border-l-2 border-destructive/70 bg-destructive/5 px-2.5 py-1.5 text-[11px] leading-snug text-ink">
+          <svg className="mt-[2px] shrink-0 text-destructive" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span>
-            <span className="font-medium">Publishing didn't go through.</span>{" "}
+            <span className="font-medium">Publishing issue:</span>{" "}
             <span className="text-ink-soft">{post.failureReason ?? "Channel returned an error."}</span>
           </span>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-1">
-        <StatusDot status={post.status} />
+      {metaBits.length > 0 && (
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 px-1 text-[10.5px] text-ink-soft">
+          <StatusDot status={post.status} />
+          {metaBits.map((b, i) => (
+            <span key={i} className="inline-flex items-center gap-2.5">
+              <span className="opacity-50">·</span>
+              {b}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-1">
+        {metaBits.length === 0 && <StatusDot status={post.status} />}
         <AgentAttribution post={post} />
 
-        {/* spacer */}
         <span className="flex-1" />
 
-        {/* actions */}
         {awaiting && (
           <>
-            <button onClick={onPublish} className={btnPrimary}>Approve</button>
+            <button onClick={onPublish} className={btnPrimary}>Review & Approve</button>
             <button onClick={() => toast("Revision requested. Author notified.")} className={btnGhost}>
               Request Revision
             </button>
-            <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
           </>
         )}
         {scheduled && (
@@ -582,12 +609,10 @@ function ControlBar({ post }: { post: TimelinePost }) {
         )}
         {failed && (
           <>
-            <button
-              onClick={() => toast.success("Publishing job re-queued.")}
-              className={btnPrimary}
-            >
+            <button onClick={() => toast.success("Publishing job re-queued.")} className={btnPrimary}>
               Retry
             </button>
+            <button onClick={() => toast("Opened media fixer.")} className={btnGhost}>Fix Media</button>
             <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
           </>
         )}
