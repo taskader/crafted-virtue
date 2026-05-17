@@ -93,6 +93,10 @@ const author = {
 };
 
 // ---------- Scheduled (upcoming) ----------
+// Spec date layout:
+//   Today (May 18):  Instagram failed, X scheduled
+//   May 19:          LinkedIn scheduled, Newsletter awaiting approval
+//   May 20:          X scheduled, Blog scheduled, Instagram scheduled
 const SCHEDULED: TimelinePost[] = [
   {
     id: "s1",
