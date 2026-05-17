@@ -467,7 +467,7 @@ function StepContent({ step, state, actions }: { step: number; state: State; act
   if (step === 6) {
     return (
       <div className="space-y-5">
-        <p className="text-ink-soft">Publishing is managed through your connected Postiz workspace.</p>
+        <p className="text-ink-soft">Publishing runs through your connected channels.</p>
         <div className="grid gap-3 sm:grid-cols-2">
           {CHANNELS.map((c) => {
             const isConnected = state.connected.includes(c.id);
