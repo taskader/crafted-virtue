@@ -373,6 +373,7 @@ export function FacebookPostPreview({ post }: { post: TimelinePost }) {
         </div>
         <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
         {post.mediaType && <div className="mt-3"><MediaPlaceholder ratio="aspect-video" maxH={220} /></div>}
+        {reactionCount > 0 && (
           <div className="mt-3 flex items-center justify-between text-[11.5px] text-ink-soft">
             <span className="inline-flex items-center gap-1.5">
               <span className="inline-flex -space-x-0.5">
