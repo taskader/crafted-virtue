@@ -861,7 +861,7 @@ export function PublishingTimeline() {
               Synced with connected channels
             </span>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="flex flex-wrap items-start gap-5">
             {scheduledNext.map((p) => (
               <ScheduledPostCard key={`hero-${p.id}`} post={p} variant="hero" />
             ))}
