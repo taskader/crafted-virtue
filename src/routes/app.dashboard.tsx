@@ -15,6 +15,8 @@ import {
   Shield,
   Sparkles,
   Twitter,
+  CalendarClock,
+  Activity,
 } from "lucide-react";
 
 export const Route = createFileRoute("/app/dashboard")({
@@ -91,6 +93,75 @@ function Dashboard() {
         <Stat label="Channels" value="3" delta="of 8 connected" />
         <Stat label="Weekly reach" value="28.4k" delta="+12% w/w" />
         <Stat label="Engagement" value="6.8%" delta="+0.4 pts" />
+      </div>
+
+      {/* Publishing Timeline + Today's activity */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Card className="p-6 lg:col-span-2">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="grid h-10 w-10 place-items-center rounded-full bg-ink/5 text-ink">
+                <CalendarClock className="h-5 w-5" />
+              </div>
+              <div>
+                <SectionLabel>Publishing</SectionLabel>
+                <h2 className="mt-1 font-display text-xl">Publishing Timeline</h2>
+                <p className="mt-1 max-w-xl text-sm text-ink-soft">
+                  Scroll through scheduled posts and published history by date. Engagement metrics sync from your connected publishing workspace.
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/app/publishing"
+              className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-xs font-medium text-parchment hover:bg-ink/90"
+            >
+              Open Timeline <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-xl border border-border/60 bg-parchment-deep/50 p-3">
+              <p className="text-[10px] uppercase tracking-wider text-ink-soft">Next scheduled</p>
+              <p className="mt-1.5 text-sm font-medium leading-snug">The Quiet Compounding of Reputation</p>
+              <p className="mt-1 text-[11px] text-ink-soft">LinkedIn · Tue 9:15 AM</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-parchment-deep/50 p-3">
+              <p className="text-[10px] uppercase tracking-wider text-ink-soft">Latest published</p>
+              <p className="mt-1.5 text-sm font-medium leading-snug">Why I rewrote our operating cadence</p>
+              <p className="mt-1 text-[11px] text-ink-soft">Newsletter · Mar 12</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-parchment-deep/50 p-3">
+              <p className="text-[10px] uppercase tracking-wider text-ink-soft">Posts this month</p>
+              <p className="mt-1.5 font-display text-2xl">23</p>
+              <p className="mt-1 text-[11px] text-ink-soft">+6 vs. last month</p>
+            </div>
+            <div className="rounded-xl border border-border/60 bg-parchment-deep/50 p-3">
+              <p className="text-[10px] uppercase tracking-wider text-ink-soft">Engagement updated</p>
+              <p className="mt-1.5 text-sm font-medium">12 min ago</p>
+              <p className="mt-1 text-[11px] text-ink-soft">Postiz workspace sync</p>
+            </div>
+          </div>
+        </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center gap-2">
+            <Activity className="h-4 w-4 text-primary" />
+            <SectionLabel>Today's publishing activity</SectionLabel>
+          </div>
+          <ul className="mt-4 divide-y divide-border/60 text-sm">
+            {[
+              { label: "Posts scheduled", value: "1" },
+              { label: "Posts published", value: "2" },
+              { label: "Comments", value: "14" },
+              { label: "Likes", value: "328" },
+              { label: "Impressions", value: "4.2k" },
+            ].map((row) => (
+              <li key={row.label} className="flex items-center justify-between py-2.5">
+                <span className="text-ink-soft">{row.label}</span>
+                <span className="font-display text-lg tabular-nums">{row.value}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
       </div>
 
       {/* Next Best Action + Agent Timeline */}

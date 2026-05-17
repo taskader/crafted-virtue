@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app/publishing")({
   component: Publishing,
 });
 
-type View = "timeline" | "calendar" | "queue";
+type View = "timeline" | "calendar" | "queue" | "accounts";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const PLATFORMS = ["All", "LinkedIn", "X", "Instagram", "YouTube", "Blog", "Newsletter"] as const;
@@ -51,24 +51,34 @@ function Publishing() {
   );
 
   const isTimeline = mainView === "timeline";
+  const isCalendar = mainView === "calendar";
+  const isQueue = mainView === "queue";
+  const isAccounts = mainView === "accounts";
+
+  const titleFor: Record<View, string> = {
+    timeline: "Publishing Timeline",
+    calendar: "Publishing Calendar",
+    queue: "Publishing Queue",
+    accounts: "Connected Accounts",
+  };
+  const subFor: Record<View, string> = {
+    timeline: "See every scheduled and published post in one chronological view. Scheduled posts sit at the top; published history unfolds below.",
+    calendar: "Approved content moves from your queue into the calendar. Publishing is managed through your connected Postiz workspace.",
+    queue: "Scheduled, published, and failed jobs across every connected channel.",
+    accounts: "Channels connected through your Postiz workspace.",
+  };
 
   return (
     <div className="space-y-8">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div className="max-w-2xl">
           <SectionLabel>Publishing</SectionLabel>
-          <h1 className="mt-2 font-display text-4xl">
-            {isTimeline ? "Publishing Timeline" : "Publishing"}
-          </h1>
-          <p className="mt-2 text-ink-soft">
-            {isTimeline
-              ? "See every scheduled and published post in one chronological view. Scheduled posts sit at the top; published history unfolds below."
-              : "Approved content moves from your queue into the calendar. Publishing is managed through your connected Postiz workspace."}
-          </p>
+          <h1 className="mt-2 font-display text-4xl">{titleFor[mainView]}</h1>
+          <p className="mt-2 text-ink-soft">{subFor[mainView]}</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex rounded-full border border-border p-1">
-            {(["timeline", "calendar", "queue"] as const).map((v) => (
+            {(["timeline", "calendar", "queue", "accounts"] as const).map((v) => (
               <button
                 key={v}
                 onClick={() => setMainView(v)}
@@ -89,7 +99,7 @@ function Publishing() {
 
       {isTimeline && <PublishingTimeline />}
 
-      {!isTimeline && (
+      {isCalendar && (
         <>
         <div className="flex flex-wrap gap-2">
           <div className="flex rounded-full border border-border p-1">
@@ -163,7 +173,11 @@ function Publishing() {
           </div>
         </div>
       </Card>
+        </>
+      )}
 
+      {isQueue && (
+        <>
       <Card className="p-6">
         <div className="flex items-center justify-between">
           <div>
@@ -238,7 +252,11 @@ function Publishing() {
           ))}
         </div>
       </Card>
+        </>
+      )}
 
+      {isAccounts && (
+        <>
       <Card className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -263,9 +281,11 @@ function Publishing() {
           ))}
         </div>
       </Card>
-
-      <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
         </>
+      )}
+
+      {!isTimeline && (
+        <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
       )}
     </div>
   );
