@@ -252,7 +252,11 @@ function Publishing() {
           ))}
         </div>
       </Card>
+        </>
+      )}
 
+      {isAccounts && (
+        <>
       <Card className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -277,9 +281,11 @@ function Publishing() {
           ))}
         </div>
       </Card>
-
-      <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
         </>
+      )}
+
+      {!isTimeline && (
+        <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
       )}
     </div>
   );
