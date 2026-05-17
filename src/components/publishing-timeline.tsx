@@ -270,14 +270,25 @@ function AgentAttribution({ post }: { post: TimelinePost }) {
   );
 }
 
-function MediaPlaceholder({ label, ratio = "aspect-[4/3]" }: { label?: string; ratio?: string }) {
+function MediaPlaceholder({
+  label,
+  ratio = "aspect-[4/3]",
+  maxH = 240,
+}: {
+  label?: string;
+  ratio?: string;
+  maxH?: number;
+}) {
   return (
-    <div className={`grid ${ratio} place-items-center overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}>
+    <div
+      className={`relative grid ${ratio} w-full place-items-center overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}
+      style={{ maxHeight: `${maxH}px` }}
+    >
       <div className="text-center">
-        <div className="mx-auto mb-1 grid size-9 place-items-center rounded-full bg-card ring-1 ring-border/60">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+        <div className="mx-auto mb-1 grid size-7 place-items-center rounded-full bg-card ring-1 ring-border/60">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.18em] text-ink-soft">{label ?? "Visual"}</p>
+        <p className="text-[9.5px] uppercase tracking-[0.18em] text-ink-soft">{label ?? "Visual"}</p>
       </div>
     </div>
   );
