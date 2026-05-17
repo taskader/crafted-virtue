@@ -57,6 +57,18 @@ const PLATFORM_LABEL: Record<Platform, string> = {
   newsletter: "Newsletter",
 };
 
+// Hard per-platform max widths (px). Keeps cards feeling like real native
+// social posts and lets multiple sit side-by-side on wider screens.
+const PLATFORM_MAX_W: Record<Platform, number> = {
+  x: 340,
+  instagram: 340,
+  facebook: 360,
+  linkedin: 420,
+  youtube: 420,
+  blog: 420,
+  newsletter: 420,
+};
+
 const PLATFORM_ACCENT: Record<Platform, string> = {
   x: "bg-ink text-parchment",
   linkedin: "bg-[oklch(0.45_0.12_245)] text-parchment",
@@ -258,14 +270,25 @@ function AgentAttribution({ post }: { post: TimelinePost }) {
   );
 }
 
-function MediaPlaceholder({ label, ratio = "aspect-[4/3]" }: { label?: string; ratio?: string }) {
+function MediaPlaceholder({
+  label,
+  ratio = "aspect-[4/3]",
+  maxH = 240,
+}: {
+  label?: string;
+  ratio?: string;
+  maxH?: number;
+}) {
   return (
-    <div className={`grid ${ratio} place-items-center overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}>
+    <div
+      className={`relative grid ${ratio} w-full place-items-center overflow-hidden rounded-xl border border-border/50 bg-gradient-to-br from-parchment-deep via-card to-accent/60`}
+      style={{ maxHeight: `${maxH}px` }}
+    >
       <div className="text-center">
-        <div className="mx-auto mb-1 grid size-9 place-items-center rounded-full bg-card ring-1 ring-border/60">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+        <div className="mx-auto mb-1 grid size-7 place-items-center rounded-full bg-card ring-1 ring-border/60">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
         </div>
-        <p className="text-[10px] uppercase tracking-[0.18em] text-ink-soft">{label ?? "Visual"}</p>
+        <p className="text-[9.5px] uppercase tracking-[0.18em] text-ink-soft">{label ?? "Visual"}</p>
       </div>
     </div>
   );
@@ -284,10 +307,14 @@ export function XPostPreview({ post }: { post: TimelinePost }) {
             <span className="text-[13px] text-ink-soft">{handle}</span>
             <span className="text-[13px] text-ink-soft">· {post.publishedAt ?? post.scheduledAt}</span>
           </div>
-          <p className="mt-1 max-w-[58ch] whitespace-pre-line text-[14.5px] leading-[1.45] text-ink">
+          <p className="mt-1 whitespace-pre-line text-[14px] leading-[1.45] text-ink">
             {post.content}
           </p>
-          {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
+          {post.mediaType && (
+            <div className="mt-2.5">
+              <MediaPlaceholder ratio="aspect-video" maxH={200} />
+            </div>
+          )}
           <EngagementMetricsRow platform="x" metrics={post.metrics} />
         </div>
       </div>
@@ -320,7 +347,7 @@ export function LinkedInPostPreview({ post }: { post: TimelinePost }) {
           </button>
         </div>
         <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
-        {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+        {post.mediaType && <div className="mt-3"><MediaPlaceholder ratio="aspect-video" maxH={260} /></div>}
         <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
         <RecentComments comments={post.recentComments} />
       </div>
@@ -345,7 +372,7 @@ export function FacebookPostPreview({ post }: { post: TimelinePost }) {
           </div>
         </div>
         <p className="mt-3 whitespace-pre-line text-[14px] leading-relaxed text-ink">{post.content}</p>
-        {post.mediaType && <div className="mt-3"><MediaPlaceholder /></div>}
+        {post.mediaType && <div className="mt-3"><MediaPlaceholder ratio="aspect-video" maxH={220} /></div>}
         {reactionCount > 0 && (
           <div className="mt-3 flex items-center justify-between text-[11.5px] text-ink-soft">
             <span className="inline-flex items-center gap-1.5">
@@ -379,7 +406,7 @@ export function InstagramPostPreview({ post }: { post: TimelinePost }) {
         </div>
       </div>
       <div className="border-y border-border/40">
-        <MediaPlaceholder ratio="aspect-square" label="Photo" />
+        <MediaPlaceholder ratio="aspect-square" label="Photo" maxH={340} />
       </div>
       <div className="px-4 pb-4 pt-3">
         <div className="flex items-center gap-3 text-ink">
@@ -454,7 +481,7 @@ export function BlogPostPreview({ post }: { post: TimelinePost }) {
           </div>
         </div>
         <div className="hidden p-4 pl-0 md:block">
-          <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
+          <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" maxH={220} />
         </div>
       </div>
     </PreviewShell>
@@ -516,34 +543,61 @@ function ControlBar({ post }: { post: TimelinePost }) {
   const btnGhost =
     "rounded-full px-3 py-1 text-[11px] font-medium text-ink-soft hover:text-ink hover:bg-muted/60";
 
+  // Compact meta line: scheduled time · approval · voice · facts
+  const metaBits: React.ReactNode[] = [];
+  if (scheduled || awaiting) {
+    if (post.scheduledAt) metaBits.push(<span key="t">Scheduled {post.scheduledAt}</span>);
+    if (post.approval || awaiting || scheduled) {
+      metaBits.push(
+        <span key="a">
+          Approval: <span className="text-ink">{awaiting ? "Pending" : "Approved"}</span>
+        </span>
+      );
+    }
+  }
+  if (post.voiceScore != null) metaBits.push(<span key="v">Voice <span className="text-ink tabular-nums">{post.voiceScore}</span></span>);
+  if (post.factCheckStatus) {
+    const fLabel = post.factCheckStatus === "verified" ? "Facts verified" : post.factCheckStatus === "pending" ? "Facts pending" : "Facts flagged";
+    metaBits.push(<span key="f">{fLabel}</span>);
+  }
+
   return (
     <div className="mt-2 space-y-1.5">
       {/* Failed warning — small, inline, never a giant red card */}
       {failed && (
-        <div className="flex items-start gap-2 rounded-md border-l-2 border-destructive/70 bg-destructive/5 px-2.5 py-1.5 text-[11.5px] text-ink">
-          <svg className="mt-[2px] text-destructive" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div className="flex items-start gap-2 rounded-md border-l-2 border-destructive/70 bg-destructive/5 px-2.5 py-1.5 text-[11px] leading-snug text-ink">
+          <svg className="mt-[2px] shrink-0 text-destructive" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span>
-            <span className="font-medium">Publishing didn't go through.</span>{" "}
+            <span className="font-medium">Publishing issue:</span>{" "}
             <span className="text-ink-soft">{post.failureReason ?? "Channel returned an error."}</span>
           </span>
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 px-1">
-        <StatusDot status={post.status} />
+      {metaBits.length > 0 && (
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 px-1 text-[10.5px] text-ink-soft">
+          <StatusDot status={post.status} />
+          {metaBits.map((b, i) => (
+            <span key={i} className="inline-flex items-center gap-2.5">
+              <span className="opacity-50">·</span>
+              {b}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-1">
+        {metaBits.length === 0 && <StatusDot status={post.status} />}
         <AgentAttribution post={post} />
 
-        {/* spacer */}
         <span className="flex-1" />
 
-        {/* actions */}
         {awaiting && (
           <>
-            <button onClick={onPublish} className={btnPrimary}>Approve</button>
+            <button onClick={onPublish} className={btnPrimary}>Review & Approve</button>
             <button onClick={() => toast("Revision requested. Author notified.")} className={btnGhost}>
               Request Revision
             </button>
-            <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
           </>
         )}
         {scheduled && (
@@ -555,12 +609,10 @@ function ControlBar({ post }: { post: TimelinePost }) {
         )}
         {failed && (
           <>
-            <button
-              onClick={() => toast.success("Publishing job re-queued.")}
-              className={btnPrimary}
-            >
+            <button onClick={() => toast.success("Publishing job re-queued.")} className={btnPrimary}>
               Retry
             </button>
+            <button onClick={() => toast("Opened media fixer.")} className={btnGhost}>Fix Media</button>
             <button onClick={() => toast("Opened in editor.")} className={btnGhost}>Edit</button>
           </>
         )}
@@ -583,12 +635,7 @@ export function ScheduledPostCard({
   post: TimelinePost;
   variant?: "default" | "hero";
 }) {
-  return (
-    <div>
-      <PreviewPicker post={post} />
-      <ControlBar post={post} />
-    </div>
-  );
+  return <PlatformPostCard post={post} />;
 }
 
 // PreviewPicker chooses the platform-native preview for any status.
@@ -606,8 +653,9 @@ function PreviewPicker({ post }: { post: TimelinePost }) {
 }
 
 export function PlatformPostCard({ post }: { post: TimelinePost }) {
+  const maxW = PLATFORM_MAX_W[post.platform] ?? 360;
   return (
-    <div>
+    <div className="w-full" style={{ maxWidth: `${maxW}px` }}>
       <PreviewPicker post={post} />
       <ControlBar post={post} />
     </div>
@@ -643,8 +691,8 @@ export function TimelineDateGroup({ day }: { day: TimelineDay }) {
         </p>
       </div>
 
-      {/* Posts column */}
-      <div className="relative space-y-4">
+      {/* Posts column — responsive wrap so cards sit side-by-side */}
+      <div className="relative flex flex-wrap items-start gap-5">
         {day.posts.map((p) => (
           <motion.div
             key={p.id}
@@ -652,6 +700,7 @@ export function TimelineDateGroup({ day }: { day: TimelineDay }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.4, ease: "easeOut" }}
+            className="w-full sm:w-auto sm:flex-[0_1_auto]"
           >
             <PlatformPostCard post={p} />
           </motion.div>
@@ -660,6 +709,7 @@ export function TimelineDateGroup({ day }: { day: TimelineDay }) {
     </div>
   );
 }
+
 
 // ============================================================================
 // Main Timeline
@@ -811,7 +861,7 @@ export function PublishingTimeline() {
               Synced with connected channels
             </span>
           </div>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="flex flex-wrap items-start gap-5">
             {scheduledNext.map((p) => (
               <ScheduledPostCard key={`hero-${p.id}`} post={p} variant="hero" />
             ))}
