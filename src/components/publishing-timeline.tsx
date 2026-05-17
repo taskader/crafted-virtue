@@ -57,6 +57,18 @@ const PLATFORM_LABEL: Record<Platform, string> = {
   newsletter: "Newsletter",
 };
 
+// Hard per-platform max widths (px). Keeps cards feeling like real native
+// social posts and lets multiple sit side-by-side on wider screens.
+const PLATFORM_MAX_W: Record<Platform, number> = {
+  x: 340,
+  instagram: 340,
+  facebook: 360,
+  linkedin: 420,
+  youtube: 420,
+  blog: 420,
+  newsletter: 420,
+};
+
 const PLATFORM_ACCENT: Record<Platform, string> = {
   x: "bg-ink text-parchment",
   linkedin: "bg-[oklch(0.45_0.12_245)] text-parchment",
