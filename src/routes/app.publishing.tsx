@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app/publishing")({
   component: Publishing,
 });
 
-type View = "timeline" | "calendar" | "queue";
+type View = "timeline" | "calendar" | "queue" | "accounts";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const PLATFORMS = ["All", "LinkedIn", "X", "Instagram", "YouTube", "Blog", "Newsletter"] as const;
