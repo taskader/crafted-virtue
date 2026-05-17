@@ -68,6 +68,8 @@ const PLATFORM_ACCENT: Record<Platform, string> = {
 };
 
 function PlatformTag({ platform }: { platform: Platform }) {
+  // Kept for the hero scheduled preview + dialog where the platform context isn't
+  // obvious from the visual treatment. Quiet, not a SaaS badge.
   return (
     <span
       className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ${PLATFORM_ACCENT[platform]}`}
@@ -77,20 +79,20 @@ function PlatformTag({ platform }: { platform: Platform }) {
   );
 }
 
-function StatusTag({ status }: { status: PostStatus }) {
-  const map: Record<PostStatus, string> = {
-    scheduled: "bg-primary/10 text-primary ring-primary/25",
-    published: "bg-success/10 text-success ring-success/30",
-    failed: "bg-destructive/10 text-destructive ring-destructive/30",
-    draft: "bg-muted text-ink-soft ring-border",
-    awaiting_approval: "bg-warning/15 text-ink ring-warning/40",
+// A small dot + label used inside the quiet control bar instead of loud pills.
+function StatusDot({ status }: { status: PostStatus }) {
+  const map: Record<PostStatus, { color: string; label: string }> = {
+    scheduled: { color: "bg-primary", label: "Scheduled" },
+    published: { color: "bg-success", label: "Published" },
+    failed: { color: "bg-destructive", label: "Needs attention" },
+    draft: { color: "bg-ink-soft", label: "Draft" },
+    awaiting_approval: { color: "bg-warning", label: "Awaiting approval" },
   };
-  const label = status.replace("_", " ");
+  const s = map[status];
   return (
-    <span
-      className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ring-1 ring-inset ${map[status]}`}
-    >
-      {label}
+    <span className="inline-flex items-center gap-1.5 text-[11px] text-ink-soft">
+      <span className={`size-1.5 rounded-full ${s.color}`} />
+      {s.label}
     </span>
   );
 }
