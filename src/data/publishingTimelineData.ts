@@ -184,6 +184,55 @@ const SCHEDULED: TimelinePost[] = [
     voiceScore: 86,
     factCheckStatus: "verified",
   },
+  {
+    id: "s5",
+    platform: "x",
+    status: "scheduled",
+    date: "2026-05-18",
+    scheduledAt: "Mon May 18 · 17:45",
+    authorName: author.name,
+    authorHandle: author.handle,
+    content:
+      "Quiet weeks are underrated.\n\nThe loud ones rarely move the number.",
+    createdByAgent: "Sam",
+    voiceScore: 90,
+    factCheckStatus: "verified",
+  },
+  {
+    id: "s6",
+    platform: "blog",
+    status: "scheduled",
+    date: "2026-05-21",
+    scheduledAt: "Thu May 21 · 06:00",
+    authorName: author.name,
+    authorHandle: "ellisharrow.com",
+    title: "Operating cadence, rebuilt from scratch",
+    excerpt:
+      "Why the most important meeting on our calendar is the one we almost cancelled.",
+    content:
+      "Why the most important meeting on our calendar is the one we almost cancelled.",
+    category: "Operator's Mind",
+    readTime: "6 min read",
+    createdByAgent: "Leo",
+    reviewedByAgent: "Konrad",
+    voiceScore: 93,
+    factCheckStatus: "verified",
+  },
+  {
+    id: "s7",
+    platform: "instagram",
+    status: "scheduled",
+    date: "2026-05-21",
+    scheduledAt: "Thu May 21 · 19:30",
+    authorName: "Ellis Harrow",
+    authorHandle: "ellis.harrow",
+    mediaType: "image",
+    content:
+      "Notebook spread from this morning — three questions worth carrying into the week.",
+    createdByAgent: "Vincent",
+    voiceScore: 88,
+    factCheckStatus: "verified",
+  },
 ];
 
 // ---------- Published (history, newest first) ----------
