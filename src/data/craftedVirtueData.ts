@@ -195,7 +195,7 @@ export const agents: Agent[] = [
       "Engineering assists",
     ],
     userFacing: false,
-    activityExample: "Wired a new Postiz channel adapter for staging.",
+    activityExample: "Wired a new publishing channel adapter for staging.",
   },
   {
     id: "scout",
@@ -324,7 +324,7 @@ export const onboardingSteps = [
   {
     id: 6,
     title: "Connect publishing channels",
-    description: "LinkedIn, X, Newsletter, Blog and more — connected through your Postiz workspace.",
+    description: "LinkedIn, X, Newsletter, Blog and more — connected to your Crafted Virtue publishing workspace.",
     fields: ["channels"],
     agentNote: "Alex confirms permissions; nothing publishes until you approve it.",
   },
@@ -367,7 +367,7 @@ export const socialPlatforms = [
     publishingEnabled: true,
     analyticsEnabled: true,
     lastSync: "2m ago",
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "x",
@@ -377,7 +377,7 @@ export const socialPlatforms = [
     publishingEnabled: true,
     analyticsEnabled: false,
     lastSync: "8m ago",
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "instagram",
@@ -387,7 +387,7 @@ export const socialPlatforms = [
     publishingEnabled: false,
     analyticsEnabled: false,
     lastSync: null,
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "facebook",
@@ -397,7 +397,7 @@ export const socialPlatforms = [
     publishingEnabled: false,
     analyticsEnabled: false,
     lastSync: null,
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "youtube",
@@ -407,7 +407,7 @@ export const socialPlatforms = [
     publishingEnabled: false,
     analyticsEnabled: false,
     lastSync: null,
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "tiktok",
@@ -417,7 +417,7 @@ export const socialPlatforms = [
     publishingEnabled: false,
     analyticsEnabled: false,
     lastSync: null,
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "blog",
@@ -427,7 +427,7 @@ export const socialPlatforms = [
     publishingEnabled: true,
     analyticsEnabled: true,
     lastSync: "1h ago",
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
   {
     id: "newsletter",
@@ -437,7 +437,7 @@ export const socialPlatforms = [
     publishingEnabled: true,
     analyticsEnabled: true,
     lastSync: "20m ago",
-    microcopy: "Publishing is managed through your connected Postiz workspace.",
+    microcopy: "Publishing runs through your connected channels.",
   },
 ] as const;
 

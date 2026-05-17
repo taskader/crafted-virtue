@@ -262,13 +262,13 @@ function AgentAttribution({ post }: { post: TimelinePost }) {
   );
 }
 
-function PostizSyncedTag({ post }: { post: TimelinePost }) {
+function ChannelSyncTag({ post }: { post: TimelinePost }) {
   if (post.status !== "published") return null;
   const synced = post.postizSyncedAt ?? "just now";
   return (
     <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 text-[10px] text-ink-soft ring-1 ring-inset ring-border/60">
       <span className="size-1 rounded-full bg-success" />
-      Postiz synced · last updated {synced}
+      Synced with connected channels · updated {synced}
     </span>
   );
 }
@@ -306,7 +306,7 @@ export function XPostCard({ post }: { post: TimelinePost }) {
           {post.mediaType && <div className="mt-3 max-w-[58ch]"><MediaPlaceholder /></div>}
           <EngagementMetricsRow platform="x" metrics={post.metrics} />
           <AgentAttribution post={post} />
-          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
       </div>
     </CardShell>
@@ -345,7 +345,7 @@ export function LinkedInPostCard({ post }: { post: TimelinePost }) {
       <EngagementMetricsRow platform="linkedin" metrics={post.metrics} />
       <RecentComments comments={post.recentComments} />
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
@@ -385,7 +385,7 @@ export function FacebookPostCard({ post }: { post: TimelinePost }) {
       </div>
       <EngagementMetricsRow platform="facebook" metrics={post.metrics} />
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
@@ -430,7 +430,7 @@ export function InstagramPostCard({ post }: { post: TimelinePost }) {
       </div>
       <div className="px-4 pb-4">
         <AgentAttribution post={post} />
-        <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        <div className="mt-2"><ChannelSyncTag post={post} /></div>
       </div>
     </CardShell>
   );
@@ -462,7 +462,7 @@ export function YouTubePostCard({ post }: { post: TimelinePost }) {
         <p className="mt-3 line-clamp-2 text-[13px] leading-relaxed text-ink-soft">{post.content}</p>
         <EngagementMetricsRow platform="youtube" metrics={post.metrics} />
         <AgentAttribution post={post} />
-        <div className="mt-2"><PostizSyncedTag post={post} /></div>
+        <div className="mt-2"><ChannelSyncTag post={post} /></div>
       </div>
     </CardShell>
   );
@@ -493,7 +493,7 @@ export function BlogPostCard({ post }: { post: TimelinePost }) {
           </div>
           <EngagementMetricsRow platform="blog" metrics={post.metrics} />
           <AgentAttribution post={post} />
-          <div className="mt-2"><PostizSyncedTag post={post} /></div>
+          <div className="mt-2"><ChannelSyncTag post={post} /></div>
         </div>
         <div className="hidden md:block">
           <MediaPlaceholder ratio="aspect-[4/5]" label="Cover" />
@@ -546,7 +546,7 @@ export function NewsletterPostCard({ post }: { post: TimelinePost }) {
         {post.authorName} · {post.publishedAt ?? post.scheduledAt}
       </p>
       <AgentAttribution post={post} />
-      <div className="mt-2"><PostizSyncedTag post={post} /></div>
+      <div className="mt-2"><ChannelSyncTag post={post} /></div>
     </CardShell>
   );
 }
@@ -622,7 +622,7 @@ export function ScheduledPostCard({
         )}
         <span className="inline-flex items-center gap-1 rounded-full bg-parchment-deep px-2 py-0.5 ring-1 ring-inset ring-border/60">
           <span className="size-1 rounded-full bg-primary" />
-          Scheduled via Postiz
+          Scheduled through Crafted Virtue
         </span>
       </div>
 
@@ -656,11 +656,6 @@ export function ScheduledPostCard({
             </button>
           </>
         )}
-        {post.postizPostId && (
-          <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
-            Postiz · {post.postizPostId}
-          </span>
-        )}
       </div>
     </CardShell>
   );
@@ -685,22 +680,17 @@ export function FailedPostCard({ post }: { post: TimelinePost }) {
       <AgentAttribution post={post} />
       <div className="mt-4 flex flex-wrap gap-2 border-t border-destructive/20 pt-4">
         <button
-          onClick={() => toast.success("Job re-queued in Postiz.")}
+          onClick={() => toast.success("Publishing job re-queued.")}
           className="rounded-full bg-ink px-4 py-1.5 text-xs font-medium text-parchment hover:bg-ink/90"
         >
           Retry
         </button>
         <button
-          onClick={() => toast("Opening Postiz to reconnect this account.")}
+          onClick={() => toast("Opening channel settings to reconnect.")}
           className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
         >
-          Reconnect Account
+          Reconnect Channel
         </button>
-        {post.postizPostId && (
-          <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
-            Postiz · {post.postizPostId}
-          </span>
-        )}
       </div>
     </CardShell>
   );
@@ -864,7 +854,7 @@ export function PublishingTimeline() {
     setScheduledPosts((s) => s.filter((p) => p.id !== post.id));
     setPublishedPosts((p) => [movedPost, ...p]);
     setPendingPublish(null);
-    toast.success("Published. Postiz sync will update engagement metrics shortly.");
+    toast.success("Published. Engagement metrics will sync from your connected channels shortly.");
   };
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -920,12 +910,12 @@ export function PublishingTimeline() {
                 The next {scheduledNext.length} {scheduledNext.length === 1 ? "post" : "posts"} ready to go
               </h2>
               <p className="mt-1 text-[12px] text-ink-soft">
-                Review, approve, or publish without leaving the timeline.
+                Approved and pending posts prepared by your Crafted Virtue Agent.
               </p>
             </div>
             <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/70 px-3 py-1.5 text-[10.5px] uppercase tracking-[0.16em] text-ink-soft">
               <span className="size-1.5 rounded-full bg-primary" />
-              Synced from Postiz
+              Synced with connected channels
             </span>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -934,7 +924,7 @@ export function PublishingTimeline() {
             ))}
           </div>
           <p className="mt-4 text-[11px] text-ink-soft">
-            Scheduled publishing will use your connected Postiz workspace when backend integration is enabled.
+            Scheduled publishing runs through your connected channels in Crafted Virtue.
           </p>
         </section>
       )}
@@ -1007,10 +997,10 @@ export function PublishingTimeline() {
           <section className="space-y-12">
             <div className="md:pl-[200px]">
               <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-ink-soft">
-                Full scheduled queue
+                Scheduled Publishing Queue
               </p>
               <h2 className="mt-1 font-display text-2xl tracking-tight text-ink">
-                Everything queued in Postiz
+                Everything scheduled through Crafted Virtue
               </h2>
             </div>
             {scheduled.map((d) => (

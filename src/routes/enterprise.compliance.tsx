@@ -20,7 +20,7 @@ const AUDIT = [
   { when: "Mar 14 14:22", actor: "Marcus Lim", action: "Approved", target: "Why we're underweight late-stage growth", note: "Legal review cleared." },
   { when: "Mar 14 11:04", actor: "Priya Shah", action: "Requested revision", target: "AI governance for emerging managers", note: "Soften regulatory claim." },
   { when: "Mar 13 17:48", actor: "System", action: "Flagged", target: "Three CFO lessons", note: "Truth Filter requested citation." },
-  { when: "Mar 13 09:11", actor: "David Chen", action: "Published", target: "Allocation discipline post", note: "Scheduled via Postiz." },
+  { when: "Mar 13 09:11", actor: "David Chen", action: "Published", target: "Allocation discipline post", note: "Scheduled through Crafted Virtue." },
 ];
 
 const HISTORY = [

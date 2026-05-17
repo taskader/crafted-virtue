@@ -137,7 +137,7 @@ function Dashboard() {
             <div className="rounded-xl border border-border/60 bg-parchment-deep/50 p-3">
               <p className="text-[10px] uppercase tracking-wider text-ink-soft">Engagement updated</p>
               <p className="mt-1.5 text-sm font-medium">12 min ago</p>
-              <p className="mt-1 text-[11px] text-ink-soft">Postiz workspace sync</p>
+              <p className="mt-1 text-[11px] text-ink-soft">Connected channels sync</p>
             </div>
           </div>
         </Card>

@@ -157,7 +157,7 @@ function Home() {
             {
               n: "03",
               t: "Publish & scale",
-              d: "Approve your first week of content and automate distribution across LinkedIn, X, newsletter, and blog — through your connected Postiz workspace.",
+              d: "Approve your first week of content and automate distribution across LinkedIn, X, newsletter, and blog — through your connected channels.",
             },
           ].map((s) => (
             <li key={s.n} className="grid gap-6 border-l border-border/70 pl-8 md:grid-cols-[80px_1fr] md:gap-10 md:border-0 md:pl-0">

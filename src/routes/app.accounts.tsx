@@ -36,7 +36,7 @@ function Accounts() {
         <SectionLabel>Channels</SectionLabel>
         <h1 className="mt-2 font-display text-4xl">Connected Accounts</h1>
         <p className="mt-2 text-ink-soft">Connect the channels where your authority should compound.</p>
-        <p className="mt-2 text-xs text-ink-soft">Publishing is managed through your connected Postiz workspace.</p>
+        <p className="mt-2 text-xs text-ink-soft">Publishing runs through your connected channels.</p>
       </header>
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -79,8 +79,8 @@ function Accounts() {
             <button
               onClick={() =>
                 a.connected
-                  ? toast("Opening this channel in Postiz.")
-                  : toast.success(`${a.name} connection flow started in Postiz.`)
+                  ? toast("Opening this channel.")
+                  : toast.success(`${a.name} connection flow started.`)
               }
               className={`mt-5 w-full rounded-full px-4 py-2 text-xs font-medium ${
                 a.connected ? "border border-border text-ink hover:bg-parchment-deep" : "bg-ink text-parchment"
@@ -100,7 +100,7 @@ function Accounts() {
             </svg>
           </div>
           <div className="flex-1">
-            <p className="font-display text-lg">Your tokens stay in Postiz</p>
+            <p className="font-display text-lg">Your tokens stay in your connected workspace</p>
             <p className="mt-1 max-w-2xl text-sm text-ink-soft">
               Your social tokens are never shown here. Permissions can be revoked any time from your connected publishing workspace.
             </p>

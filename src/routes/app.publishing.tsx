@@ -63,9 +63,9 @@ function Publishing() {
   };
   const subFor: Record<View, string> = {
     timeline: "See every scheduled and published post in one chronological view. Scheduled posts sit at the top; published history unfolds below.",
-    calendar: "Approved content moves from your queue into the calendar. Publishing is managed through your connected Postiz workspace.",
+    calendar: "Approved content moves from your queue into the calendar. Publishing runs through your connected channels.",
     queue: "Scheduled, published, and failed jobs across every connected channel.",
-    accounts: "Channels connected through your Postiz workspace.",
+    accounts: "Channels connected to your Crafted Virtue publishing workspace.",
   };
 
   return (
@@ -89,7 +89,7 @@ function Publishing() {
             ))}
           </div>
           <button
-            onClick={() => toast.success("Campaign scheduling opened in Postiz.")}
+            onClick={() => toast.success("Campaign scheduling opened.")}
             className="rounded-full bg-ink px-5 py-2 text-xs font-medium text-parchment"
           >
             Schedule Campaign
@@ -182,7 +182,7 @@ function Publishing() {
         <div className="flex items-center justify-between">
           <div>
             <SectionLabel>Scheduled</SectionLabel>
-            <p className="mt-1 text-xs text-ink-soft">{SCHEDULED.length} posts ready in your Postiz queue.</p>
+            <p className="mt-1 text-xs text-ink-soft">{SCHEDULED.length} posts scheduled through Crafted Virtue.</p>
           </div>
         </div>
         <div className="mt-5 grid gap-3 md:grid-cols-2">
@@ -195,8 +195,7 @@ function Publishing() {
                 </div>
                 <StatusPill status={s.status} />
               </div>
-              <div className="mt-3 flex items-center justify-between text-[11px] text-ink-soft">
-                <span>Postiz job <code className="rounded bg-muted px-1.5 py-0.5">{s.job}</code></span>
+              <div className="mt-3 flex items-center justify-end text-[11px] text-ink-soft">
                 <button className="font-medium text-ink hover:underline">View</button>
               </div>
             </div>
@@ -211,7 +210,7 @@ function Publishing() {
             <div key={p.id} className="flex items-center justify-between py-3">
               <div>
                 <p className="font-medium">{p.title}</p>
-                <p className="text-xs text-ink-soft">{p.platform} · {p.when} · job {p.job}</p>
+                <p className="text-xs text-ink-soft">{p.platform} · {p.when}</p>
               </div>
               <div className="text-right">
                 <p className="font-display text-lg">{p.reach}</p>
@@ -235,7 +234,7 @@ function Publishing() {
                 </div>
                 <div className="flex gap-2">
                   <button
-                    onClick={() => toast("Redirecting to Postiz to reconnect this account.")}
+                    onClick={() => toast("Opening channel settings to reconnect.")}
                     className="rounded-full bg-ink px-4 py-1.5 text-xs text-parchment"
                   >
                     Reconnect account
@@ -260,7 +259,7 @@ function Publishing() {
       <Card className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <SectionLabel>Postiz connection</SectionLabel>
+            <SectionLabel>Connected channels</SectionLabel>
             <p className="mt-2 font-display text-xl">Your publishing workspace</p>
             <p className="mt-1 text-xs text-ink-soft">Workspace: crafted-virtue-prod · Last full sync 2 minutes ago</p>
           </div>
@@ -285,7 +284,7 @@ function Publishing() {
       )}
 
       {!isTimeline && (
-        <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing is managed through your connected Postiz workspace.</p>
+        <p className="text-center text-xs text-ink-soft">Only approved content can be scheduled. Publishing runs through your connected channels.</p>
       )}
     </div>
   );
