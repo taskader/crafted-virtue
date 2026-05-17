@@ -15,6 +15,8 @@ import {
   Shield,
   Sparkles,
   Twitter,
+  CalendarClock,
+  Activity,
 } from "lucide-react";
 
 export const Route = createFileRoute("/app/dashboard")({
