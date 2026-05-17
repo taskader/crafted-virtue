@@ -680,22 +680,17 @@ export function FailedPostCard({ post }: { post: TimelinePost }) {
       <AgentAttribution post={post} />
       <div className="mt-4 flex flex-wrap gap-2 border-t border-destructive/20 pt-4">
         <button
-          onClick={() => toast.success("Job re-queued in Postiz.")}
+          onClick={() => toast.success("Publishing job re-queued.")}
           className="rounded-full bg-ink px-4 py-1.5 text-xs font-medium text-parchment hover:bg-ink/90"
         >
           Retry
         </button>
         <button
-          onClick={() => toast("Opening Postiz to reconnect this account.")}
+          onClick={() => toast("Opening channel settings to reconnect.")}
           className="rounded-full border border-border px-4 py-1.5 text-xs font-medium hover:bg-muted"
         >
-          Reconnect Account
+          Reconnect Channel
         </button>
-        {post.postizPostId && (
-          <span className="ml-auto self-center text-[10px] uppercase tracking-[0.16em] text-ink-soft">
-            Postiz · {post.postizPostId}
-          </span>
-        )}
       </div>
     </CardShell>
   );
