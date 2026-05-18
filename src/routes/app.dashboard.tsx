@@ -203,10 +203,23 @@ function Dashboard() {
           <ul className="mt-4 space-y-3">
             {AGENT_TIMELINE.map((a, i) => (
               <li key={a.agent + i} className="flex items-start gap-3">
-                <AgentAvatar name={a.agent} size="md" className="mt-0.5" />
+                <Link
+                  to="/agents/$agentId"
+                  params={{ agentId: a.agent.toLowerCase() }}
+                  className="shrink-0"
+                  aria-label={`View ${a.agent}'s profile`}
+                >
+                  <AgentAvatar name={a.agent} size="md" className="mt-0.5" />
+                </Link>
                 <div className="min-w-0 text-sm leading-snug">
                   <p>
-                    <span className="font-medium text-ink">{a.agent}</span>{" "}
+                    <Link
+                      to="/agents/$agentId"
+                      params={{ agentId: a.agent.toLowerCase() }}
+                      className="font-medium text-ink hover:underline underline-offset-4"
+                    >
+                      {a.agent}
+                    </Link>{" "}
                     <span className="text-ink-soft">{a.action}.</span>
                   </p>
                   <p className="mt-0.5 text-xs text-ink-soft">{a.time}</p>
@@ -214,6 +227,11 @@ function Dashboard() {
               </li>
             ))}
           </ul>
+          <div className="mt-4 border-t border-border/60 pt-3">
+            <Link to="/agents" className="text-xs text-ink-soft hover:text-ink">
+              Meet the full agent team →
+            </Link>
+          </div>
         </Card>
       </div>
 
