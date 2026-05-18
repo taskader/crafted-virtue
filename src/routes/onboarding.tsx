@@ -309,6 +309,12 @@ function Onboarding() {
                   );
                 })}
               </div>
+              <Link
+                to="/agents"
+                className="mt-4 inline-block text-[11px] uppercase tracking-[0.18em] text-ink-soft underline-offset-4 hover:text-ink hover:underline"
+              >
+                Meet the specialist team →
+              </Link>
             </div>
           </Card>
         </aside>
