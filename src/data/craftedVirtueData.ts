@@ -18,6 +18,7 @@ export const navigation = {
   public: [
     { label: "Solutions", to: "/solutions" },
     { label: "Platform", to: "/platform" },
+    { label: "Agents", to: "/agents" },
     { label: "Pricing", to: "/pricing" },
     { label: "Report", to: "/report" },
     { label: "Enterprise", to: "/enterprise" },
