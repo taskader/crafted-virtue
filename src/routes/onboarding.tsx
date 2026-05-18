@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Logo } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
