@@ -239,7 +239,7 @@ function HeroOrbit() {
   );
 }
 
-function AgentCard({ profile, onView }: { profile: AgentProfile; onView: () => void }) {
+function AgentCard({ profile }: { profile: AgentProfile }) {
   const agent = AGENT_REG[profile.id];
   return (
     <Card className="group relative overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
