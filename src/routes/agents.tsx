@@ -9,11 +9,11 @@ import { brand } from "@/data/craftedVirtueData";
 export const Route = createFileRoute("/agents")({
   head: () => ({
     meta: [
-      { title: "Meet the specialist team behind your authority engine — Crafted Virtue" },
+      { title: "Crafted Virtue Agents — Specialist AI Team for Executive Authority" },
       {
         name: "description",
         content:
-          "One personal agent. Twelve specialist minds behind it. Meet the Crafted Virtue agent team for onboarding, content, analytics, quality, media, support, billing, strategy, and product operations.",
+          "Meet the specialist agents behind Crafted Virtue: onboarding, content, analytics, quality, media, support, billing, and strategy working together to build executive authority.",
       },
       { property: "og:title", content: "The Crafted Virtue Agent Team" },
       {

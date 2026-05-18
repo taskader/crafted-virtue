@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Logo } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
@@ -309,6 +309,12 @@ function Onboarding() {
                   );
                 })}
               </div>
+              <Link
+                to="/agents"
+                className="mt-4 inline-block text-[11px] uppercase tracking-[0.18em] text-ink-soft underline-offset-4 hover:text-ink hover:underline"
+              >
+                Meet the specialist team →
+              </Link>
             </div>
           </Card>
         </aside>

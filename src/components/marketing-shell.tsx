@@ -66,14 +66,14 @@ export function MarketingFooter() {
           </div>
         </div>
         <div className="md:col-span-3">
-          <p className="mb-3 text-xs uppercase tracking-widest text-ink-soft">Platform</p>
+          <p className="mb-3 text-xs uppercase tracking-widest text-ink-soft">Product</p>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/solutions" className="hover:text-ink">Solutions</Link></li>
             <li><Link to="/platform" className="hover:text-ink">Platform</Link></li>
+            <li><Link to="/solutions" className="hover:text-ink">Solutions</Link></li>
+            <li><Link to="/agents" className="hover:text-ink">Agents</Link></li>
             <li><Link to="/pricing" className="hover:text-ink">Pricing</Link></li>
-            <li><Link to="/enterprise" className="hover:text-ink">Enterprise</Link></li>
-            <li><Link to="/agents" className="hover:text-ink">Agent Team</Link></li>
             <li><Link to="/report" className="hover:text-ink">Authority Report</Link></li>
+            <li><Link to="/enterprise" className="hover:text-ink">Enterprise</Link></li>
           </ul>
         </div>
         <div className="md:col-span-2">

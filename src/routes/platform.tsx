@@ -113,6 +113,31 @@ function Platform() {
         </div>
       </section>
 
+      {/* Agent Team Teaser */}
+      <section className="mx-auto max-w-7xl px-6 pt-20">
+        <Card className="grid gap-8 p-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-8">
+            <SectionLabel>The team behind the platform</SectionLabel>
+            <h2 className="mt-3 font-display text-3xl text-balance md:text-4xl">
+              A specialist team behind every workflow.
+            </h2>
+            <p className="mt-3 max-w-2xl text-ink-soft">
+              You work with one personal agent. Behind it, twelve specialists handle onboarding,
+              content, analytics, quality, media, support, billing, and strategy — each with a clear
+              mandate and clean handoffs.
+            </p>
+          </div>
+          <div className="md:col-span-4 md:text-right">
+            <Link
+              to="/agents"
+              className="inline-flex rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-parchment shadow-soft"
+            >
+              Meet the agents
+            </Link>
+          </div>
+        </Card>
+      </section>
+
       {/* Final CTA */}
       <section className="mx-auto max-w-5xl px-6 pb-24 pt-20">
         <Card className="p-10 text-center">

@@ -284,6 +284,14 @@ function Solutions() {
             </Card>
           ))}
         </div>
+        <div className="mt-8">
+          <Link
+            to="/agents"
+            className="inline-flex rounded-full border border-ink/20 bg-parchment px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/40"
+          >
+            Meet the full agent team
+          </Link>
+        </div>
       </section>
 
       {/* Final CTA */}
