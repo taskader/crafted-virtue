@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SecurityRouteImport } from './routes/security'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -54,6 +56,11 @@ import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppContentReviewRouteImport } from './routes/app.content.review'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
@@ -62,6 +69,11 @@ const SolutionsRoute = SolutionsRouteImport.update({
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportRoute = ReportRouteImport.update({
@@ -286,8 +298,10 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -332,8 +346,10 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -379,8 +395,10 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -427,8 +445,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -473,8 +493,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -519,8 +541,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -566,8 +590,10 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ReportRoute: typeof ReportRoute
+  SecurityRoute: typeof SecurityRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  TermsRoute: typeof TermsRoute
   ControlCenterAgentsRoute: typeof ControlCenterAgentsRoute
   ControlCenterApprovalsRoute: typeof ControlCenterApprovalsRoute
   ControlCenterIncidentsRoute: typeof ControlCenterIncidentsRoute
@@ -588,6 +614,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
@@ -600,6 +633,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report': {
@@ -958,8 +998,10 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ReportRoute: ReportRoute,
+  SecurityRoute: SecurityRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  TermsRoute: TermsRoute,
   ControlCenterAgentsRoute: ControlCenterAgentsRoute,
   ControlCenterApprovalsRoute: ControlCenterApprovalsRoute,
   ControlCenterIncidentsRoute: ControlCenterIncidentsRoute,
@@ -980,3 +1022,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
