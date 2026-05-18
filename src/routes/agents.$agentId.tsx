@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
 import { AgentAvatar } from "@/components/agent-avatar";
+import { AgentPortrait } from "@/components/agent-portrait";
 import { AGENTS as AGENT_REG, type AgentId } from "@/lib/agents";
 import { AGENT_PROFILES, AGENT_IDS } from "@/data/agentProfiles";
 import { brand } from "@/data/craftedVirtueData";
@@ -70,35 +71,9 @@ function Section({
 }
 
 function AmbientPortrait({ agentId }: { agentId: AgentId }) {
-  const agent = AGENT_REG[agentId];
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-xs">
-      {/* ambient glow */}
-      <div
-        className="absolute inset-0 animate-pulse rounded-full opacity-70 blur-3xl"
-        style={{ background: `radial-gradient(circle, ${agent.accent}33 0%, transparent 70%)` }}
-        aria-hidden
-      />
-      {/* slow rotating signal ring */}
-      <div
-        className="absolute inset-2 rounded-full border border-dashed border-ink/15"
-        style={{ animation: "spin 28s linear infinite" }}
-        aria-hidden
-      />
-      <div
-        className="absolute inset-6 rounded-full border border-ink/10"
-        style={{ animation: "spin 38s linear infinite reverse" }}
-        aria-hidden
-      />
-      {/* portrait */}
-      <div className="absolute inset-10 overflow-hidden rounded-full ring-1 ring-ink/10 shadow-soft transition-transform duration-700 hover:scale-[1.02]">
-        <img
-          src={agent.avatar}
-          alt={agent.alt}
-          loading="eager"
-          className="h-full w-full object-cover"
-        />
-      </div>
+    <div className="mx-auto flex w-full max-w-xs justify-center">
+      <AgentPortrait agentId={agentId} size="hero" ambient />
     </div>
   );
 }
