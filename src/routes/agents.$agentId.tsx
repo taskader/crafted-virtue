@@ -104,10 +104,11 @@ function AmbientPortrait({ agentId }: { agentId: AgentId }) {
 }
 
 function AgentProfilePage() {
-  const { id } = Route.useLoaderData();
+  const data = Route.useLoaderData();
+  const id = data.id as AgentId;
   const agent = AGENT_REG[id];
   const profile = AGENT_PROFILES[id];
-  const related = profile.related.map((rid) => ({
+  const related = profile.related.map((rid: AgentId) => ({
     agent: AGENT_REG[rid],
     profile: AGENT_PROFILES[rid],
   }));
