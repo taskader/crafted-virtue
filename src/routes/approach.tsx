@@ -242,32 +242,63 @@ function Approach() {
         </div>
       </section>
 
-      {/* Section 4: AI-First Operating Model */}
+      {/* Section 4: Specialist team */}
       <section className="bg-parchment-deep">
         <div className="mx-auto max-w-7xl px-6 py-20">
           <div className="max-w-3xl">
             <SectionLabel>Operating model</SectionLabel>
             <h2 className="mt-3 font-display text-4xl text-balance">
-              The AI-First Operating Model.
+              One personal agent. A specialist team behind it.
             </h2>
             <p className="mt-4 text-ink-soft">
-              Crafted Virtue is designed around one personal agent for each user, supported by specialist
-              capabilities for onboarding, content, analytics, quality, media, billing, and support. The
-              result is a calm interface with a coordinated intelligence layer underneath.
+              Users interact with one personal Crafted Virtue Agent. Behind the scenes, specialist
+              agents support onboarding, content strategy, analytics, quality, media, support,
+              billing, and long-term strategy.
             </p>
           </div>
-          <div className="mt-10 flex flex-wrap gap-3">
-            {AGENTS.map((a) => (
-              <span
-                key={a.id}
-                className="inline-flex items-center gap-2 rounded-full border border-ink/10 bg-parchment px-4 py-2 text-sm"
-              >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-ink text-parchment font-display text-xs">
-                  {a.name[0]}
-                </span>
-                {a.name}
-              </span>
+
+          <div className="mt-10 flex flex-wrap gap-2" role="tablist" aria-label="Specialist agents">
+            {primaryAgents.map((d) => (
+              <AgentChipTab
+                key={d.id}
+                detail={d}
+                active={activeId === d.id}
+                onClick={() => setActiveId(d.id)}
+              />
             ))}
+          </div>
+
+          <div className="mt-6 grid gap-6 md:grid-cols-12">
+            <div className="md:col-span-8">
+              <AgentDetailCard detail={activeDetail} />
+            </div>
+            <div className="md:col-span-4">
+              <Card className="p-6">
+                <h3 className="font-display text-lg">Show all specialists</h3>
+                <p className="mt-1 text-xs text-ink-soft">
+                  Internal and adjacent agents that support the team behind the scenes.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {secondaryAgents.map((d) => (
+                    <AgentChipTab
+                      key={d.id}
+                      detail={d}
+                      active={activeId === d.id}
+                      onClick={() => setActiveId(d.id)}
+                    />
+                  ))}
+                </div>
+              </Card>
+            </div>
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/agents"
+              className="rounded-full border border-ink/20 bg-parchment px-5 py-2.5 text-sm font-medium text-ink hover:border-ink/40"
+            >
+              Meet the full agent team
+            </Link>
           </div>
         </div>
       </section>
