@@ -128,6 +128,12 @@ function AgentDetailCard({ detail }: { detail: AgentDetail }) {
     </Card>
   );
 }
+
+function Approach() {
+  const primaryAgents = AGENT_DETAILS.filter((a) => a.primary);
+  const secondaryAgents = AGENT_DETAILS.filter((a) => !a.primary);
+  const [activeId, setActiveId] = useState<AgentId>(primaryAgents[0].id);
+  const activeDetail = AGENT_DETAILS.find((a) => a.id === activeId) ?? primaryAgents[0];
   return (
     <MarketingShell>
       {/* Hero */}
