@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MarketingShell } from "@/components/marketing-shell";
 import { Card, SectionLabel } from "@/components/ui-bits";
 import { Illustration } from "@/components/illustration";
+import { AgentAvatar } from "@/components/agent-avatar";
+import { AGENTS as AGENT_REG, type AgentId } from "@/lib/agents";
 import { brand } from "@/data/craftedVirtueData";
 
 export const Route = createFileRoute("/approach")({
