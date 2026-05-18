@@ -87,10 +87,10 @@ export function MarketingFooter() {
         <div className="md:col-span-2">
           <p className="mb-3 text-xs uppercase tracking-widest text-ink-soft">Trust</p>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/" hash="privacy" className="hover:text-ink">Privacy</Link></li>
-            <li><Link to="/" hash="terms" className="hover:text-ink">Terms</Link></li>
-            <li><Link to="/" hash="security" className="hover:text-ink">Security</Link></li>
-            <li><Link to="/" hash="ai-ethics" className="hover:text-ink">AI &amp; Ethics</Link></li>
+            <li><Link to="/privacy" className="hover:text-ink">Privacy</Link></li>
+            <li><Link to="/terms" className="hover:text-ink">Terms</Link></li>
+            <li><Link to="/security" className="hover:text-ink">Security</Link></li>
+            <li><Link to="/ai-ethics" className="hover:text-ink">AI &amp; Ethics</Link></li>
           </ul>
         </div>
       </div>

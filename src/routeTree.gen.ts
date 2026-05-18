@@ -9,9 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as SecurityRouteImport } from './routes/security'
 import { Route as ReportRouteImport } from './routes/report'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PlatformRouteImport } from './routes/platform'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
@@ -19,6 +22,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AiEthicsRouteImport } from './routes/ai-ethics'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EnterpriseIndexRouteImport } from './routes/enterprise.index'
 import { Route as ControlCenterIndexRouteImport } from './routes/control-center.index'
@@ -53,6 +57,11 @@ import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppContentReviewRouteImport } from './routes/app.content.review'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
@@ -63,9 +72,19 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportRoute = ReportRouteImport.update({
   id: '/report',
   path: '/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PricingRoute = PricingRouteImport.update({
@@ -101,6 +120,11 @@ const ApproachRoute = ApproachRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEthicsRoute = AiEthicsRouteImport.update({
+  id: '/ai-ethics',
+  path: '/ai-ethics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -271,6 +295,7 @@ const AppContentNewRoute = AppContentNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -278,9 +303,12 @@ export interface FileRoutesByFullPath {
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -316,6 +344,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -323,9 +352,12 @@ export interface FileRoutesByTo {
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -362,6 +394,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -369,9 +402,12 @@ export interface FileRoutesById {
   '/onboarding': typeof OnboardingRoute
   '/platform': typeof PlatformRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/report': typeof ReportRoute
+  '/security': typeof SecurityRoute
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
+  '/terms': typeof TermsRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -409,6 +445,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -416,9 +453,12 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/platform'
     | '/pricing'
+    | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -454,6 +494,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -461,9 +502,12 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/platform'
     | '/pricing'
+    | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -499,6 +543,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -506,9 +551,12 @@ export interface FileRouteTypes {
     | '/onboarding'
     | '/platform'
     | '/pricing'
+    | '/privacy'
     | '/report'
+    | '/security'
     | '/signup'
     | '/solutions'
+    | '/terms'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -545,6 +593,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiEthicsRoute: typeof AiEthicsRoute
   AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
@@ -552,9 +601,12 @@ export interface RootRouteChildren {
   OnboardingRoute: typeof OnboardingRoute
   PlatformRoute: typeof PlatformRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   ReportRoute: typeof ReportRoute
+  SecurityRoute: typeof SecurityRoute
   SignupRoute: typeof SignupRoute
   SolutionsRoute: typeof SolutionsRoute
+  TermsRoute: typeof TermsRoute
   ControlCenterAgentsRoute: typeof ControlCenterAgentsRoute
   ControlCenterApprovalsRoute: typeof ControlCenterApprovalsRoute
   ControlCenterIncidentsRoute: typeof ControlCenterIncidentsRoute
@@ -575,6 +627,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
@@ -589,11 +648,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/report': {
       id: '/report'
       path: '/report'
       fullPath: '/report'
       preLoaderRoute: typeof ReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pricing': {
@@ -643,6 +716,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-ethics': {
+      id: '/ai-ethics'
+      path: '/ai-ethics'
+      fullPath: '/ai-ethics'
+      preLoaderRoute: typeof AiEthicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -929,6 +1009,7 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiEthicsRoute: AiEthicsRoute,
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
@@ -936,9 +1017,12 @@ const rootRouteChildren: RootRouteChildren = {
   OnboardingRoute: OnboardingRoute,
   PlatformRoute: PlatformRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   ReportRoute: ReportRoute,
+  SecurityRoute: SecurityRoute,
   SignupRoute: SignupRoute,
   SolutionsRoute: SolutionsRoute,
+  TermsRoute: TermsRoute,
   ControlCenterAgentsRoute: ControlCenterAgentsRoute,
   ControlCenterApprovalsRoute: ControlCenterApprovalsRoute,
   ControlCenterIncidentsRoute: ControlCenterIncidentsRoute,
