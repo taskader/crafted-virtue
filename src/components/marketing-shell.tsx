@@ -72,6 +72,7 @@ export function MarketingFooter() {
             <li><Link to="/platform" className="hover:text-ink">Platform</Link></li>
             <li><Link to="/pricing" className="hover:text-ink">Pricing</Link></li>
             <li><Link to="/enterprise" className="hover:text-ink">Enterprise</Link></li>
+            <li><Link to="/agents" className="hover:text-ink">Agent Team</Link></li>
             <li><Link to="/report" className="hover:text-ink">Authority Report</Link></li>
           </ul>
         </div>
