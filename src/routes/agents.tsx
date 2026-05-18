@@ -470,7 +470,7 @@ function AgentsPage() {
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {AGENT_PROFILES.map((p) => (
-              <AgentCard key={p.id} profile={p} onView={() => setActiveProfile(p)} />
+              <AgentCard key={p.id} profile={p} />
             ))}
           </div>
         </div>
