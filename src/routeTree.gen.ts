@@ -22,6 +22,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ApproachRouteImport } from './routes/approach'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AiEthicsRouteImport } from './routes/ai-ethics'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EnterpriseIndexRouteImport } from './routes/enterprise.index'
 import { Route as ControlCenterIndexRouteImport } from './routes/control-center.index'
@@ -119,6 +120,11 @@ const ApproachRoute = ApproachRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiEthicsRoute = AiEthicsRouteImport.update({
+  id: '/ai-ethics',
+  path: '/ai-ethics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -289,6 +295,7 @@ const AppContentNewRoute = AppContentNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -337,6 +344,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -386,6 +394,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
   '/blog': typeof BlogRouteWithChildren
@@ -436,6 +445,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -484,6 +494,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -532,6 +543,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai-ethics'
     | '/app'
     | '/approach'
     | '/blog'
@@ -581,6 +593,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiEthicsRoute: typeof AiEthicsRoute
   AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
   BlogRoute: typeof BlogRouteWithChildren
@@ -703,6 +716,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-ethics': {
+      id: '/ai-ethics'
+      path: '/ai-ethics'
+      fullPath: '/ai-ethics'
+      preLoaderRoute: typeof AiEthicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -989,6 +1009,7 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiEthicsRoute: AiEthicsRoute,
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
   BlogRoute: BlogRouteWithChildren,
