@@ -239,7 +239,7 @@ function HeroOrbit() {
   );
 }
 
-function AgentCard({ profile, onView }: { profile: AgentProfile; onView: () => void }) {
+function AgentCard({ profile }: { profile: AgentProfile }) {
   const agent = AGENT_REG[profile.id];
   return (
     <Card className="group relative overflow-hidden p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft">
@@ -284,13 +284,13 @@ function AgentCard({ profile, onView }: { profile: AgentProfile; onView: () => v
       </blockquote>
 
       <div className="mt-5">
-        <button
-          type="button"
-          onClick={onView}
+        <Link
+          to="/agents/$agentId"
+          params={{ agentId: profile.id }}
           className="text-xs font-medium uppercase tracking-wide text-ink underline-offset-4 hover:underline"
         >
           View profile →
-        </button>
+        </Link>
       </div>
     </Card>
   );
@@ -470,7 +470,7 @@ function AgentsPage() {
           </div>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {AGENT_PROFILES.map((p) => (
-              <AgentCard key={p.id} profile={p} onView={() => setActiveProfile(p)} />
+              <AgentCard key={p.id} profile={p} />
             ))}
           </div>
         </div>

@@ -54,6 +54,7 @@ import { Route as AppBillingRouteImport } from './routes/app.billing'
 import { Route as AppApprovalsRouteImport } from './routes/app.approvals'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppAccountsRouteImport } from './routes/app.accounts'
+import { Route as AgentsAgentIdRouteImport } from './routes/agents.$agentId'
 import { Route as AppContentIndexRouteImport } from './routes/app.content.index'
 import { Route as AppContentReviewRouteImport } from './routes/app.content.review'
 import { Route as AppContentNewRouteImport } from './routes/app.content.new'
@@ -283,6 +284,11 @@ const AppAccountsRoute = AppAccountsRouteImport.update({
   path: '/accounts',
   getParentRoute: () => AppRoute,
 } as any)
+const AgentsAgentIdRoute = AgentsAgentIdRouteImport.update({
+  id: '/$agentId',
+  path: '/$agentId',
+  getParentRoute: () => AgentsRoute,
+} as any)
 const AppContentIndexRoute = AppContentIndexRouteImport.update({
   id: '/content/',
   path: '/content/',
@@ -301,7 +307,7 @@ const AppContentNewRoute = AppContentNewRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
+  '/agents': typeof AgentsRouteWithChildren
   '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
@@ -316,6 +322,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
+  '/agents/$agentId': typeof AgentsAgentIdRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -351,7 +358,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
+  '/agents': typeof AgentsRouteWithChildren
   '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
@@ -366,6 +373,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
+  '/agents/$agentId': typeof AgentsAgentIdRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -402,7 +410,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/agents': typeof AgentsRoute
+  '/agents': typeof AgentsRouteWithChildren
   '/ai-ethics': typeof AiEthicsRoute
   '/app': typeof AppRouteWithChildren
   '/approach': typeof ApproachRoute
@@ -417,6 +425,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/solutions': typeof SolutionsRoute
   '/terms': typeof TermsRoute
+  '/agents/$agentId': typeof AgentsAgentIdRoute
   '/app/accounts': typeof AppAccountsRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/approvals': typeof AppApprovalsRoute
@@ -469,6 +478,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/terms'
+    | '/agents/$agentId'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -519,6 +529,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/terms'
+    | '/agents/$agentId'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -569,6 +580,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/solutions'
     | '/terms'
+    | '/agents/$agentId'
     | '/app/accounts'
     | '/app/analytics'
     | '/app/approvals'
@@ -605,7 +617,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AgentsRoute: typeof AgentsRoute
+  AgentsRoute: typeof AgentsRouteWithChildren
   AiEthicsRoute: typeof AiEthicsRoute
   AppRoute: typeof AppRouteWithChildren
   ApproachRoute: typeof ApproachRoute
@@ -955,6 +967,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAccountsRouteImport
       parentRoute: typeof AppRoute
     }
+    '/agents/$agentId': {
+      id: '/agents/$agentId'
+      path: '/$agentId'
+      fullPath: '/agents/$agentId'
+      preLoaderRoute: typeof AgentsAgentIdRouteImport
+      parentRoute: typeof AgentsRoute
+    }
     '/app/content/': {
       id: '/app/content/'
       path: '/content'
@@ -978,6 +997,17 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AgentsRouteChildren {
+  AgentsAgentIdRoute: typeof AgentsAgentIdRoute
+}
+
+const AgentsRouteChildren: AgentsRouteChildren = {
+  AgentsAgentIdRoute: AgentsAgentIdRoute,
+}
+
+const AgentsRouteWithChildren =
+  AgentsRoute._addFileChildren(AgentsRouteChildren)
 
 interface AppRouteChildren {
   AppAccountsRoute: typeof AppAccountsRoute
@@ -1029,7 +1059,7 @@ const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AgentsRoute: AgentsRoute,
+  AgentsRoute: AgentsRouteWithChildren,
   AiEthicsRoute: AiEthicsRoute,
   AppRoute: AppRouteWithChildren,
   ApproachRoute: ApproachRoute,
