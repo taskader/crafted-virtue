@@ -284,13 +284,13 @@ function AgentCard({ profile }: { profile: AgentProfile }) {
       </blockquote>
 
       <div className="mt-5">
-        <button
-          type="button"
-          onClick={onView}
+        <Link
+          to="/agents/$agentId"
+          params={{ agentId: profile.id }}
           className="text-xs font-medium uppercase tracking-wide text-ink underline-offset-4 hover:underline"
         >
           View profile →
-        </button>
+        </Link>
       </div>
     </Card>
   );
